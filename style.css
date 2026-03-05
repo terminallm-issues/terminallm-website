@@ -1,0 +1,522 @@
+/* TerminaLLM Website - Mirror Popup Inspired Theme
+ * Design tokens pulled from the Flutter app's AppColors, AppSpacing, AppTextColors
+ * and the SessionShareDialog / mirror setup dialog aesthetic.
+ */
+
+/* ========== CSS Custom Properties (Design Tokens) ========== */
+:root {
+  /* Backgrounds - from AppColors */
+  --scaffold-bg: #121212;
+  --surface-bg: #1E1E1E;
+  --card-bg: #1E1E1E;
+  --input-bg: #2A2A2A;
+  --button-bg: #2A2A2A;
+  --button-bg-active: #3A3A3A;
+  --code-bg: #000000;
+
+  /* Brand colors */
+  --primary: #4CAF50;
+  --primary-accent: #69F0AE;
+  --primary-glow: rgba(76, 175, 80, 0.3);
+  --success: #4CAF50;
+  --warning: #FF9800;
+  --error: #F44336;
+  --pro-gold: #FFD700;
+
+  /* Text colors - from AppTextColors */
+  --text-primary: #FFFFFF;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-disabled: rgba(255, 255, 255, 0.38);
+  --text-accent: #69F0AE;
+
+  /* Spacing - from AppSpacing (4dp base) */
+  --space-xs2: 2px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-xxl: 32px;
+  --space-xxxl: 48px;
+
+  /* Semantic spacing */
+  --screen-padding: 24px;
+  --card-padding: 20px;
+  --item-spacing: 16px;
+  --section-spacing: 32px;
+
+  /* Border radii - from AppSpacing */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-xxl: 16px;
+
+  /* Layout */
+  --max-width: 720px;
+  --max-width-wide: 960px;
+}
+
+/* ========== Reset & Base ========== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: var(--scaffold-bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--primary-accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+/* ========== Layout ========== */
+.site-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--screen-padding);
+}
+
+.site-container--wide {
+  max-width: var(--max-width-wide);
+}
+
+/* ========== Navigation ========== */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--surface-bg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.site-nav__inner {
+  max-width: var(--max-width-wide);
+  margin: 0 auto;
+  padding: var(--space-md) var(--screen-padding);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-nav__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.site-nav__brand:hover {
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.site-nav__logo {
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-shadow: 0 0 10px var(--primary-glow);
+}
+
+.site-nav__title {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.site-nav__links {
+  display: flex;
+  gap: var(--space-lg);
+  list-style: none;
+}
+
+.site-nav__links a {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  transition: color 0.2s ease;
+}
+
+.site-nav__links a:hover {
+  color: var(--primary-accent);
+  text-decoration: none;
+}
+
+/* Mobile nav */
+@media (max-width: 600px) {
+  .site-nav__inner {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+  .site-nav__links {
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+/* ========== Hero Section ========== */
+.hero {
+  text-align: center;
+  padding: var(--space-xxxl) 0;
+}
+
+.hero__icon {
+  width: 96px;
+  height: 96px;
+  border-radius: var(--radius-xxl);
+  margin-bottom: var(--space-xl);
+  box-shadow: 0 0 40px var(--primary-glow), 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.hero__title {
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: var(--space-md);
+  color: var(--text-primary);
+}
+
+.hero__title span {
+  color: var(--primary);
+  text-shadow: 0 0 20px var(--primary-glow);
+}
+
+.hero__subtitle {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* ========== Cards - Mirror dialog style ========== */
+.card {
+  background: var(--surface-bg);
+  border-radius: var(--radius-xl);
+  padding: var(--card-padding);
+  margin-bottom: var(--item-spacing);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: border-color 0.2s ease;
+}
+
+.card:hover {
+  border-color: rgba(76, 175, 80, 0.2);
+}
+
+.card__title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.card__text {
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+}
+
+/* ========== Code Blocks - Mirror command row style ========== */
+.code-block {
+  background: var(--code-bg);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md) var(--space-lg);
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+  font-size: 0.8125rem;
+  color: var(--primary);
+  overflow-x: auto;
+  line-height: 1.5;
+}
+
+code {
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+  background: var(--code-bg);
+  color: var(--primary);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85em;
+}
+
+/* ========== Buttons - from AppButtonStyles ========== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-xl);
+  border-radius: var(--radius-lg);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn:hover {
+  text-decoration: none;
+}
+
+.btn--primary {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.btn--primary:hover {
+  background: #5cb85c;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.btn--secondary {
+  background: transparent;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+}
+
+.btn--secondary:hover {
+  background: rgba(76, 175, 80, 0.1);
+  color: var(--primary-accent);
+}
+
+.btn--tertiary {
+  background: transparent;
+  color: var(--text-secondary);
+  padding: var(--space-md) var(--space-lg);
+}
+
+.btn--tertiary:hover {
+  color: var(--text-primary);
+}
+
+/* ========== Warning / Info Callouts - from WarningCallout ========== */
+.callout {
+  border-radius: var(--radius-lg);
+  padding: var(--space-md) var(--space-lg);
+  margin: var(--item-spacing) 0;
+  border-left: 4px solid;
+  font-size: 0.9375rem;
+}
+
+.callout--info {
+  background: rgba(33, 150, 243, 0.1);
+  border-color: #2196F3;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.callout--caution {
+  background: rgba(255, 152, 0, 0.1);
+  border-color: var(--warning);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.callout--danger {
+  background: rgba(244, 67, 54, 0.1);
+  border-color: var(--error);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ========== Info Box - Mirror session info style ========== */
+.info-box {
+  background: var(--input-bg);
+  border-radius: var(--radius-sm);
+  padding: var(--space-md) var(--space-lg);
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+  font-size: 0.6875rem;
+  color: var(--text-disabled);
+  line-height: 1.6;
+}
+
+/* ========== Section Headers ========== */
+.section-header {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: var(--section-spacing);
+  margin-bottom: var(--item-spacing);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ========== Legal / Long-form Content ========== */
+.legal-content {
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  line-height: 1.75;
+}
+
+.legal-content h1 {
+  font-size: 1.75rem;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.legal-content h2 {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-top: var(--section-spacing);
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.legal-content h3 {
+  font-size: 1.0625rem;
+  color: var(--text-primary);
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-sm);
+}
+
+.legal-content p {
+  margin-bottom: var(--space-md);
+}
+
+.legal-content ul, .legal-content ol {
+  margin-bottom: var(--space-md);
+  padding-left: var(--space-xl);
+}
+
+.legal-content li {
+  margin-bottom: var(--space-xs);
+}
+
+.legal-content strong {
+  color: var(--text-primary);
+}
+
+.legal-content .last-updated {
+  color: var(--text-disabled);
+  font-size: 0.875rem;
+  margin-bottom: var(--space-xl);
+}
+
+/* ========== Badge / Pill - Mirror keyword style ========== */
+.badge {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  padding: 2px 10px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.badge--outline {
+  background: transparent;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+}
+
+/* ========== Footer ========== */
+.site-footer {
+  margin-top: var(--space-xxxl);
+  padding: var(--space-xl) 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  text-align: center;
+  color: var(--text-disabled);
+  font-size: 0.8125rem;
+}
+
+.site-footer a {
+  color: var(--text-secondary);
+}
+
+.site-footer a:hover {
+  color: var(--primary-accent);
+}
+
+.site-footer__links {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-md);
+  flex-wrap: wrap;
+}
+
+/* ========== Feature Grid ========== */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--item-spacing);
+  margin: var(--space-xl) 0;
+}
+
+/* ========== Blinking cursor animation ========== */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+  color: var(--primary);
+}
+
+/* ========== Store badges ========== */
+.store-badges {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  margin-top: var(--space-xl);
+  flex-wrap: wrap;
+}
+
+.store-badges img {
+  height: 44px;
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 480px) {
+  :root {
+    --screen-padding: 16px;
+  }
+  .hero__title {
+    font-size: 1.75rem;
+  }
+  .hero__subtitle {
+    font-size: 1rem;
+  }
+}
+
+/* ========== Glow accent line - top of page ========== */
+.glow-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  opacity: 0.6;
+}
+
+/* ========== Terminal typing effect for hero ========== */
+.terminal-prompt {
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  color: var(--text-disabled);
+  margin-top: var(--space-xl);
+}
+
+.terminal-prompt .prompt-symbol {
+  color: var(--primary);
+}

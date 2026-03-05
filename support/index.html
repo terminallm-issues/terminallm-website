@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support - TerminaLLM</title>
+  <meta name="description" content="Get help with TerminaLLM. Contact support, browse FAQs, and find troubleshooting guides.">
+  <link rel="icon" type="image/png" href="../app_icon.png">
+  <link rel="apple-touch-icon" href="../app_icon.png">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="glow-line"></div>
+
+  <nav class="site-nav">
+    <div class="site-nav__inner">
+      <a href="/" class="site-nav__brand">
+        <span class="site-nav__logo">&gt;_T</span>
+        <span class="site-nav__title">TerminaLLM</span>
+      </a>
+      <ul class="site-nav__links">
+        <li><a href="/support">Support</a></li>
+        <li><a href="/privacy">Privacy</a></li>
+        <li><a href="/terms">Terms</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="site-container">
+
+    <section class="hero" style="padding-bottom: 24px;">
+      <h1 class="hero__title" style="font-size: 2rem;">Support</h1>
+      <p class="hero__subtitle">Need help with TerminaLLM? We're here for you.</p>
+    </section>
+
+    <!-- Contact -->
+    <h2 class="section-header">Contact Us</h2>
+    <div class="feature-grid">
+      <div class="card">
+        <h3 class="card__title">Email Support</h3>
+        <p class="card__text">For general questions, bug reports, or feature requests.</p>
+        <p style="margin-top: 12px;"><a href="mailto:support@terminallm.app" class="btn btn--primary">support@terminallm.app</a></p>
+      </div>
+      <div class="card">
+        <h3 class="card__title">GitHub Issues</h3>
+        <p class="card__text">Report bugs, request features, or browse known issues.</p>
+        <p style="margin-top: 12px;"><a href="https://github.com/terminallm/terminallm/issues" class="btn btn--secondary">Open an Issue</a></p>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <h2 class="section-header">Frequently Asked Questions</h2>
+
+    <div class="card">
+      <h3 class="card__title">What is TerminaLLM?</h3>
+      <p class="card__text">TerminaLLM is a mobile SSH terminal client built specifically for running AI coding assistants like Claude Code, Cursor, and Aider from your phone. It includes features like session persistence, session mirroring, a built-in AI chatbot, and enterprise-grade security.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card__title">How do I connect to my server?</h3>
+      <p class="card__text">Tap the "+" button on the connection screen and enter your server's hostname, port (default 22), and username. You can authenticate with a password, private key, or both. Connection profiles are saved for quick reconnection.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card__title">What AI coding assistants are supported?</h3>
+      <p class="card__text">TerminaLLM works with any CLI-based AI coding tool you can run over SSH, including Claude Code, Cursor (SSH remote), Aider, GitHub Copilot CLI, and others. The terminal is optimized with dedicated modifier keys and smart action detection for these tools.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card__title">How does session persistence work?</h3>
+      <p class="card__text">TerminaLLM uses dtach to keep your terminal session alive on the remote server even when your phone disconnects. When you reconnect, you pick up right where you left off &mdash; your AI assistant keeps running.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card__title">What is session mirroring?</h3>
+      <p class="card__text">Session mirroring lets you share your live terminal session to a laptop browser. Tap the cast icon in the terminal toolbar to generate a sharable link. Requires dtach to be installed on the remote server.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card__title">Is my data secure?</h3>
+      <p class="card__text">Yes. All sensitive data is stored in platform-native encrypted storage (iOS Keychain / Android EncryptedSharedPreferences). SSH connections use standard protocol encryption. The app includes TOTP MFA, biometric lock, host key verification, and audit logging. See our <a href="/privacy">Privacy Policy</a> for details.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card__title">What is BYOK (Bring Your Own Key)?</h3>
+      <p class="card__text">BYOK lets you use your own Anthropic API key for the built-in AI chatbot. Your key is stored locally and sent directly to Anthropic &mdash; it never passes through our servers. This gives you unlimited chatbot usage at your own API cost.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card__title">How do I delete my account or data?</h3>
+      <p class="card__text">TerminaLLM stores all data locally on your device. Uninstalling the app removes all data. You can also clear specific data from the app's settings. See our <a href="/account-deletion">Account Deletion</a> page for detailed instructions.</p>
+    </div>
+
+    <!-- Troubleshooting -->
+    <h2 class="section-header">Troubleshooting</h2>
+
+    <div class="card">
+      <h3 class="card__title">Connection times out</h3>
+      <p class="card__text">Verify your server hostname and port are correct. Ensure your server is reachable from your network (some networks block port 22). Try connecting on a different network (e.g., mobile data vs WiFi). Check that your server's SSH daemon is running.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card__title">Authentication failed</h3>
+      <p class="card__text">Double-check your username and password. If using key-based auth, ensure your public key is in the server's <code>~/.ssh/authorized_keys</code>. If you recently changed your password, clear the saved credential from the Credential Vault.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card__title">Terminal rendering looks wrong</h3>
+      <p class="card__text">Go to Settings &gt; Terminal and try adjusting the font size. Ensure your server's TERM is set to <code>xterm-256color</code>. If specific characters don't render, try a different terminal theme.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card__title">Browser blocking during AI sessions</h3>
+      <p class="card__text">When Claude Code or other AI tools try to open a browser (e.g., for OAuth), it can block terminal input. Use the URL action sheet to "Open in Browser" or copy the URL instead of letting the AI tool open it directly. Ctrl+C may not work in this state.</p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__links">
+      <a href="/support">Support</a>
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Service</a>
+      <a href="/account-deletion">Account Deletion</a>
+    </div>
+    <p>&copy; 2026 TerminaLLM. All rights reserved.</p>
+  </footer>
+</body>
+</html>

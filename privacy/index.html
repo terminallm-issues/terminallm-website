@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - TerminaLLM</title>
+  <meta name="description" content="TerminaLLM privacy policy. Learn how we handle your data with privacy as a core principle.">
+  <link rel="icon" type="image/png" href="../app_icon.png">
+  <link rel="apple-touch-icon" href="../app_icon.png">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="glow-line"></div>
+
+  <nav class="site-nav">
+    <div class="site-nav__inner">
+      <a href="/" class="site-nav__brand">
+        <span class="site-nav__logo">&gt;_T</span>
+        <span class="site-nav__title">TerminaLLM</span>
+      </a>
+      <ul class="site-nav__links">
+        <li><a href="/support">Support</a></li>
+        <li><a href="/privacy">Privacy</a></li>
+        <li><a href="/terms">Terms</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="site-container legal-content">
+
+    <h1>Privacy Policy</h1>
+    <p class="last-updated">Last Updated: February 22, 2026</p>
+
+    <h2>Overview</h2>
+    <p>TerminaLLM ("the App") is a mobile SSH terminal client that enables secure remote command execution. This Privacy Policy describes how we collect, use, and protect your information.</p>
+
+    <h2>Information We Collect</h2>
+
+    <h3>Data Stored Locally on Your Device</h3>
+    <p>The App stores the following information locally on your device using platform-native encrypted storage (iOS Keychain / Android EncryptedSharedPreferences):</p>
+    <ul>
+      <li><strong>SSH Connection Details:</strong> Host address, port number, and username</li>
+      <li><strong>TOTP MFA Secrets:</strong> Encrypted secrets for multi-factor authentication</li>
+      <li><strong>Host Key Fingerprints:</strong> SSH server fingerprints for man-in-the-middle attack prevention</li>
+      <li><strong>Security Audit Logs:</strong> Connection attempts, authentication events, and security-related activities (up to 1,000 most recent events)</li>
+      <li><strong>Session Information:</strong> dtach session identifiers for session persistence</li>
+      <li><strong>App Preferences:</strong> Biometric authentication settings, security profiles, terminal preferences</li>
+      <li><strong>Credential Vault (Opt-in):</strong> If you enable the Credential Vault, SSH passwords, private keys, and passphrases are encrypted and stored locally using HKDF-Expand key derivation with per-credential nonces, XOR stream encryption, and HMAC-SHA256 authentication tags. Vault entries have configurable TTL expiry and are stored exclusively in platform-native encrypted storage</li>
+      <li><strong>Media Drop (Camera/Photo Library):</strong> When you use the Media Drop feature, selected images or files are uploaded directly to your remote server via SFTP. Media files are <strong>not</strong> cached or stored locally by the App</li>
+      <li><strong>Port Forwarding Rules:</strong> Saved port forwarding rules are stored locally per connection profile. No network traffic is intercepted or logged</li>
+      <li><strong>AI Chatbot Usage:</strong> Daily message count for free-tier enforcement is stored locally. The last 50 chatbot messages are persisted in platform-native encrypted storage for conversation continuity</li>
+      <li><strong>AI Chatbot API Key (BYOK):</strong> If you bring your own Anthropic API key, it is stored locally in platform-native encrypted storage. It is never transmitted to TerminaLLM servers</li>
+      <li><strong>Terminal Session Recordings:</strong> If you use the recording feature, terminal sessions are captured in asciicast v2 format and stored locally. Recordings are <strong>not encrypted at rest</strong> and are never automatically uploaded</li>
+      <li><strong>Encrypted Backups:</strong> Backup files are encrypted with AES-256-GCM using a password-derived key (PBKDF2). They are never uploaded to TerminaLLM servers</li>
+      <li><strong>Custom Terminal Themes:</strong> User-created terminal color themes are stored in platform-native encrypted storage</li>
+      <li><strong>Connection History:</strong> Timestamps, durations, and host information for recent connections (up to 10 entries) stored locally</li>
+      <li><strong>Proxy Authentication Token:</strong> A JWT token containing only your device identifier and subscription tier</li>
+      <li><strong>Device Identifier:</strong> A randomly generated identifier (not linked to your hardware or advertising ID)</li>
+      <li><strong>iOS Live Activities:</strong> When an SSH session is active on iOS 16.1+, session metadata is displayed on the Lock Screen and Dynamic Island via iOS Live Activities</li>
+    </ul>
+
+    <h3>Data Transmitted to External Services</h3>
+    <ul>
+      <li><strong>AI Chatbot (Free/Pro tiers):</strong> Messages are sent through the TerminaLLM proxy server (hosted on Fly.io) to the Anthropic API. Messages are not stored on the proxy server. See <a href="https://www.anthropic.com/privacy">Anthropic's Privacy Policy</a></li>
+      <li><strong>AI Chatbot (BYOK mode):</strong> Messages are sent directly from your device to the Anthropic API. No data passes through the TerminaLLM proxy</li>
+    </ul>
+
+    <h3>Data We Do NOT Collect</h3>
+    <ul>
+      <li><strong>Passwords (by default):</strong> SSH passwords are not stored by default</li>
+      <li><strong>Command History:</strong> Commands executed on remote servers are not logged by the App</li>
+      <li><strong>Terminal Output:</strong> Content displayed in the terminal is not stored or transmitted</li>
+      <li><strong>Location Data:</strong> We do not access your location</li>
+      <li><strong>Personal Information:</strong> We do not collect names, emails, or other personal data</li>
+    </ul>
+
+    <h3>Voice Input</h3>
+    <p>The App offers optional speech-to-text input for dictating terminal commands and chatbot messages. Voice recognition is performed entirely on-device using platform-native engines. <strong>No audio data is recorded, stored, or transmitted</strong> by the App.</p>
+
+    <h2>How We Use Information</h2>
+    <p>All data stored by the App is used solely to provide its functionality:</p>
+    <ul>
+      <li><strong>Connection Details:</strong> Enable quick reconnection to previously accessed servers</li>
+      <li><strong>Credential Vault:</strong> Enable seamless reconnection without re-entering credentials (opt-in only)</li>
+      <li><strong>TOTP Secrets:</strong> Verify your identity through multi-factor authentication</li>
+      <li><strong>Host Key Fingerprints:</strong> Protect against man-in-the-middle attacks</li>
+      <li><strong>Audit Logs:</strong> Allow you to review security events on your device</li>
+      <li><strong>Session Information:</strong> Enable resumption of interrupted sessions</li>
+      <li><strong>Device Identifier &amp; Usage Count:</strong> Enforce free-tier daily message limits</li>
+    </ul>
+
+    <h2>Data Security</h2>
+
+    <h3>Encryption at Rest</h3>
+    <ul>
+      <li><strong>iOS:</strong> All sensitive data stored in Apple Keychain with <code>first_unlock_this_device</code> accessibility</li>
+      <li><strong>Android:</strong> EncryptedSharedPreferences with AES-256 encryption</li>
+    </ul>
+
+    <h3>Encryption in Transit</h3>
+    <ul>
+      <li>All SSH communications use industry-standard SSH protocol encryption</li>
+      <li>Host key verification prevents man-in-the-middle attacks</li>
+      <li>AI chatbot communications use HTTPS/TLS</li>
+    </ul>
+
+    <h3>Additional Security Measures</h3>
+    <ul>
+      <li>Multi-factor authentication (TOTP) required for app access</li>
+      <li>Optional biometric authentication (Face ID / Fingerprint)</li>
+      <li>Session timeouts after inactivity</li>
+      <li>Rate limiting on authentication attempts</li>
+      <li>Screen capture prevention (Android)</li>
+      <li>Clipboard auto-clear after paste operations</li>
+    </ul>
+
+    <h2>Data Retention</h2>
+    <ul>
+      <li><strong>Connection Details:</strong> Retained until you uninstall the App or clear app data</li>
+      <li><strong>Audit Logs:</strong> Last 1,000 events retained, older events automatically deleted</li>
+      <li><strong>Session Data:</strong> Retained until you clear session or uninstall the App</li>
+      <li><strong>Chatbot Messages:</strong> Last 50 messages persisted for conversation continuity</li>
+      <li><strong>Terminal Recordings:</strong> Retained until you manually delete them or uninstall</li>
+      <li><strong>Custom Themes:</strong> Retained until you delete the theme or uninstall</li>
+      <li><strong>Connection History:</strong> Up to 10 recent entries; older entries automatically removed</li>
+      <li><strong>Device Identifier:</strong> Retained until you uninstall the App</li>
+    </ul>
+
+    <h2>Your Data Rights</h2>
+
+    <h3>Access Your Data</h3>
+    <p>You can view your stored audit logs within the App's settings.</p>
+
+    <h3>Export Your Data</h3>
+    <p>Audit logs can be exported as JSON format from the App settings.</p>
+
+    <h3>Delete Your Data</h3>
+    <ul>
+      <li>Uninstalling the App removes all locally stored data</li>
+      <li>You can clear specific data (saved connections, audit logs) from App settings</li>
+    </ul>
+
+    <h3>For EU Residents (GDPR)</h3>
+    <p>You have the right to access, rectify, erase, restrict processing, data portability, and object to processing of your personal data. To exercise these rights, use the in-app data management features or contact us.</p>
+
+    <h3>For California Residents (CCPA/CPRA)</h3>
+    <p>You have the right to know what personal information is collected, delete your personal information, opt-out of the "sale" of personal information (we do not sell data), and non-discrimination for exercising your rights.</p>
+
+    <h2>Third-Party Services</h2>
+    <ul>
+      <li><strong>Anthropic, PBC</strong> &mdash; AI chatbot responses powered by Anthropic's Claude API. See <a href="https://www.anthropic.com/privacy">Anthropic's Privacy Policy</a></li>
+      <li><strong>Fly.io</strong> &mdash; Proxy server infrastructure. The proxy does not store message content</li>
+    </ul>
+
+    <h2>Children's Privacy</h2>
+    <p>The App is not intended for children under 13 years of age. We do not knowingly collect personal information from children.</p>
+
+    <h2>Changes to This Policy</h2>
+    <p>We may update this Privacy Policy periodically. Changes will be noted by updating the "Last Updated" date. Continued use of the App after changes constitutes acceptance of the updated policy.</p>
+
+    <h2>Contact Information</h2>
+    <p>For privacy-related questions or concerns:</p>
+    <p><strong>Email:</strong> <a href="mailto:privacy@terminallm.app">privacy@terminallm.app</a></p>
+    <p><strong>GitHub Issues:</strong> <a href="https://github.com/terminallm/terminallm/issues">github.com/terminallm/terminallm/issues</a></p>
+
+    <h2>Data Processing Location</h2>
+    <p>Most data processing occurs locally on your device. When using the AI chatbot in free/pro mode, message data is processed through our proxy server (Fly.io, US-East region) and Anthropic's API servers. In BYOK mode, message data is sent directly to Anthropic's servers.</p>
+
+    <div class="callout callout--info" style="margin-top: 32px;">
+      <p>TerminaLLM is designed with privacy as a core principle &mdash; we collect minimal data, store credentials locally, and only transmit data to external services when required for specific features.</p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__links">
+      <a href="/support">Support</a>
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Service</a>
+      <a href="/account-deletion">Account Deletion</a>
+    </div>
+    <p>&copy; 2026 TerminaLLM. All rights reserved.</p>
+  </footer>
+</body>
+</html>

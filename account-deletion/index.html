@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account &amp; Data Deletion - TerminaLLM</title>
+  <meta name="description" content="How to delete your TerminaLLM account and data.">
+  <link rel="icon" type="image/png" href="../app_icon.png">
+  <link rel="apple-touch-icon" href="../app_icon.png">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="glow-line"></div>
+
+  <nav class="site-nav">
+    <div class="site-nav__inner">
+      <a href="/" class="site-nav__brand">
+        <span class="site-nav__logo">&gt;_T</span>
+        <span class="site-nav__title">TerminaLLM</span>
+      </a>
+      <ul class="site-nav__links">
+        <li><a href="/support">Support</a></li>
+        <li><a href="/privacy">Privacy</a></li>
+        <li><a href="/terms">Terms</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="site-container">
+
+    <section class="hero" style="padding-bottom: 24px;">
+      <h1 class="hero__title" style="font-size: 2rem;">Account &amp; Data Deletion</h1>
+      <p class="hero__subtitle">How to delete your data from TerminaLLM.</p>
+    </section>
+
+    <div class="callout callout--info">
+      <p><strong>TerminaLLM does not require an account.</strong> All data is stored locally on your device. There is no server-side account to delete.</p>
+    </div>
+
+    <h2 class="section-header">Delete All Data</h2>
+    <div class="card">
+      <h3 class="card__title">Uninstall the App</h3>
+      <p class="card__text">Uninstalling TerminaLLM from your device permanently deletes all locally stored data, including:</p>
+      <ul style="margin-top: 12px; padding-left: 24px; color: var(--text-secondary);">
+        <li>SSH connection profiles</li>
+        <li>Credential Vault entries (passwords, private keys)</li>
+        <li>TOTP MFA secrets</li>
+        <li>Host key fingerprints</li>
+        <li>Security audit logs</li>
+        <li>AI chatbot conversation history</li>
+        <li>Terminal session recordings</li>
+        <li>Custom terminal themes</li>
+        <li>All app preferences and settings</li>
+      </ul>
+      <p class="card__text" style="margin-top: 12px;"><strong>This action is irreversible.</strong> We recommend creating an encrypted backup before uninstalling if you want to preserve your settings.</p>
+    </div>
+
+    <h2 class="section-header">Delete Specific Data</h2>
+    <p style="color: var(--text-secondary); margin-bottom: 16px;">You can selectively delete data without uninstalling:</p>
+
+    <div class="card">
+      <h3 class="card__title">Connection Profiles</h3>
+      <p class="card__text">Open the app &rarr; Connection screen &rarr; Swipe left on a profile &rarr; Delete. This removes the saved host, port, username, and any associated Credential Vault entry.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card__title">Credential Vault</h3>
+      <p class="card__text">Open the app &rarr; Settings &rarr; Security &rarr; Credential Vault &rarr; Delete individual entries or clear the entire vault.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card__title">Audit Logs</h3>
+      <p class="card__text">Open the app &rarr; Settings &rarr; Security &rarr; Audit Log &rarr; Clear All. You can also export logs as JSON before clearing.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card__title">AI Chatbot History</h3>
+      <p class="card__text">Open the app &rarr; Chatbot &rarr; Clear Conversation. This removes all stored messages from encrypted storage.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card__title">Terminal Recordings</h3>
+      <p class="card__text">Open the app &rarr; Settings &rarr; Recordings &rarr; Delete individual recordings or all recordings.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card__title">Custom Themes</h3>
+      <p class="card__text">Open the app &rarr; Settings &rarr; Terminal &rarr; Themes &rarr; Delete individual custom themes.</p>
+    </div>
+
+    <h2 class="section-header">Server-Side Data</h2>
+    <div class="callout callout--caution">
+      <p><strong>Proxy server data:</strong> If you used the built-in AI chatbot in free or pro mode, your device identifier and daily message count were sent to our proxy server for rate limiting. This data is ephemeral and not permanently stored. To request deletion of any residual proxy data, email <a href="mailto:privacy@terminallm.app">privacy@terminallm.app</a>.</p>
+    </div>
+
+    <h2 class="section-header">Need Help?</h2>
+    <div class="card">
+      <p class="card__text">If you need assistance deleting your data or have questions about data handling:</p>
+      <p style="margin-top: 12px;">
+        <a href="mailto:privacy@terminallm.app" class="btn btn--primary">Email privacy@terminallm.app</a>
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__links">
+      <a href="/support">Support</a>
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Service</a>
+      <a href="/account-deletion">Account Deletion</a>
+    </div>
+    <p>&copy; 2026 TerminaLLM. All rights reserved.</p>
+  </footer>
+</body>
+</html>

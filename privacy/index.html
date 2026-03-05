@@ -28,7 +28,7 @@
 
   <main class="site-container legal-content">
 
-    <h1>Privacy Policy</h1>
+    <h1>Privacy Policy - TerminaLLM</h1>
     <p class="last-updated">Last Updated: February 22, 2026</p>
 
     <h2>Overview</h2>
@@ -46,28 +46,29 @@
       <li><strong>Session Information:</strong> dtach session identifiers for session persistence</li>
       <li><strong>App Preferences:</strong> Biometric authentication settings, security profiles, terminal preferences</li>
       <li><strong>Credential Vault (Opt-in):</strong> If you enable the Credential Vault, SSH passwords, private keys, and passphrases are encrypted and stored locally using HKDF-Expand key derivation with per-credential nonces, XOR stream encryption, and HMAC-SHA256 authentication tags. Vault entries have configurable TTL expiry and are stored exclusively in platform-native encrypted storage</li>
-      <li><strong>Media Drop (Camera/Photo Library):</strong> When you use the Media Drop feature, selected images or files are uploaded directly to your remote server via SFTP. Media files are <strong>not</strong> cached or stored locally by the App</li>
-      <li><strong>Port Forwarding Rules:</strong> Saved port forwarding rules are stored locally per connection profile. No network traffic is intercepted or logged</li>
-      <li><strong>AI Chatbot Usage:</strong> Daily message count for free-tier enforcement is stored locally. The last 50 chatbot messages are persisted in platform-native encrypted storage for conversation continuity</li>
-      <li><strong>AI Chatbot API Key (BYOK):</strong> If you bring your own Anthropic API key, it is stored locally in platform-native encrypted storage. It is never transmitted to TerminaLLM servers</li>
-      <li><strong>Terminal Session Recordings:</strong> If you use the recording feature, terminal sessions are captured in asciicast v2 format and stored locally. Recordings are <strong>not encrypted at rest</strong> and are never automatically uploaded</li>
-      <li><strong>Encrypted Backups:</strong> Backup files are encrypted with AES-256-GCM using a password-derived key (PBKDF2). They are never uploaded to TerminaLLM servers</li>
-      <li><strong>Custom Terminal Themes:</strong> User-created terminal color themes are stored in platform-native encrypted storage</li>
-      <li><strong>Connection History:</strong> Timestamps, durations, and host information for recent connections (up to 10 entries) stored locally</li>
-      <li><strong>Proxy Authentication Token:</strong> A JWT token containing only your device identifier and subscription tier</li>
-      <li><strong>Device Identifier:</strong> A randomly generated identifier (not linked to your hardware or advertising ID)</li>
-      <li><strong>iOS Live Activities:</strong> When an SSH session is active on iOS 16.1+, session metadata is displayed on the Lock Screen and Dynamic Island via iOS Live Activities</li>
+      <li><strong>Media Drop (Camera/Photo Library):</strong> When you use the Media Drop feature, the App requests access to your device camera or photo library on demand via standard iOS/Android permission prompts. Selected images or files are uploaded directly to your remote server at <code>/tmp/terminallm-uploads/</code> via SFTP with <code>chmod 600</code> (owner-read/write only) permissions. Media files are <strong>not</strong> cached or stored locally by the App &mdash; they are streamed from the system picker to the remote server. Camera and photo library access can be revoked at any time in your device settings</li>
+      <li><strong>Port Forwarding Rules:</strong> Saved port forwarding rules (local port, remote host, remote port, rule name) are stored locally per connection profile. No network traffic is intercepted or logged &mdash; tunnels bind exclusively to <code>localhost</code> (127.0.0.1) on your device</li>
+      <li><strong>AI Chatbot Usage:</strong> Daily message count for free-tier enforcement is stored locally. Your chatbot subscription tier (free/pro/BYOK) is stored locally. The last 50 chatbot messages are persisted in platform-native encrypted storage for conversation continuity across app sessions</li>
+      <li><strong>AI Chatbot API Key (BYOK):</strong> If you bring your own Anthropic API key, it is stored locally in platform-native encrypted storage. It is never transmitted to TerminaLLM servers &mdash; only sent directly to Anthropic's API</li>
+      <li><strong>Terminal Session Recordings:</strong> If you use the recording feature, terminal sessions are captured in asciicast v2 format (.cast files) and stored locally in the app's documents directory. Recordings contain all terminal output and input events with timestamps. Recordings are <strong>not encrypted at rest</strong> and are never automatically uploaded or shared</li>
+      <li><strong>Encrypted Backups:</strong> If you create a backup, an encrypted .tlmbackup file is generated containing your selected data categories (profiles, snippets, settings, and optionally vault credentials). Backups are encrypted with AES-256-GCM using a password-derived key (PBKDF2). Backup files are stored locally or shared via the system share sheet &mdash; they are never uploaded to TerminaLLM servers</li>
+      <li><strong>Custom Terminal Themes:</strong> User-created terminal color themes (23 color values per theme) are stored in platform-native encrypted storage</li>
+      <li><strong>Connection History:</strong> Timestamps, durations, and host information for recent connections (up to 10 entries) are stored locally in encrypted storage for the session resume feature</li>
+      <li><strong>Connection Health Check:</strong> TCP port reachability results for saved profiles are cached in memory with a 60-second TTL. Health check results are never persisted to disk or transmitted</li>
+      <li><strong>Proxy Authentication Token:</strong> A JWT token for proxy authentication is stored locally in encrypted storage. It contains only your device identifier and subscription tier &mdash; no personal information</li>
+      <li><strong>Device Identifier:</strong> A randomly generated device identifier (not linked to your hardware or advertising ID) is created and stored locally for proxy authentication purposes</li>
+      <li><strong>iOS Live Activities:</strong> When an SSH session is active on iOS 16.1+, session metadata (server name, connected AI tool, AI state, and file change counts) is written to an App Group shared container (NSUserDefaults) and displayed on the Lock Screen and Dynamic Island via iOS Live Activities. This data is visible without unlocking your device. Live Activities are automatically ended when you disconnect or the session is idle for 8 hours (iOS system limit)</li>
     </ul>
 
     <h3>Data Transmitted to External Services</h3>
     <ul>
-      <li><strong>AI Chatbot (Free/Pro tiers):</strong> Messages are sent through the TerminaLLM proxy server (hosted on Fly.io) to the Anthropic API. Messages are not stored on the proxy server. See <a href="https://www.anthropic.com/privacy">Anthropic's Privacy Policy</a></li>
-      <li><strong>AI Chatbot (BYOK mode):</strong> Messages are sent directly from your device to the Anthropic API. No data passes through the TerminaLLM proxy</li>
+      <li><strong>AI Chatbot (Free/Pro tiers):</strong> When using the built-in AI chatbot in free or pro mode, your messages are sent through the TerminaLLM proxy server (hosted on Fly.io) to the Anthropic API. The proxy server receives your device identifier and daily message count for free-tier rate limiting. Messages are not stored on the proxy server &mdash; they are streamed through to Anthropic and discarded. See <a href="https://www.anthropic.com/privacy">Anthropic's Privacy Policy</a> for how Anthropic handles API data</li>
+      <li><strong>AI Chatbot (BYOK mode):</strong> When using your own Anthropic API key (Bring Your Own Key), messages are sent directly from your device to the Anthropic API. No data passes through the TerminaLLM proxy</li>
     </ul>
 
     <h3>Data We Do NOT Collect</h3>
     <ul>
-      <li><strong>Passwords (by default):</strong> SSH passwords are not stored by default</li>
+      <li><strong>Passwords (by default):</strong> SSH passwords are not stored by default &mdash; you enter them at connection time and they are cleared from memory after use. If you opt in to the Credential Vault, credentials are encrypted and stored locally with configurable TTL expiry (see "Credential Vault" above)</li>
       <li><strong>Command History:</strong> Commands executed on remote servers are not logged by the App</li>
       <li><strong>Terminal Output:</strong> Content displayed in the terminal is not stored or transmitted</li>
       <li><strong>Location Data:</strong> We do not access your location</li>
@@ -75,18 +76,21 @@
     </ul>
 
     <h3>Voice Input</h3>
-    <p>The App offers optional speech-to-text input for dictating terminal commands and chatbot messages. Voice recognition is performed entirely on-device using platform-native engines. <strong>No audio data is recorded, stored, or transmitted</strong> by the App.</p>
+    <p>The App offers optional speech-to-text input for dictating terminal commands and chatbot messages. Voice recognition is performed entirely on-device using platform-native engines (iOS Speech framework, Android SpeechRecognizer). <strong>No audio data is recorded, stored, or transmitted</strong> by the App. Voice input can be used without an internet connection on supported devices.</p>
 
     <h2>How We Use Information</h2>
     <p>All data stored by the App is used solely to provide its functionality:</p>
     <ul>
       <li><strong>Connection Details:</strong> Enable quick reconnection to previously accessed servers</li>
-      <li><strong>Credential Vault:</strong> Enable seamless reconnection without re-entering credentials (opt-in only)</li>
+      <li><strong>Credential Vault:</strong> Enable seamless reconnection without re-entering credentials (opt-in only, encrypted locally, auto-expires per TTL)</li>
       <li><strong>TOTP Secrets:</strong> Verify your identity through multi-factor authentication</li>
       <li><strong>Host Key Fingerprints:</strong> Protect against man-in-the-middle attacks</li>
       <li><strong>Audit Logs:</strong> Allow you to review security events on your device</li>
-      <li><strong>Session Information:</strong> Enable resumption of interrupted sessions</li>
-      <li><strong>Device Identifier &amp; Usage Count:</strong> Enforce free-tier daily message limits</li>
+      <li><strong>Session Information:</strong> Enable resumption of interrupted AI coding sessions</li>
+      <li><strong>Media Drop:</strong> Upload photos, screenshots, and files to your remote server for use in AI coding sessions</li>
+      <li><strong>Port Forwarding Rules:</strong> Quickly re-establish SSH tunnels for accessing remote development servers</li>
+      <li><strong>Device Identifier &amp; Usage Count:</strong> Enforce free-tier daily message limits via the proxy server</li>
+      <li><strong>AI Chatbot:</strong> Provide AI-powered assistance for terminal and coding questions</li>
     </ul>
 
     <h2>Data Security</h2>
@@ -119,11 +123,13 @@
       <li><strong>Connection Details:</strong> Retained until you uninstall the App or clear app data</li>
       <li><strong>Audit Logs:</strong> Last 1,000 events retained, older events automatically deleted</li>
       <li><strong>Session Data:</strong> Retained until you clear session or uninstall the App</li>
-      <li><strong>Chatbot Messages:</strong> Last 50 messages persisted for conversation continuity</li>
-      <li><strong>Terminal Recordings:</strong> Retained until you manually delete them or uninstall</li>
-      <li><strong>Custom Themes:</strong> Retained until you delete the theme or uninstall</li>
-      <li><strong>Connection History:</strong> Up to 10 recent entries; older entries automatically removed</li>
-      <li><strong>Device Identifier:</strong> Retained until you uninstall the App</li>
+      <li><strong>Chatbot Messages:</strong> Last 50 messages persisted in platform-native encrypted storage for conversation continuity. System messages (welcome prompts) are not persisted. Clearing conversation removes all stored messages</li>
+      <li><strong>Terminal Recordings:</strong> Retained until you manually delete them or uninstall the App</li>
+      <li><strong>Encrypted Backups:</strong> Backup files exist wherever you saved or shared them; the App does not manage backup file lifecycle after export</li>
+      <li><strong>Custom Themes:</strong> Retained until you delete the theme or uninstall the App</li>
+      <li><strong>Connection History:</strong> Up to 10 recent entries retained; older entries automatically removed</li>
+      <li><strong>Health Check Cache:</strong> In-memory only, cleared when the App is closed (60-second TTL)</li>
+      <li><strong>Device Identifier:</strong> Retained until you uninstall the App or clear app data</li>
     </ul>
 
     <h2>Your Data Rights</h2>
@@ -141,16 +147,36 @@
     </ul>
 
     <h3>For EU Residents (GDPR)</h3>
-    <p>You have the right to access, rectify, erase, restrict processing, data portability, and object to processing of your personal data. To exercise these rights, use the in-app data management features or contact us.</p>
+    <p>You have the right to:</p>
+    <ul>
+      <li>Access your personal data</li>
+      <li>Rectify inaccurate data</li>
+      <li>Erase your data ("right to be forgotten")</li>
+      <li>Restrict processing</li>
+      <li>Data portability</li>
+      <li>Object to processing</li>
+    </ul>
+    <p>To exercise these rights, use the in-app data management features or contact us at the address below.</p>
 
     <h3>For California Residents (CCPA/CPRA)</h3>
-    <p>You have the right to know what personal information is collected, delete your personal information, opt-out of the "sale" of personal information (we do not sell data), and non-discrimination for exercising your rights.</p>
+    <p>You have the right to:</p>
+    <ul>
+      <li>Know what personal information is collected</li>
+      <li>Delete your personal information</li>
+      <li>Opt-out of the "sale" of personal information (we do not sell data)</li>
+      <li>Non-discrimination for exercising your rights</li>
+    </ul>
 
     <h2>Third-Party Services</h2>
+    <p>The App integrates with the following third-party services:</p>
     <ul>
-      <li><strong>Anthropic, PBC</strong> &mdash; AI chatbot responses powered by Anthropic's Claude API. See <a href="https://www.anthropic.com/privacy">Anthropic's Privacy Policy</a></li>
-      <li><strong>Fly.io</strong> &mdash; Proxy server infrastructure. The proxy does not store message content</li>
+      <li><strong>Anthropic, PBC</strong> &mdash; AI chatbot responses are powered by Anthropic's Claude API. In free/pro mode, requests pass through our proxy; in BYOK mode, requests go directly to Anthropic. See <a href="https://www.anthropic.com/privacy">Anthropic's Privacy Policy</a></li>
+      <li><strong>Fly.io</strong> &mdash; Our proxy server infrastructure is hosted on Fly.io. The proxy does not store message content</li>
+      <li><strong>GitHub</strong> (Developer feature only) &mdash; When developer mode is enabled, the App checks GitHub for release updates using your provided PAT</li>
     </ul>
+
+    <h3>Open Source Libraries</h3>
+    <p>The App uses open-source libraries for SSH connectivity and terminal rendering. These libraries do not collect or transmit user data.</p>
 
     <h2>Children's Privacy</h2>
     <p>The App is not intended for children under 13 years of age. We do not knowingly collect personal information from children.</p>
@@ -160,14 +186,18 @@
 
     <h2>Contact Information</h2>
     <p>For privacy-related questions or concerns:</p>
-    <p><strong>Email:</strong> <a href="mailto:privacy@terminallm.app">privacy@terminallm.app</a></p>
-    <p><strong>GitHub Issues:</strong> <a href="https://github.com/terminallm/terminallm/issues">github.com/terminallm/terminallm/issues</a></p>
+    <div class="contact-block">
+      <strong>Email:</strong>
+      <span class="contact-email">privacy@terminallm.app</span>
+      <a href="mailto:privacy@terminallm.app" class="btn btn--tertiary">Send Email</a>
+    </div>
+    <p style="margin-top: 16px;"><strong>GitHub Issues:</strong> <a href="https://github.com/terminallm-issues/.github/issues">github.com/terminallm-issues/.github/issues</a></p>
 
     <h2>Data Processing Location</h2>
     <p>Most data processing occurs locally on your device. When using the AI chatbot in free/pro mode, message data is processed through our proxy server (Fly.io, US-East region) and Anthropic's API servers. In BYOK mode, message data is sent directly to Anthropic's servers.</p>
 
     <div class="callout callout--info" style="margin-top: 32px;">
-      <p>TerminaLLM is designed with privacy as a core principle &mdash; we collect minimal data, store credentials locally, and only transmit data to external services when required for specific features.</p>
+      <p><em>This privacy policy is provided for informational purposes. TerminaLLM is designed with privacy as a core principle &mdash; we collect minimal data, store credentials locally, and only transmit data to external services when required for specific features (AI chatbot).</em></p>
     </div>
 
   </main>
@@ -178,6 +208,7 @@
       <a href="/privacy">Privacy Policy</a>
       <a href="/terms">Terms of Service</a>
       <a href="/account-deletion">Account Deletion</a>
+      <a href="https://github.com/terminallm-issues/.github/issues">GitHub</a>
     </div>
     <p>&copy; 2026 TerminaLLM. All rights reserved.</p>
   </footer>

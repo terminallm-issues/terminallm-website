@@ -489,6 +489,52 @@ code {
   height: 44px;
 }
 
+/* ========== Copyable email / contact block ========== */
+.contact-block {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin-top: var(--space-md);
+}
+
+.contact-email {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: var(--code-bg);
+  border-radius: var(--radius-lg);
+  padding: var(--space-sm) var(--space-lg);
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  color: var(--primary);
+  user-select: all;
+  -webkit-user-select: all;
+  cursor: text;
+}
+
+.contact-email__copy {
+  background: var(--button-bg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.contact-email__copy:hover {
+  background: var(--button-bg-active);
+  color: var(--text-primary);
+}
+
+.contact-email__copy:active {
+  background: var(--primary);
+  color: #fff;
+}
+
 /* ========== Responsive ========== */
 @media (max-width: 480px) {
   :root {

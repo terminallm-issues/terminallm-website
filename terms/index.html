@@ -28,7 +28,7 @@
 
   <main class="site-container legal-content">
 
-    <h1>Terms of Service</h1>
+    <h1>Terms of Service - TerminaLLM</h1>
     <p class="last-updated">Last Updated: February 22, 2026</p>
 
     <h2>1. Acceptance of Terms</h2>
@@ -58,7 +58,12 @@
     </ul>
 
     <h3>3.3 System Administrator Compliance</h3>
-    <p>If accessing systems managed by others, you must comply with the system administrator's acceptable use policies, obtain proper authorization before access, and follow organizational security procedures.</p>
+    <p>If accessing systems managed by others, you must:</p>
+    <ul>
+      <li>Comply with the system administrator's acceptable use policies</li>
+      <li>Obtain proper authorization before access</li>
+      <li>Follow organizational security procedures</li>
+    </ul>
 
     <h2>4. Prohibited Uses</h2>
     <p>You may NOT use the App to:</p>
@@ -75,76 +80,232 @@
     <h2>5. Security Features Disclaimer</h2>
 
     <h3>5.1 Authentication</h3>
-    <p>The App provides multi-factor authentication (MFA) and optional biometric authentication. These features enhance security but do not guarantee absolute protection.</p>
+    <p>The App provides multi-factor authentication (MFA) and optional biometric authentication. These features enhance security but do not guarantee absolute protection. You are responsible for:</p>
+    <ul>
+      <li>Keeping your TOTP secret secure</li>
+      <li>Not sharing your biometric data</li>
+      <li>Reporting security concerns promptly</li>
+    </ul>
 
     <h3>5.2 Host Key Verification</h3>
-    <p>The App verifies SSH host keys to help prevent man-in-the-middle attacks. However, you are responsible for verifying fingerprints match expected values. Accepting a changed host key is at your own risk.</p>
+    <p>The App verifies SSH host keys to help prevent man-in-the-middle attacks. However:</p>
+    <ul>
+      <li>You are responsible for verifying fingerprints match expected values</li>
+      <li>Accepting a changed host key is at your own risk</li>
+      <li>The App cannot guarantee the identity of remote servers</li>
+    </ul>
 
     <h3>5.3 Credential Vault</h3>
-    <p>The optional Credential Vault encrypts and stores SSH credentials locally. The developers are NOT liable for credential data loss, corruption, or compromise resulting from device theft, jailbreak/root, malware, OS vulnerabilities, or hardware failure.</p>
+    <p>The App offers an optional Credential Vault that encrypts and stores SSH credentials locally on your device. By enabling this feature, you acknowledge that:</p>
+    <ul>
+      <li>Credentials are stored using HKDF-Expand key derivation with per-credential nonces, XOR stream encryption, and HMAC-SHA256 authentication</li>
+      <li>Credential security depends on the integrity of your device and its platform-native encrypted storage (iOS Keychain / Android EncryptedSharedPreferences)</li>
+      <li>The developers are NOT liable for credential data loss, corruption, or compromise resulting from device theft, jailbreak/root, malware, OS vulnerabilities, or hardware failure</li>
+      <li>Vault entries have configurable TTL expiry; expired credentials are permanently deleted</li>
+      <li>Uninstalling the App permanently deletes all vault data with no recovery option</li>
+      <li>The Credential Vault is provided "as is" with no guarantee of availability or data integrity</li>
+    </ul>
 
     <h3>5.4 AI-Generated Content</h3>
-    <div class="callout callout--caution">
-      <p>Chatbot responses are <strong>AI-generated</strong> and may contain inaccuracies, outdated information, or errors. You are solely responsible for verifying any information, code, or commands provided by the chatbot before use. The developers are NOT liable for any consequences resulting from following AI-generated suggestions.</p>
-    </div>
+    <p>The App includes a built-in AI chatbot powered by Anthropic's Claude API. You acknowledge that:</p>
+    <ul>
+      <li>Chatbot responses are <strong>AI-generated</strong> and may contain inaccuracies, outdated information, or errors</li>
+      <li>AI responses do not constitute professional advice (legal, financial, medical, security, or otherwise)</li>
+      <li>You are solely responsible for verifying and validating any information, code, or commands provided by the chatbot before use</li>
+      <li>The developers are NOT liable for any consequences resulting from following AI-generated suggestions, including but not limited to data loss, system damage, security vulnerabilities, or financial loss</li>
+      <li>Chatbot availability depends on network connectivity and third-party API availability</li>
+    </ul>
 
     <h3>5.5 Bring Your Own Key (BYOK)</h3>
-    <p>If you use your own Anthropic API key, you are subject to <a href="https://www.anthropic.com/terms">Anthropic's Terms of Service</a>. API usage charges are billed directly to your Anthropic account. The developers are NOT responsible for any charges incurred.</p>
+    <p>If you use your own Anthropic API key:</p>
+    <ul>
+      <li>You are subject to <a href="https://www.anthropic.com/terms">Anthropic's Terms of Service</a> and <a href="https://www.anthropic.com/policies">API Usage Policy</a></li>
+      <li>API usage charges are billed directly to your Anthropic account</li>
+      <li>The developers are NOT responsible for any charges incurred through your API key</li>
+      <li>You are responsible for keeping your API key secure and revoking it if compromised</li>
+    </ul>
 
     <h3>5.6 Voice Input (Speech-to-Text)</h3>
-    <p>Speech recognition is performed on-device by the operating system. TerminaLLM does not record, store, or transmit audio data. Accuracy varies by device, language, and ambient noise conditions.</p>
+    <p>The App offers optional speech-to-text input using platform-native speech recognition engines (iOS Speech framework, Android SpeechRecognizer). You acknowledge that:</p>
+    <ul>
+      <li>Speech recognition is performed on-device by the operating system, not by TerminaLLM</li>
+      <li>The iOS Speech framework and Android SpeechRecognizer may have their own data handling and privacy policies as determined by Apple and Google respectively</li>
+      <li>TerminaLLM does not record, store, or transmit audio data</li>
+      <li>Recognized text is sent to the terminal or chatbot input as plain text</li>
+      <li>Accuracy varies by device, language, and ambient noise conditions</li>
+    </ul>
 
     <h3>5.7 iOS Live Activities</h3>
-    <p>Session metadata is visible on the Lock Screen <strong>without unlocking your device</strong>. You can disable Live Activities in iOS Settings.</p>
+    <p>On iOS 16.1+, the App displays SSH session status on the Lock Screen and Dynamic Island via iOS Live Activities. You acknowledge that:</p>
+    <ul>
+      <li>Session metadata (server name, AI tool name, AI state, file change counts) is visible on the Lock Screen <strong>without unlocking your device</strong></li>
+      <li>This data is written to an iOS App Group shared container accessible by the Live Activity widget extension</li>
+      <li>Live Activities are subject to iOS system limits (maximum 8-hour duration, system may end activities to conserve resources)</li>
+      <li>You can disable Live Activities in iOS Settings &rarr; TerminaLLM &rarr; Live Activities</li>
+    </ul>
 
     <h3>5.8 Free Tier Limits</h3>
-    <p>We reserve the right to adjust free tier limits, quotas, and availability without prior notice.</p>
+    <p>The built-in AI chatbot free tier has a daily message limit that may change at our discretion. We reserve the right to adjust free tier limits, quotas, and availability without prior notice. Users who require guaranteed access should use BYOK mode with their own Anthropic API key.</p>
 
     <h3>5.9 Terminal Session Recording</h3>
-    <p>Recordings are stored locally and are <strong>not encrypted at rest</strong>. You are solely responsible for the content of your recordings.</p>
+    <p>The App offers optional terminal session recording in asciicast v2 format (.cast files). You acknowledge that:</p>
+    <ul>
+      <li>Recordings capture all terminal output and input events with timestamps</li>
+      <li>Recordings are stored locally on your device in the app's documents directory and are <strong>not encrypted at rest</strong></li>
+      <li>You are solely responsible for the content of your recordings, including any sensitive data (credentials, API keys, personal information) that may appear in terminal output</li>
+      <li>Recordings are never automatically uploaded or shared &mdash; export and sharing are manual actions initiated by you</li>
+      <li>Deleting a recording permanently removes it from your device</li>
+      <li>Uninstalling the App permanently deletes all recordings with no recovery option</li>
+    </ul>
 
     <h3>5.10 AI Coding Assistant Commands</h3>
     <div class="callout callout--danger">
-      <p><strong>Commands executed by AI coding assistants through this App are YOUR sole responsibility.</strong> AI tools may suggest or execute destructive commands including file deletion, system configuration changes, and code modifications. The developers are NOT liable for any actions taken by AI tools running in your terminal session.</p>
+      <p>This App is designed and marketed for use with AI coding assistants (Claude Code, Cursor, Aider, Copilot CLI, and similar tools). <strong>Commands executed by AI coding assistants through this App are YOUR sole responsibility.</strong> AI tools may suggest or execute destructive commands including but not limited to file deletion, system configuration changes, package installation, and code modifications. The developers are NOT liable for any actions taken by AI tools running in your terminal session, including data loss, system damage, security vulnerabilities, or unintended changes to your codebase.</p>
     </div>
 
     <h2>6. Limitation of Liability</h2>
 
     <h3>6.1 Disclaimer of Warranties</h3>
-    <p>THE APP IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, SECURITY, AND ACCURACY.</p>
+    <p>THE APP IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO:</p>
+    <ul>
+      <li>MERCHANTABILITY</li>
+      <li>FITNESS FOR A PARTICULAR PURPOSE</li>
+      <li>NON-INFRINGEMENT</li>
+      <li>SECURITY</li>
+      <li>ACCURACY</li>
+    </ul>
 
     <h3>6.2 Limitation of Damages</h3>
-    <p>You assume ALL risk and responsibility for commands executed, remote system security, credential compromise, device security, and AI-generated content. IN NO EVENT SHALL THE DEVELOPERS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES.</p>
+    <p><strong>CRITICAL DISCLAIMER:</strong></p>
+    <p>You assume ALL risk and responsibility for:</p>
+    <ol>
+      <li><strong>Commands Executed:</strong> Any command executed on remote systems through the App, including commands resulting in:
+        <ul>
+          <li>Data loss or corruption</li>
+          <li>System damage or downtime</li>
+          <li>Security breaches</li>
+          <li>Financial loss</li>
+        </ul>
+      </li>
+      <li><strong>Remote System Security:</strong> The security of systems you access, including:
+        <ul>
+          <li>Server configuration</li>
+          <li>Network security</li>
+          <li>Access controls</li>
+          <li>Data protection</li>
+        </ul>
+      </li>
+      <li><strong>Credential Compromise:</strong> Any unauthorized access resulting from:
+        <ul>
+          <li>Compromised SSH credentials</li>
+          <li>Lost or stolen devices</li>
+          <li>Malware on your device</li>
+          <li>Social engineering attacks</li>
+        </ul>
+      </li>
+      <li><strong>Device Security:</strong> The security status of your device, including:
+        <ul>
+          <li>Jailbroken/rooted devices (we warn but cannot prevent use)</li>
+          <li>Malware or spyware</li>
+          <li>Compromised operating system</li>
+        </ul>
+      </li>
+      <li><strong>AI-Generated Content:</strong> Any consequences of acting on chatbot suggestions, including incorrect code, commands, or advice</li>
+    </ol>
+    <p>IN NO EVENT SHALL THE DEVELOPERS BE LIABLE FOR ANY:</p>
+    <ul>
+      <li>Direct, indirect, incidental, special, consequential, or punitive damages</li>
+      <li>Loss of profits, data, use, goodwill, or other intangible losses</li>
+      <li>Damages exceeding the amount you paid for the App (which is zero for free versions)</li>
+    </ul>
 
     <h2>7. Indemnification</h2>
-    <p>You agree to indemnify, defend, and hold harmless the developers from any claims, damages, losses, liabilities, costs, and expenses arising from your use of the App, violation of these Terms, or commands executed on remote systems.</p>
+    <p>You agree to indemnify, defend, and hold harmless the developers from any claims, damages, losses, liabilities, costs, and expenses (including legal fees) arising from:</p>
+    <ul>
+      <li>Your use of the App</li>
+      <li>Your violation of these Terms</li>
+      <li>Your violation of any third-party rights</li>
+      <li>Commands executed on remote systems</li>
+      <li>Unauthorized access to systems</li>
+    </ul>
 
     <h2>8. Regulatory Compliance</h2>
-    <p>This App is NOT designed or certified for HIPAA-regulated healthcare systems, PCI-DSS payment systems, government classified systems, or critical infrastructure. If you need to access regulated systems, consult your compliance team.</p>
-    <p>The App includes cryptographic functionality. You agree to comply with all applicable export control laws and regulations.</p>
+
+    <h3>8.1 Not Suitable Without Additional Compliance</h3>
+    <p>This App is NOT designed or certified for:</p>
+    <ul>
+      <li><strong>HIPAA-regulated healthcare systems:</strong> Accessing Protected Health Information (PHI) requires additional compliance measures not provided by this App</li>
+      <li><strong>PCI-DSS payment systems:</strong> Accessing cardholder data environments requires additional compliance measures</li>
+      <li><strong>Government classified systems:</strong> Access may require FedRAMP authorization or security clearance</li>
+      <li><strong>Critical infrastructure:</strong> Industrial control systems, power grids, etc.</li>
+    </ul>
+    <p>If you need to access regulated systems, consult your compliance team before using this App.</p>
+
+    <h3>8.2 Export Controls</h3>
+    <p>The App includes cryptographic functionality. You agree to comply with all applicable export control laws and regulations. You may not use the App in countries subject to U.S. trade sanctions without proper authorization.</p>
 
     <h2>9. Intellectual Property</h2>
-    <p>The App is licensed under the MIT License. "TerminaLLM" and associated logos are trademarks. Third-party product names (Claude, Cursor, Aider) are trademarks of their respective owners. TerminaLLM is not affiliated with, endorsed by, or sponsored by any AI assistant provider.</p>
+
+    <h3>9.1 App License</h3>
+    <p>The App is licensed under the MIT License. You may use, copy, modify, and distribute the App in accordance with that license.</p>
+
+    <h3>9.2 Trademarks</h3>
+    <p>"TerminaLLM" and associated logos are trademarks. "Claude" and "Claude Code" are trademarks of Anthropic, PBC. "Cursor" is a trademark of Anysphere, Inc. "Aider" is a trademark of its respective owner. Other product names mentioned are trademarks of their respective owners and are used here solely to indicate compatibility.</p>
+    <p>TerminaLLM is not affiliated with, endorsed by, or sponsored by Anthropic, Anysphere (Cursor), Aider, or any other AI assistant provider. All third-party product names are trademarks of their respective owners and are used solely to describe compatibility with those products.</p>
 
     <h2>10. Termination</h2>
-    <p>You may stop using the App at any time by uninstalling it. We reserve the right to update or discontinue the App at any time.</p>
+
+    <h3>10.1 Your Right to Terminate</h3>
+    <p>You may stop using the App at any time by uninstalling it.</p>
+
+    <h3>10.2 Our Right to Terminate</h3>
+    <p>We reserve the right to:</p>
+    <ul>
+      <li>Update or discontinue the App at any time</li>
+      <li>Refuse service to anyone for any reason</li>
+    </ul>
+
+    <h3>10.3 Effect of Termination</h3>
+    <p>Upon termination:</p>
+    <ul>
+      <li>Your right to use the App ceases</li>
+      <li>These Terms survive as applicable to past use</li>
+    </ul>
 
     <h2>11. Modifications to Terms</h2>
-    <p>We may modify these Terms at any time. Your continued use after changes constitutes acceptance.</p>
+    <p>We may modify these Terms at any time. Changes will be posted with an updated "Last Updated" date. Your continued use of the App after changes constitutes acceptance of the modified Terms.</p>
 
     <h2>12. Governing Law</h2>
-    <p>These Terms are governed by the laws of the State of California, United States.</p>
+    <p>These Terms are governed by the laws of the State of California, United States, without regard to conflict of law principles.</p>
 
     <h2>13. Dispute Resolution</h2>
-    <p>You agree to attempt informal resolution before filing legal action. Unresolved disputes shall be resolved by binding arbitration under the American Arbitration Association in the State of California. You waive any right to participate in class actions.</p>
 
-    <h2>14. Contact Information</h2>
+    <h3>13.1 Informal Resolution</h3>
+    <p>Before filing any legal action, you agree to attempt informal resolution by contacting us.</p>
+
+    <h3>13.2 Arbitration</h3>
+    <p>Any dispute not resolved informally shall be resolved by binding arbitration under the rules of the American Arbitration Association. Arbitration shall take place in the State of California.</p>
+
+    <h3>13.3 Class Action Waiver</h3>
+    <p>You agree to resolve disputes individually and waive any right to participate in class actions.</p>
+
+    <h2>14. Severability</h2>
+    <p>If any provision of these Terms is found unenforceable, the remaining provisions remain in full effect.</p>
+
+    <h2>15. Entire Agreement</h2>
+    <p>These Terms, together with the Privacy Policy, constitute the entire agreement between you and the developers regarding the App.</p>
+
+    <h2>16. Contact Information</h2>
     <p>For questions about these Terms:</p>
-    <p><strong>Email:</strong> <a href="mailto:legal@terminallm.app">legal@terminallm.app</a></p>
-    <p><strong>GitHub Issues:</strong> <a href="https://github.com/terminallm/terminallm/issues">github.com/terminallm/terminallm/issues</a></p>
+    <div class="contact-block">
+      <strong>Email:</strong>
+      <span class="contact-email">legal@terminallm.app</span>
+      <a href="mailto:legal@terminallm.app" class="btn btn--tertiary">Send Email</a>
+    </div>
+    <p style="margin-top: 16px;"><strong>GitHub Issues:</strong> <a href="https://github.com/terminallm-issues/.github/issues">github.com/terminallm-issues/.github/issues</a></p>
 
     <div class="callout callout--info" style="margin-top: 32px;">
-      <p>By using TerminaLLM, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.</p>
+      <p><em>By using TerminaLLM, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.</em></p>
     </div>
 
   </main>
@@ -155,6 +316,7 @@
       <a href="/privacy">Privacy Policy</a>
       <a href="/terms">Terms of Service</a>
       <a href="/account-deletion">Account Deletion</a>
+      <a href="https://github.com/terminallm-issues/.github/issues">GitHub</a>
     </div>
     <p>&copy; 2026 TerminaLLM. All rights reserved.</p>
   </footer>

@@ -491,19 +491,19 @@ code {
 
 /* ========== Copyable email / contact block ========== */
 .contact-block {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: var(--space-sm);
-  flex-wrap: wrap;
+  gap: 0;
   margin-top: var(--space-md);
+  background: var(--code-bg);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
 }
 
 .contact-email {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-sm);
-  background: var(--code-bg);
-  border-radius: var(--radius-lg);
   padding: var(--space-sm) var(--space-lg);
   font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
   font-size: 0.875rem;
@@ -511,28 +511,38 @@ code {
   user-select: all;
   -webkit-user-select: all;
   cursor: text;
+  line-height: 1.4;
 }
 
 .contact-email__copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   background: var(--button-bg);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: none;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
   color: var(--text-secondary);
-  border-radius: var(--radius-sm);
-  padding: 4px 10px;
+  padding: var(--space-sm) var(--space-md);
   font-size: 0.75rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-family: inherit;
+  white-space: nowrap;
 }
 
 .contact-email__copy:hover {
   background: var(--button-bg-active);
-  color: var(--text-primary);
+  color: var(--primary-accent);
 }
 
-.contact-email__copy:active {
+.contact-email__copy--copied {
   background: var(--primary);
   color: #fff;
+}
+
+/* Send Email link - hidden on desktop, shown on mobile */
+.contact-email__send {
+  display: none;
 }
 
 /* ========== Responsive ========== */
@@ -545,6 +555,14 @@ code {
   }
   .hero__subtitle {
     font-size: 1rem;
+  }
+  /* Show Send Email on mobile */
+  .contact-email__send {
+    display: inline-flex;
+  }
+  .site-nav__links {
+    gap: var(--space-sm);
+    font-size: 0.8125rem;
   }
 }
 

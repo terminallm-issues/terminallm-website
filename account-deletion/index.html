@@ -22,6 +22,8 @@
         <li><a href="/support">Support</a></li>
         <li><a href="/privacy">Privacy</a></li>
         <li><a href="/terms">Terms</a></li>
+        <li><a href="/account-deletion">Account Deletion</a></li>
+        <li><a href="https://github.com/terminallm-issues/.github/issues">GitHub</a></li>
       </ul>
     </div>
   </nav>
@@ -98,7 +100,8 @@
       <p class="card__text">If you need assistance deleting your data or have questions about data handling:</p>
       <div class="contact-block">
         <span class="contact-email">privacy@terminallm.app</span>
-        <a href="mailto:privacy@terminallm.app" class="btn btn--tertiary">Send Email</a>
+        <button class="contact-email__copy" onclick="navigator.clipboard.writeText('privacy@terminallm.app').then(()=>{this.textContent='Copied';this.classList.add('contact-email__copy--copied');setTimeout(()=>{this.textContent='Copy';this.classList.remove('contact-email__copy--copied')},2000)})">Copy</button>
+        <a href="mailto:privacy@terminallm.app" class="btn btn--tertiary contact-email__send">Send Email</a>
       </div>
     </div>
 

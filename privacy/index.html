@@ -22,6 +22,8 @@
         <li><a href="/support">Support</a></li>
         <li><a href="/privacy">Privacy</a></li>
         <li><a href="/terms">Terms</a></li>
+        <li><a href="/account-deletion">Account Deletion</a></li>
+        <li><a href="https://github.com/terminallm-issues/.github/issues">GitHub</a></li>
       </ul>
     </div>
   </nav>
@@ -48,8 +50,7 @@
       <li><strong>Credential Vault (Opt-in):</strong> If you enable the Credential Vault, SSH passwords, private keys, and passphrases are encrypted and stored locally using HKDF-Expand key derivation with per-credential nonces, XOR stream encryption, and HMAC-SHA256 authentication tags. Vault entries have configurable TTL expiry and are stored exclusively in platform-native encrypted storage</li>
       <li><strong>Media Drop (Camera/Photo Library):</strong> When you use the Media Drop feature, the App requests access to your device camera or photo library on demand via standard iOS/Android permission prompts. Selected images or files are uploaded directly to your remote server at <code>/tmp/terminallm-uploads/</code> via SFTP with <code>chmod 600</code> (owner-read/write only) permissions. Media files are <strong>not</strong> cached or stored locally by the App &mdash; they are streamed from the system picker to the remote server. Camera and photo library access can be revoked at any time in your device settings</li>
       <li><strong>Port Forwarding Rules:</strong> Saved port forwarding rules (local port, remote host, remote port, rule name) are stored locally per connection profile. No network traffic is intercepted or logged &mdash; tunnels bind exclusively to <code>localhost</code> (127.0.0.1) on your device</li>
-      <li><strong>AI Chatbot Usage:</strong> Daily message count for free-tier enforcement is stored locally. Your chatbot subscription tier (free/pro/BYOK) is stored locally. The last 50 chatbot messages are persisted in platform-native encrypted storage for conversation continuity across app sessions</li>
-      <li><strong>AI Chatbot API Key (BYOK):</strong> If you bring your own Anthropic API key, it is stored locally in platform-native encrypted storage. It is never transmitted to TerminaLLM servers &mdash; only sent directly to Anthropic's API</li>
+      <li><strong>AI Chatbot Usage:</strong> Daily message count for free-tier enforcement is stored locally. Your chatbot subscription tier (free/pro) is stored locally. The last 50 chatbot messages are persisted in platform-native encrypted storage for conversation continuity across app sessions</li>
       <li><strong>Terminal Session Recordings:</strong> If you use the recording feature, terminal sessions are captured in asciicast v2 format (.cast files) and stored locally in the app's documents directory. Recordings contain all terminal output and input events with timestamps. Recordings are <strong>not encrypted at rest</strong> and are never automatically uploaded or shared</li>
       <li><strong>Encrypted Backups:</strong> If you create a backup, an encrypted .tlmbackup file is generated containing your selected data categories (profiles, snippets, settings, and optionally vault credentials). Backups are encrypted with AES-256-GCM using a password-derived key (PBKDF2). Backup files are stored locally or shared via the system share sheet &mdash; they are never uploaded to TerminaLLM servers</li>
       <li><strong>Custom Terminal Themes:</strong> User-created terminal color themes (23 color values per theme) are stored in platform-native encrypted storage</li>
@@ -62,8 +63,7 @@
 
     <h3>Data Transmitted to External Services</h3>
     <ul>
-      <li><strong>AI Chatbot (Free/Pro tiers):</strong> When using the built-in AI chatbot in free or pro mode, your messages are sent through the TerminaLLM proxy server (hosted on Fly.io) to the Anthropic API. The proxy server receives your device identifier and daily message count for free-tier rate limiting. Messages are not stored on the proxy server &mdash; they are streamed through to Anthropic and discarded. See <a href="https://www.anthropic.com/privacy">Anthropic's Privacy Policy</a> for how Anthropic handles API data</li>
-      <li><strong>AI Chatbot (BYOK mode):</strong> When using your own Anthropic API key (Bring Your Own Key), messages are sent directly from your device to the Anthropic API. No data passes through the TerminaLLM proxy</li>
+      <li><strong>AI Chatbot:</strong> When using the built-in AI chatbot, your messages are sent through the TerminaLLM proxy server (hosted on Fly.io) to the Anthropic API. The proxy server receives your device identifier and daily message count for free-tier rate limiting. Messages are not stored on the proxy server &mdash; they are streamed through to Anthropic and discarded. See <a href="https://www.anthropic.com/privacy">Anthropic's Privacy Policy</a> for how Anthropic handles API data</li>
     </ul>
 
     <h3>Data We Do NOT Collect</h3>
@@ -170,7 +170,7 @@
     <h2>Third-Party Services</h2>
     <p>The App integrates with the following third-party services:</p>
     <ul>
-      <li><strong>Anthropic, PBC</strong> &mdash; AI chatbot responses are powered by Anthropic's Claude API. In free/pro mode, requests pass through our proxy; in BYOK mode, requests go directly to Anthropic. See <a href="https://www.anthropic.com/privacy">Anthropic's Privacy Policy</a></li>
+      <li><strong>Anthropic, PBC</strong> &mdash; AI chatbot responses are powered by Anthropic's Claude API. Requests pass through our proxy to Anthropic. See <a href="https://www.anthropic.com/privacy">Anthropic's Privacy Policy</a></li>
       <li><strong>Fly.io</strong> &mdash; Our proxy server infrastructure is hosted on Fly.io. The proxy does not store message content</li>
       <li><strong>GitHub</strong> (Developer feature only) &mdash; When developer mode is enabled, the App checks GitHub for release updates using your provided PAT</li>
     </ul>
@@ -187,14 +187,14 @@
     <h2>Contact Information</h2>
     <p>For privacy-related questions or concerns:</p>
     <div class="contact-block">
-      <strong>Email:</strong>
       <span class="contact-email">privacy@terminallm.app</span>
-      <a href="mailto:privacy@terminallm.app" class="btn btn--tertiary">Send Email</a>
+      <button class="contact-email__copy" onclick="navigator.clipboard.writeText('privacy@terminallm.app').then(()=>{this.textContent='Copied';this.classList.add('contact-email__copy--copied');setTimeout(()=>{this.textContent='Copy';this.classList.remove('contact-email__copy--copied')},2000)})">Copy</button>
+      <a href="mailto:privacy@terminallm.app" class="btn btn--tertiary contact-email__send">Send Email</a>
     </div>
     <p style="margin-top: 16px;"><strong>GitHub Issues:</strong> <a href="https://github.com/terminallm-issues/.github/issues">github.com/terminallm-issues/.github/issues</a></p>
 
     <h2>Data Processing Location</h2>
-    <p>Most data processing occurs locally on your device. When using the AI chatbot in free/pro mode, message data is processed through our proxy server (Fly.io, US-East region) and Anthropic's API servers. In BYOK mode, message data is sent directly to Anthropic's servers.</p>
+    <p>Most data processing occurs locally on your device. When using the AI chatbot, message data is processed through our proxy server (Fly.io, US-East region) and Anthropic's API servers.</p>
 
     <div class="callout callout--info" style="margin-top: 32px;">
       <p><em>This privacy policy is provided for informational purposes. TerminaLLM is designed with privacy as a core principle &mdash; we collect minimal data, store credentials locally, and only transmit data to external services when required for specific features (AI chatbot).</em></p>

@@ -22,6 +22,8 @@
         <li><a href="/support">Support</a></li>
         <li><a href="/privacy">Privacy</a></li>
         <li><a href="/terms">Terms</a></li>
+        <li><a href="/account-deletion">Account Deletion</a></li>
+        <li><a href="https://github.com/terminallm-issues/.github/issues">GitHub</a></li>
       </ul>
     </div>
   </nav>
@@ -116,16 +118,7 @@
       <li>Chatbot availability depends on network connectivity and third-party API availability</li>
     </ul>
 
-    <h3>5.5 Bring Your Own Key (BYOK)</h3>
-    <p>If you use your own Anthropic API key:</p>
-    <ul>
-      <li>You are subject to <a href="https://www.anthropic.com/terms">Anthropic's Terms of Service</a> and <a href="https://www.anthropic.com/policies">API Usage Policy</a></li>
-      <li>API usage charges are billed directly to your Anthropic account</li>
-      <li>The developers are NOT responsible for any charges incurred through your API key</li>
-      <li>You are responsible for keeping your API key secure and revoking it if compromised</li>
-    </ul>
-
-    <h3>5.6 Voice Input (Speech-to-Text)</h3>
+    <h3>5.5 Voice Input (Speech-to-Text)</h3>
     <p>The App offers optional speech-to-text input using platform-native speech recognition engines (iOS Speech framework, Android SpeechRecognizer). You acknowledge that:</p>
     <ul>
       <li>Speech recognition is performed on-device by the operating system, not by TerminaLLM</li>
@@ -135,7 +128,7 @@
       <li>Accuracy varies by device, language, and ambient noise conditions</li>
     </ul>
 
-    <h3>5.7 iOS Live Activities</h3>
+    <h3>5.6 iOS Live Activities</h3>
     <p>On iOS 16.1+, the App displays SSH session status on the Lock Screen and Dynamic Island via iOS Live Activities. You acknowledge that:</p>
     <ul>
       <li>Session metadata (server name, AI tool name, AI state, file change counts) is visible on the Lock Screen <strong>without unlocking your device</strong></li>
@@ -144,10 +137,10 @@
       <li>You can disable Live Activities in iOS Settings &rarr; TerminaLLM &rarr; Live Activities</li>
     </ul>
 
-    <h3>5.8 Free Tier Limits</h3>
-    <p>The built-in AI chatbot free tier has a daily message limit that may change at our discretion. We reserve the right to adjust free tier limits, quotas, and availability without prior notice. Users who require guaranteed access should use BYOK mode with their own Anthropic API key.</p>
+    <h3>5.7 Free Tier Limits</h3>
+    <p>The built-in AI chatbot free tier has a daily message limit that may change at our discretion. We reserve the right to adjust free tier limits, quotas, and availability without prior notice.</p>
 
-    <h3>5.9 Terminal Session Recording</h3>
+    <h3>5.8 Terminal Session Recording</h3>
     <p>The App offers optional terminal session recording in asciicast v2 format (.cast files). You acknowledge that:</p>
     <ul>
       <li>Recordings capture all terminal output and input events with timestamps</li>
@@ -158,7 +151,7 @@
       <li>Uninstalling the App permanently deletes all recordings with no recovery option</li>
     </ul>
 
-    <h3>5.10 AI Coding Assistant Commands</h3>
+    <h3>5.9 AI Coding Assistant Commands</h3>
     <div class="callout callout--danger">
       <p>This App is designed and marketed for use with AI coding assistants (Claude Code, Cursor, Aider, Copilot CLI, and similar tools). <strong>Commands executed by AI coding assistants through this App are YOUR sole responsibility.</strong> AI tools may suggest or execute destructive commands including but not limited to file deletion, system configuration changes, package installation, and code modifications. The developers are NOT liable for any actions taken by AI tools running in your terminal session, including data loss, system damage, security vulnerabilities, or unintended changes to your codebase.</p>
     </div>
@@ -298,9 +291,9 @@
     <h2>16. Contact Information</h2>
     <p>For questions about these Terms:</p>
     <div class="contact-block">
-      <strong>Email:</strong>
       <span class="contact-email">legal@terminallm.app</span>
-      <a href="mailto:legal@terminallm.app" class="btn btn--tertiary">Send Email</a>
+      <button class="contact-email__copy" onclick="navigator.clipboard.writeText('legal@terminallm.app').then(()=>{this.textContent='Copied';this.classList.add('contact-email__copy--copied');setTimeout(()=>{this.textContent='Copy';this.classList.remove('contact-email__copy--copied')},2000)})">Copy</button>
+      <a href="mailto:legal@terminallm.app" class="btn btn--tertiary contact-email__send">Send Email</a>
     </div>
     <p style="margin-top: 16px;"><strong>GitHub Issues:</strong> <a href="https://github.com/terminallm-issues/.github/issues">github.com/terminallm-issues/.github/issues</a></p>
 

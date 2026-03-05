@@ -22,6 +22,8 @@
         <li><a href="/support">Support</a></li>
         <li><a href="/privacy">Privacy</a></li>
         <li><a href="/terms">Terms</a></li>
+        <li><a href="/account-deletion">Account Deletion</a></li>
+        <li><a href="https://github.com/terminallm-issues/.github/issues">GitHub</a></li>
       </ul>
     </div>
   </nav>
@@ -41,7 +43,8 @@
         <p class="card__text">For general questions, bug reports, or feature requests.</p>
         <div class="contact-block">
           <span class="contact-email">support@terminallm.app</span>
-          <a href="mailto:support@terminallm.app" class="btn btn--tertiary">Send Email</a>
+          <button class="contact-email__copy" onclick="navigator.clipboard.writeText('support@terminallm.app').then(()=>{this.textContent='Copied';this.classList.add('contact-email__copy--copied');setTimeout(()=>{this.textContent='Copy';this.classList.remove('contact-email__copy--copied')},2000)})">Copy</button>
+          <a href="mailto:support@terminallm.app" class="btn btn--tertiary contact-email__send">Send Email</a>
         </div>
       </div>
       <div class="card">
@@ -82,11 +85,6 @@
     <div class="card">
       <h3 class="card__title">Is my data secure?</h3>
       <p class="card__text">Yes. All sensitive data is stored in platform-native encrypted storage (iOS Keychain / Android EncryptedSharedPreferences). SSH connections use standard protocol encryption. The app includes TOTP MFA, biometric lock, host key verification, and audit logging. See our <a href="/privacy">Privacy Policy</a> for details.</p>
-    </div>
-
-    <div class="card">
-      <h3 class="card__title">What is BYOK (Bring Your Own Key)?</h3>
-      <p class="card__text">BYOK lets you use your own Anthropic API key for the built-in AI chatbot. Your key is stored locally and sent directly to Anthropic &mdash; it never passes through our servers. This gives you unlimited chatbot usage at your own API cost.</p>
     </div>
 
     <div class="card">

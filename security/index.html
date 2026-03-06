@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Policy - TerminaLLM</title>
+  <meta name="description" content="TerminaLLM security policy. Security architecture, implemented controls, vulnerability disclosure, and secure usage guidelines.">
+  <link rel="icon" type="image/png" href="../app_icon.png">
+  <link rel="apple-touch-icon" href="../app_icon.png">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="glow-line"></div>
+
+  <nav class="site-nav">
+    <div class="site-nav__inner">
+      <a href="/" class="site-nav__brand">
+        <span class="site-nav__logo">&gt;_T</span>
+        <span class="site-nav__title">TerminaLLM</span>
+      </a>
+      <ul class="site-nav__links">
+        <li><a href="/support">Support</a></li>
+        <li><a href="/privacy">Privacy</a></li>
+        <li><a href="/terms">Terms</a></li>
+        <li><a href="/account-deletion">Account Deletion</a></li>
+        <li><a href="/security">Security</a></li>
+        <li><a href="https://github.com/terminallm-issues/.github/issues">GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="site-container legal-content">
+
+    <h1>Security Policy - TerminaLLM</h1>
+
+    <h2>Overview</h2>
+    <p>TerminaLLM is a mobile SSH terminal client designed with security as a core principle. This document describes our security model, implemented protections, and guidelines for secure usage.</p>
+
+    <h2>Security Architecture</h2>
+
+    <h3>Threat Model</h3>
+    <p>TerminaLLM handles sensitive SSH credentials and provides access to remote systems. Our security design addresses:</p>
+    <ol>
+      <li><strong>Credential Theft:</strong> Attackers gaining access to stored credentials</li>
+      <li><strong>Man-in-the-Middle (MITM):</strong> Attackers intercepting SSH connections</li>
+      <li><strong>Device Compromise:</strong> Attackers with physical or malware access to the device</li>
+      <li><strong>Brute Force:</strong> Attackers attempting to guess MFA codes</li>
+      <li><strong>Session Hijacking:</strong> Attackers attempting to take over authenticated sessions</li>
+      <li><strong>Shoulder Surfing:</strong> Visual observation of credentials or terminal content</li>
+    </ol>
+
+    <h3>Security Principles</h3>
+    <ol>
+      <li><strong>Credentials Not Stored by Default:</strong> SSH passwords are entered at connection time and cleared from memory immediately after use. Users may opt in to the Credential Vault, which encrypts credentials locally using HKDF-Expand + XOR + HMAC with per-credential nonces and configurable TTL expiry</li>
+      <li><strong>Defense in Depth:</strong> Multiple layers of security (MFA, biometrics, encryption)</li>
+      <li><strong>Minimal Privilege:</strong> App requests only necessary permissions</li>
+      <li><strong>Fail Secure:</strong> On errors, default to denying access</li>
+      <li><strong>Transparent Security:</strong> Users informed of security events via audit logs</li>
+    </ol>
+
+    <h2>Implemented Security Controls</h2>
+
+    <h3>Authentication</h3>
+    <ul>
+      <li><strong>TOTP MFA:</strong> Mandatory time-based one-time passwords (RFC 6238)</li>
+      <li><strong>Biometric Auth:</strong> Optional Face ID / Fingerprint as secondary factor</li>
+      <li><strong>Rate Limiting:</strong> 5 failed attempts triggers 2-minute lockout (persistent)</li>
+      <li><strong>Code Reuse Prevention:</strong> TOTP codes cannot be reused within time window</li>
+      <li><strong>Session Timeout:</strong> Re-authentication required after inactivity</li>
+    </ul>
+
+    <h3>Credential Protection</h3>
+    <ul>
+      <li><strong>No Default Password Storage:</strong> Passwords not stored by default; opt-in Credential Vault available</li>
+      <li><strong>Credential Vault (Opt-in):</strong> HKDF-Expand + XOR + HMAC encryption with per-credential nonces, configurable TTL</li>
+      <li><strong>Secure Memory Clearing:</strong> Credentials zeroed after use</li>
+      <li><strong>Platform Encryption:</strong> iOS Keychain / Android EncryptedSharedPreferences</li>
+      <li><strong>Clipboard Auto-Clear:</strong> Clipboard cleared 10 seconds after paste</li>
+    </ul>
+
+    <h3>Connection Security</h3>
+    <ul>
+      <li><strong>SSH Host Key Verification:</strong> SHA256 fingerprints stored and verified</li>
+      <li><strong>MITM Detection:</strong> Warning on host key change</li>
+      <li><strong>Connection Timeout:</strong> 30-second timeout prevents hanging</li>
+      <li><strong>Keep-Alive:</strong> Prevents server-side timeout disconnections</li>
+    </ul>
+
+    <h3>Device Security</h3>
+    <ul>
+      <li><strong>Jailbreak/Root Detection:</strong> Warns on compromised devices</li>
+      <li><strong>Screen Capture Prevention:</strong> FLAG_SECURE on Android</li>
+      <li><strong>Screenshot Prevention:</strong> Secure text field overlay on iOS</li>
+      <li><strong>Developer Mode Warning:</strong> Alerts when developer mode enabled</li>
+    </ul>
+
+    <h3>Port Forwarding Security</h3>
+    <ul>
+      <li><strong>Localhost-only binding:</strong> Tunnels bind exclusively to 127.0.0.1, preventing remote network access</li>
+      <li><strong>Audit trail:</strong> Tunnel creation, stop, and errors logged as security events</li>
+      <li><strong>Auto-cleanup:</strong> All tunnels stopped on SSH disconnect or app dispose</li>
+    </ul>
+
+    <h3>Jump Host Security</h3>
+    <ul>
+      <li><strong>Credential clearing:</strong> Jump host password, private key, and passphrase cleared from memory immediately after SSH handshake</li>
+      <li><strong>Host key verification:</strong> Both jump host and target host keys independently verified against stored fingerprints</li>
+      <li><strong>Self-reference prevention:</strong> UI prevents selecting a profile as its own jump host (circular reference)</li>
+      <li><strong>Vault-based credentials:</strong> Jump host credentials resolved from vault at connection time, never passed through navigation</li>
+    </ul>
+
+    <h3>Media Drop Security</h3>
+    <ul>
+      <li><strong>File permissions:</strong> All uploaded files set to <code>chmod 600</code> (owner read/write only)</li>
+      <li><strong>No local caching:</strong> Media files streamed to server, not stored on device</li>
+      <li><strong>Audit logging:</strong> Upload events logged with source type, path, and file size</li>
+      <li><strong>On-demand permissions:</strong> Camera and photo library access requested only when feature is used</li>
+    </ul>
+
+    <h3>Speech-to-Text Security</h3>
+    <ul>
+      <li><strong>Dual speech engines:</strong> Two engines: <strong>Built-in</strong> uses platform STT (Apple/Google &mdash; may send audio to their servers for processing). <strong>Whisper</strong> runs fully on-device via whisper.cpp &mdash; no audio leaves the device. Users choose in Settings.</li>
+      <li><strong>No audio storage:</strong> TerminaLLM never permanently stores audio. Whisper mode creates a temporary WAV file that is deleted immediately after transcription.</li>
+      <li><strong>On-demand permissions:</strong> Microphone access requested only when the mic button is tapped</li>
+      <li><strong>Text-only output:</strong> Recognized text is written to the terminal; no audio intermediate stored</li>
+    </ul>
+
+    <h3>AI Chatbot Security</h3>
+    <ul>
+      <li><strong>No server-side message storage:</strong> Proxy server processes requests in real-time; conversation content is never logged or persisted</li>
+      <li><strong>JWT device authentication:</strong> Per-device tokens (HS256, 365-day expiry) with no personal information</li>
+      <li><strong>Encrypted local storage:</strong> Conversation history and proxy tokens stored in platform-native encrypted storage</li>
+      <li><strong>Rate limiting:</strong> Free tier limited to 20 messages/day per device to prevent abuse</li>
+      <li><strong>HTTPS-only:</strong> All proxy communication uses HTTPS (enforced by Fly.io)</li>
+    </ul>
+
+    <h3>iOS Live Activities Security</h3>
+    <ul>
+      <li><strong>Lock Screen data exposure:</strong> Live Activities display server name, AI tool, state, and file counts on the Lock Screen without device unlock. Users should be aware that bystanders can see active session metadata</li>
+      <li><strong>App Group isolation:</strong> Session data is written to an iOS App Group shared container accessible only to the app and its widget extension &mdash; not to other apps</li>
+      <li><strong>Auto-expiry:</strong> Live Activities end automatically on disconnect or after 8 hours (iOS system limit)</li>
+      <li><strong>No credentials exposed:</strong> Live Activities never display passwords, keys, usernames, or IP addresses &mdash; only display name, tool name, and aggregate counts</li>
+    </ul>
+
+    <h3>Smart Action Bar Security</h3>
+    <ul>
+      <li><strong>Pattern-based command injection:</strong> The Smart Action Bar sends terminal commands based on prompt pattern matching. Commands are pre-defined constants, not user-controllable</li>
+      <li><strong>User-initiated only:</strong> Quick-action buttons require explicit user tap &mdash; no commands are sent automatically</li>
+      <li><strong>Dismissable:</strong> Users can dismiss the action bar at any time to prevent accidental command execution</li>
+    </ul>
+
+    <h3>Audit &amp; Monitoring</h3>
+    <ul>
+      <li><strong>Security Event Logging:</strong> 1,000 events retained</li>
+      <li><strong>Connection Logging:</strong> All connection attempts logged</li>
+      <li><strong>Host Key Events:</strong> Verification decisions logged</li>
+      <li><strong>Export Capability:</strong> Audit logs exportable as JSON</li>
+    </ul>
+
+    <h2>Cryptographic Standards</h2>
+    <ul>
+      <li><strong>TOTP Generation:</strong> HMAC-SHA1 (RFC 6238)</li>
+      <li><strong>Host Key Fingerprint:</strong> SHA-256 (OpenSSH format)</li>
+      <li><strong>Credential Storage (iOS):</strong> AES-256-GCM (iOS Keychain)</li>
+      <li><strong>Credential Storage (Android):</strong> AES-256-GCM (EncryptedSharedPreferences)</li>
+      <li><strong>Credential Vault Key Derivation:</strong> HKDF-Expand / HMAC-SHA256 (RFC 5869)</li>
+      <li><strong>Credential Vault Encryption:</strong> XOR stream cipher / HKDF keystream (custom, per-credential nonce)</li>
+      <li><strong>Credential Vault Authentication:</strong> HMAC-SHA256 (RFC 2104)</li>
+      <li><strong>Backup Encryption:</strong> AES-256-GCM (NIST SP 800-38D)</li>
+      <li><strong>Backup Key Derivation:</strong> PBKDF2-HMAC-SHA256, 150,000 iterations (RFC 2898)</li>
+      <li><strong>SSH Transport:</strong> Various (negotiated per SSH Protocol)</li>
+    </ul>
+
+    <h2>Security Event Types</h2>
+    <p>The following events are logged to the audit trail:</p>
+    <div class="code-block">appLaunch - Application started
+authSuccess - Successful authentication
+authFailed - Failed authentication attempt
+connectionAttempt - SSH connection initiated
+connectionSuccess - SSH connection established
+connectionFailed - SSH connection failed
+hostKeyVerified - New host key accepted
+hostKeyRejected - Host key rejected by user
+hostKeyChanged - Changed host key detected (potential MITM)
+rateLimitTriggered - Rate limiting activated
+lockoutTriggered - Account locked out
+sessionTimeout - Session expired due to inactivity
+deviceCompromisedWarning - Jailbreak/root detected
+mediaDropUploaded - Photo/file uploaded to remote server via Media Drop
+sessionResumed - User resumed a stored dtach session
+inputWaitDetected - AI assistant detected waiting for user input
+tunnelCreated - Port forwarding tunnel started
+tunnelStopped - Port forwarding tunnel stopped
+tunnelError - Port forwarding tunnel failed (bind error, SSH error)
+jumpHostConnected - Successfully connected through a jump host
+jumpHostFailed - Jump host connection failed
+chatbotMessageSent - User sent a message to the AI chatbot</div>
+
+    <h2>Secure Usage Guidelines</h2>
+
+    <h3>For Users</h3>
+    <ol>
+      <li><strong>Verify Host Keys:</strong> Always verify SSH fingerprints match expected values</li>
+      <li><strong>Secure Your Device:</strong> Use device passcode, keep OS updated</li>
+      <li><strong>Protect MFA Secret:</strong> Don't screenshot or share your TOTP QR code</li>
+      <li><strong>Review Audit Logs:</strong> Periodically check for unauthorized access attempts</li>
+      <li><strong>Avoid Public Networks:</strong> Use VPN when on untrusted networks</li>
+      <li><strong>Report Issues:</strong> Contact us immediately if you suspect compromise</li>
+    </ol>
+
+    <h3>For Enterprise Deployment</h3>
+    <ol>
+      <li><strong>MDM Integration:</strong> Deploy via Mobile Device Management</li>
+      <li><strong>Compliance Review:</strong> Consult compliance team for regulated environments</li>
+      <li><strong>Network Security:</strong> Ensure SSH traffic is monitored/logged at network level</li>
+      <li><strong>User Training:</strong> Educate users on security features and best practices</li>
+      <li><strong>Incident Response:</strong> Include app in security incident procedures</li>
+    </ol>
+
+    <h2>Known Limitations</h2>
+    <ol>
+      <li><strong>No End-to-End Encryption Verification:</strong> App trusts SSH cipher negotiation</li>
+      <li><strong>Device Trust:</strong> Security depends on device integrity</li>
+      <li><strong>No Remote Wipe:</strong> No capability to remotely disable compromised instances</li>
+      <li><strong>Single User:</strong> No multi-user or role-based access control</li>
+      <li><strong>Local Audit Only:</strong> Audit logs stored locally only</li>
+      <li><strong>Dart GC Memory Limitation:</strong> Dart's garbage collector may retain copies of credential data in heap memory even after explicit zeroing. Platform-level device encryption (iOS sandbox, Android SELinux) mitigates this risk</li>
+    </ol>
+
+    <h2>Vulnerability Disclosure</h2>
+
+    <h3>Reporting Security Issues</h3>
+    <div class="callout callout--danger">
+      <p>If you discover a security vulnerability, <strong>DO NOT</strong> create a public GitHub issue.</p>
+    </div>
+    <p>Instead, email us with:</p>
+    <ul>
+      <li>Description of the vulnerability</li>
+      <li>Steps to reproduce</li>
+      <li>Potential impact</li>
+      <li>Any suggested fixes</li>
+    </ul>
+    <div class="contact-block">
+      <span class="contact-email">security@terminallm.app</span>
+      <button class="contact-email__copy" onclick="navigator.clipboard.writeText('security@terminallm.app').then(()=>{this.textContent='Copied';this.classList.add('contact-email__copy--copied');setTimeout(()=>{this.textContent='Copy';this.classList.remove('contact-email__copy--copied')},2000)})">Copy</button>
+      <a href="mailto:security@terminallm.app" class="btn btn--tertiary contact-email__send">Send Email</a>
+    </div>
+
+    <h3>Response Timeline</h3>
+    <ul>
+      <li><strong>Acknowledgment:</strong> Within 48 hours</li>
+      <li><strong>Initial Assessment:</strong> Within 7 days</li>
+      <li><strong>Fix Timeline:</strong> Based on severity
+        <ul>
+          <li>Critical: 24&ndash;48 hours</li>
+          <li>High: 7 days</li>
+          <li>Medium: 30 days</li>
+          <li>Low: 90 days</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3>Recognition</h3>
+    <p>We appreciate responsible disclosure and will:</p>
+    <ul>
+      <li>Credit reporters in release notes (unless anonymity requested)</li>
+      <li>Consider bug bounty for critical issues (at our discretion)</li>
+    </ul>
+
+    <h2>Security Certifications</h2>
+    <p>Currently, TerminaLLM has not undergone formal security certification (SOC 2, ISO 27001, etc.). The security controls documented here represent our best-effort implementation.</p>
+    <p>For regulated environments (HIPAA, PCI-DSS, FedRAMP), please conduct your own security assessment before deployment.</p>
+
+    <h2>Contact</h2>
+    <div class="contact-block">
+      <strong style="color: var(--text-secondary);">Security Issues:</strong>
+      <span class="contact-email">security@terminallm.app</span>
+      <button class="contact-email__copy" onclick="navigator.clipboard.writeText('security@terminallm.app').then(()=>{this.textContent='Copied';this.classList.add('contact-email__copy--copied');setTimeout(()=>{this.textContent='Copy';this.classList.remove('contact-email__copy--copied')},2000)})">Copy</button>
+    </div>
+    <div class="contact-block">
+      <strong style="color: var(--text-secondary);">General Questions:</strong>
+      <span class="contact-email">support@terminallm.app</span>
+      <button class="contact-email__copy" onclick="navigator.clipboard.writeText('support@terminallm.app').then(()=>{this.textContent='Copied';this.classList.add('contact-email__copy--copied');setTimeout(()=>{this.textContent='Copy';this.classList.remove('contact-email__copy--copied')},2000)})">Copy</button>
+    </div>
+    <p style="margin-top: 16px;"><strong>GitHub:</strong> <a href="https://github.com/terminallm-issues/.github/issues">github.com/terminallm-issues/.github/issues</a></p>
+
+    <p style="margin-top: 32px; color: var(--text-disabled); font-size: 0.875rem; font-style: italic;">Last Security Review: February 17, 2026</p>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__links">
+      <a href="/support">Support</a>
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Service</a>
+      <a href="/account-deletion">Account Deletion</a>
+      <a href="/security">Security</a>
+      <a href="https://github.com/terminallm-issues/.github/issues">GitHub</a>
+    </div>
+    <p>&copy; 2026 TerminaLLM. All rights reserved.</p>
+  </footer>
+</body>
+</html>

@@ -37,7 +37,7 @@
     </section>
 
     <div class="callout callout--info">
-      <p><strong>TerminaLLM does not require an account.</strong> All data is stored locally on your device. There is no server-side account to delete.</p>
+      <p><strong>TerminaLLM does not require an account.</strong> Nearly all data is stored locally on your device in encrypted storage. The AI chatbot proxy stores a device identifier and usage counts temporarily (see Server-Side Data below). There is no server-side account to delete.</p>
     </div>
 
     <h2 class="section-header">Delete All Data</h2>
@@ -63,37 +63,37 @@
 
     <div class="card">
       <h3 class="card__title">Connection Profiles</h3>
-      <p class="card__text">Open the app &rarr; Connection screen &rarr; Swipe left on a profile &rarr; Delete. This removes the saved host, port, username, and any associated Credential Vault entry.</p>
+      <p class="card__text">Open the app &rarr; Connection screen &rarr; Tap a saved profile chip to view details, then tap Delete. Or long-press a profile chip and select Delete from the menu. This removes the saved host, port, and username. Credential Vault entries are managed separately.</p>
     </div>
 
     <div class="card">
       <h3 class="card__title">Credential Vault</h3>
-      <p class="card__text">Open the app &rarr; Settings &rarr; Security &rarr; Credential Vault &rarr; Delete individual entries or clear the entire vault.</p>
+      <p class="card__text">Open the app &rarr; Settings &rarr; Security &rarr; scroll to the Credential Vault section. Stored credentials expire automatically based on their configured TTL. To remove all vault data, uninstall the app or contact support.</p>
     </div>
 
     <div class="card">
       <h3 class="card__title">Audit Logs</h3>
-      <p class="card__text">Open the app &rarr; Settings &rarr; Security &rarr; Audit Log &rarr; Clear All. You can also export logs as JSON before clearing.</p>
+      <p class="card__text">Open the app &rarr; Settings &rarr; Audit Log &rarr; Clear Audit Log. You can also export logs as JSON or CSV before clearing.</p>
     </div>
 
     <div class="card">
       <h3 class="card__title">AI Chatbot History</h3>
-      <p class="card__text">Open the app &rarr; Chatbot &rarr; Clear Conversation. This removes all stored messages from encrypted storage.</p>
+      <p class="card__text">Open the app &rarr; Chatbot &rarr; New Chat. This clears the current conversation and removes all stored messages from encrypted storage.</p>
     </div>
 
     <div class="card">
       <h3 class="card__title">Terminal Recordings</h3>
-      <p class="card__text">Open the app &rarr; Settings &rarr; Recordings &rarr; Delete individual recordings or all recordings.</p>
+      <p class="card__text">From a terminal session, open the recordings manager to view and delete individual recordings.</p>
     </div>
 
     <div class="card">
       <h3 class="card__title">Custom Themes</h3>
-      <p class="card__text">Open the app &rarr; Settings &rarr; Terminal &rarr; Themes &rarr; Delete individual custom themes.</p>
+      <p class="card__text">Open the app &rarr; Settings &rarr; Terminal &amp; Display &rarr; long-press a custom theme &rarr; Delete.</p>
     </div>
 
     <h2 class="section-header">Server-Side Data</h2>
     <div class="callout callout--caution">
-      <p><strong>Proxy server data:</strong> If you used the built-in AI chatbot in free or pro mode, your device identifier and daily message count were sent to our proxy server for rate limiting. This data is ephemeral and not permanently stored. To request deletion of any residual proxy data, email privacy@terminallm.app (see below).</p>
+      <p><strong>Proxy server data:</strong> If you used the built-in AI chatbot (Pro subscription), your device identifier and daily message count were sent to our proxy server for rate limiting and stored temporarily in Redis. Usage data expires after 48 hours. Subscription validation data may be retained longer. No conversation content is ever logged or stored server-side. To request deletion of any proxy data, email privacy@terminallm.app (see below).</p>
     </div>
 
     <h2 class="section-header">Need Help?</h2>

@@ -60,17 +60,17 @@
 
     <div class="card">
       <h3 class="card__title">What is TerminaLLM?</h3>
-      <p class="card__text">TerminaLLM is a mobile SSH terminal client built specifically for running AI coding assistants like Claude Code, Cursor, and Aider from your phone. It includes features like session persistence, session mirroring, a built-in AI chatbot, and enterprise-grade security.</p>
+      <p class="card__text">TerminaLLM is a mobile SSH terminal client built specifically for running AI coding assistants like Claude Code, Aider, and other CLI tools from your phone. It includes features like session persistence, session mirroring, a built-in AI chatbot, and comprehensive security controls.</p>
     </div>
 
     <div class="card">
       <h3 class="card__title">How do I connect to my server?</h3>
-      <p class="card__text">Tap the "+" button on the connection screen and enter your server's hostname, port (default 22), and username. You can authenticate with a password, private key, or both. Connection profiles are saved for quick reconnection.</p>
+      <p class="card__text">Enter your server's hostname, port (default 22), and username on the connection screen. You can authenticate with a password or private key. Save connection profiles for quick reconnection by tapping the "+" button in the Saved Connections section.</p>
     </div>
 
     <div class="card">
       <h3 class="card__title">What AI coding assistants are supported?</h3>
-      <p class="card__text">TerminaLLM works with any CLI-based AI coding tool you can run over SSH, including Claude Code, Cursor (SSH remote), Aider, GitHub Copilot CLI, and others. The terminal is optimized with dedicated modifier keys and smart action detection for these tools.</p>
+      <p class="card__text">TerminaLLM works with any CLI-based AI coding tool you can run over SSH, including Claude Code, Aider, GitHub Copilot CLI, and others. The terminal is optimized with dedicated modifier keys and smart action detection for these tools.</p>
     </div>
 
     <div class="card">
@@ -80,7 +80,7 @@
 
     <div class="card">
       <h3 class="card__title">What is session mirroring?</h3>
-      <p class="card__text">Session mirroring lets you share your live terminal session to a laptop browser. Tap the cast icon in the terminal toolbar to generate a sharable link. Requires dtach to be installed on the remote server.</p>
+      <p class="card__text">Session mirroring lets you attach to the same terminal session from a laptop. Tap the mirror icon in the terminal toolbar to generate an SSH command you can run on any computer with dtach installed. Requires dtach on the remote server.</p>
     </div>
 
     <div class="card">
@@ -90,7 +90,7 @@
 
     <div class="card">
       <h3 class="card__title">How do I delete my account or data?</h3>
-      <p class="card__text">TerminaLLM stores all data locally on your device. Uninstalling the app removes all data. You can also clear specific data from the app's settings. See our <a href="/account-deletion">Account Deletion</a> page for detailed instructions.</p>
+      <p class="card__text">TerminaLLM stores nearly all data locally on your device in encrypted storage. The AI chatbot communicates with a proxy server, but no conversation content is logged server-side. Uninstalling the app removes all local data. See our <a href="/account-deletion">Account Deletion</a> page for detailed instructions.</p>
     </div>
 
     <!-- Troubleshooting -->
@@ -108,7 +108,7 @@
 
     <div class="card">
       <h3 class="card__title">Terminal rendering looks wrong</h3>
-      <p class="card__text">Go to Settings &gt; Terminal and try adjusting the font size. Ensure your server's TERM is set to <code>xterm-256color</code>. If specific characters don't render, try a different terminal theme.</p>
+      <p class="card__text">Go to Settings &gt; Terminal &amp; Display and try adjusting the font size. Ensure your server's TERM is set to <code>xterm-256color</code>. If specific characters don't render, check that your server has the required font or locale configured.</p>
     </div>
 
     <div class="card">

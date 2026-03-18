@@ -11,6 +11,7 @@ Static website for [TerminaLLM](https://terminallm.app) — the mobile SSH termi
 | `/privacy` | Privacy policy |
 | `/terms` | Terms of service |
 | `/account-deletion` | Data deletion instructions |
+| `/security` | Security policy and vulnerability disclosure |
 
 ## Deployment
 

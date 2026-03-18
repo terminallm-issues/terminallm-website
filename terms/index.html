@@ -101,7 +101,7 @@
     <h3>5.3 Credential Vault</h3>
     <p>The App offers an optional Credential Vault that encrypts and stores SSH credentials locally on your device. By enabling this feature, you acknowledge that:</p>
     <ul>
-      <li>Credentials are stored using HKDF-Expand key derivation with per-credential nonces, XOR stream encryption, and HMAC-SHA256 authentication</li>
+      <li>Credentials are stored using AES-256-GCM authenticated encryption with HKDF-Expand key derivation and per-credential random nonces</li>
       <li>Credential security depends on the integrity of your device and its platform-native encrypted storage (iOS Keychain / Android EncryptedSharedPreferences)</li>
       <li>The developers are NOT liable for credential data loss, corruption, or compromise resulting from device theft, jailbreak/root, malware, OS vulnerabilities, or hardware failure</li>
       <li>Vault entries have configurable TTL expiry; expired credentials are permanently deleted</li>
@@ -120,11 +120,12 @@
     </ul>
 
     <h3>5.5 Voice Input (Speech-to-Text)</h3>
-    <p>The App offers optional speech-to-text input using platform-native speech recognition engines (iOS Speech framework, Android SpeechRecognizer). You acknowledge that:</p>
+    <p>The App offers optional speech-to-text input using platform-native speech recognition engines (iOS Speech framework, Android SpeechRecognizer) and an on-device Whisper engine (whisper.cpp). You acknowledge that:</p>
     <ul>
-      <li>Speech recognition is performed on-device by the operating system, not by TerminaLLM</li>
-      <li>The iOS Speech framework and Android SpeechRecognizer may have their own data handling and privacy policies as determined by Apple and Google respectively</li>
-      <li>TerminaLLM does not record, store, or transmit audio data</li>
+      <li>Speech recognition is performed on-device by the operating system (Built-in engine) or on-device by Whisper (whisper.cpp), not by TerminaLLM servers</li>
+      <li>The Built-in engine: iOS Speech framework and Android SpeechRecognizer may have their own data handling and privacy policies as determined by Apple and Google respectively</li>
+      <li>The Whisper engine runs entirely on-device &mdash; no audio leaves your device. A temporary WAV file is created and deleted immediately after transcription</li>
+      <li>TerminaLLM does not permanently record, store, or transmit audio data</li>
       <li>Recognized text is sent to the terminal or chatbot input as plain text</li>
       <li>Accuracy varies by device, language, and ambient noise conditions</li>
     </ul>
@@ -138,8 +139,8 @@
       <li>You can disable Live Activities in iOS Settings &rarr; TerminaLLM &rarr; Live Activities</li>
     </ul>
 
-    <h3>5.7 Free Tier Limits</h3>
-    <p>The built-in AI chatbot free tier has a daily message limit that may change at our discretion. We reserve the right to adjust free tier limits, quotas, and availability without prior notice.</p>
+    <h3>5.7 Pro Subscription</h3>
+    <p>AI features (chatbot, voice-to-command translation, NL-to-command) are available to Pro subscribers only. We reserve the right to adjust Pro feature scope, quotas, and availability without prior notice.</p>
 
     <h3>5.8 Terminal Session Recording</h3>
     <p>The App offers optional terminal session recording in asciicast v2 format (.cast files). You acknowledge that:</p>

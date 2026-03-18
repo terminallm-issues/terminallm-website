@@ -51,7 +51,7 @@
 
     <h3>Security Principles</h3>
     <ol>
-      <li><strong>Credentials Not Stored by Default:</strong> SSH passwords are entered at connection time and cleared from memory immediately after use. Users may opt in to the Credential Vault, which encrypts credentials locally using HKDF-Expand + XOR + HMAC with per-credential nonces and configurable TTL expiry</li>
+      <li><strong>Credentials Not Stored by Default:</strong> SSH passwords are entered at connection time and cleared from memory immediately after use. Users may opt in to the Credential Vault, which encrypts credentials locally using AES-256-GCM with HKDF-Expand key derivation and per-credential random nonces, with configurable TTL expiry</li>
       <li><strong>Defense in Depth:</strong> Multiple layers of security (MFA, biometrics, encryption)</li>
       <li><strong>Minimal Privilege:</strong> App requests only necessary permissions</li>
       <li><strong>Fail Secure:</strong> On errors, default to denying access</li>
@@ -72,7 +72,7 @@
     <h3>Credential Protection</h3>
     <ul>
       <li><strong>No Default Password Storage:</strong> Passwords not stored by default; opt-in Credential Vault available</li>
-      <li><strong>Credential Vault (Opt-in):</strong> HKDF-Expand + XOR + HMAC encryption with per-credential nonces, configurable TTL</li>
+      <li><strong>Credential Vault (Opt-in):</strong> AES-256-GCM authenticated encryption with HKDF-Expand key derivation and per-credential random nonces, configurable TTL</li>
       <li><strong>Secure Memory Clearing:</strong> Credentials zeroed after use</li>
       <li><strong>Platform Encryption:</strong> iOS Keychain / Android EncryptedSharedPreferences</li>
       <li><strong>Clipboard Auto-Clear:</strong> Clipboard cleared automatically after paste (default 3 seconds, configurable per security profile: Paranoid 3s, Casual 10s, Speedster disabled)</li>
@@ -131,7 +131,7 @@
       <li><strong>JWT device authentication:</strong> Per-device tokens (HS256, 365-day expiry) with no personal information</li>
       <li><strong>Encrypted local storage:</strong> Conversation history and proxy tokens stored in platform-native encrypted storage</li>
       <li><strong>Rate limiting:</strong> AI chatbot is available to Pro subscribers only. The proxy server enforces subscription tier checks per device</li>
-      <li><strong>HTTPS-only:</strong> All proxy communication uses HTTPS (enforced by Fly.io)</li>
+      <li><strong>HTTPS-only:</strong> All proxy communication uses HTTPS (enforced by Google Cloud Run)</li>
     </ul>
 
     <h3>iOS Live Activities Security</h3>
@@ -140,13 +140,6 @@
       <li><strong>App Group isolation:</strong> Session data is written to an iOS App Group shared container accessible only to the app and its widget extension &mdash; not to other apps</li>
       <li><strong>Auto-expiry:</strong> Live Activities end automatically on disconnect or after 8 hours (iOS system limit)</li>
       <li><strong>No credentials exposed:</strong> Live Activities never display passwords, keys, usernames, or IP addresses &mdash; only display name, tool name, and aggregate counts</li>
-    </ul>
-
-    <h3>Smart Action Bar Security</h3>
-    <ul>
-      <li><strong>Pattern-based command injection:</strong> The Smart Action Bar sends terminal commands based on prompt pattern matching. Commands are pre-defined constants, not user-controllable</li>
-      <li><strong>User-initiated only:</strong> Quick-action buttons require explicit user tap &mdash; no commands are sent automatically</li>
-      <li><strong>Dismissable:</strong> Users can dismiss the action bar at any time to prevent accidental command execution</li>
     </ul>
 
     <h3>Audit &amp; Monitoring</h3>
@@ -164,8 +157,7 @@
       <li><strong>Credential Storage (iOS):</strong> AES-256-GCM (iOS Keychain)</li>
       <li><strong>Credential Storage (Android):</strong> AES-256-GCM (EncryptedSharedPreferences)</li>
       <li><strong>Credential Vault Key Derivation:</strong> HKDF-Expand / HMAC-SHA256 (RFC 5869)</li>
-      <li><strong>Credential Vault Encryption:</strong> XOR stream cipher / HKDF keystream (custom, per-credential nonce)</li>
-      <li><strong>Credential Vault Authentication:</strong> HMAC-SHA256 (RFC 2104)</li>
+      <li><strong>Credential Vault Encryption:</strong> AES-256-GCM (NIST SP 800-38D, per-credential random nonce)</li>
       <li><strong>Backup Encryption:</strong> AES-256-GCM (NIST SP 800-38D)</li>
       <li><strong>Backup Key Derivation:</strong> PBKDF2-HMAC-SHA256, 600,000 iterations (RFC 2898). Legacy v1 backups used 150,000 iterations</li>
       <li><strong>SSH Transport:</strong> Various (negotiated per SSH Protocol)</li>

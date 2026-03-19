@@ -84,6 +84,11 @@
     </div>
 
     <div class="card">
+      <h3 class="card__title">How do I connect through a jump host / bastion?</h3>
+      <p class="card__text">If your server is behind a bastion host, save the bastion as a connection profile first. Then on the connect form, use the "Jump Host" dropdown to select it (or tap "+ New jump host..." to create one inline). The app connects to the bastion first, then tunnels through to your target server. Jump host credentials are resolved from the encrypted vault or can be entered inline. This is a Pro feature.</p>
+    </div>
+
+    <div class="card">
       <h3 class="card__title">Is my data secure?</h3>
       <p class="card__text">Yes. All sensitive data is stored in platform-native encrypted storage (iOS Keychain / Android EncryptedSharedPreferences). SSH connections use standard protocol encryption. The app includes TOTP MFA, biometric authentication, host key verification, and audit logging. See our <a href="/privacy">Privacy Policy</a> for details.</p>
     </div>

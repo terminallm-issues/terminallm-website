@@ -64,7 +64,7 @@
     <ul>
       <li><strong>TOTP MFA:</strong> Mandatory time-based one-time passwords (RFC 6238)</li>
       <li><strong>Biometric Auth:</strong> Optional Face ID / Fingerprint as secondary factor</li>
-      <li><strong>Rate Limiting:</strong> 5 failed attempts triggers 2-minute lockout (persistent)</li>
+      <li><strong>Rate Limiting:</strong> TOTP: 5 failed attempts triggers 2-minute lockout (persistent). Connection rate limiting per security profile: Paranoid: 3/min, 10-min lockout. Casual: 5/min, 5-min lockout. Speedster: 10/min, 1-min lockout.</li>
       <li><strong>Code Reuse Prevention:</strong> TOTP codes cannot be reused within time window</li>
       <li><strong>Session Timeout:</strong> Re-authentication required after inactivity</li>
     </ul>
@@ -167,18 +167,33 @@
     <h2>Security Event Types</h2>
     <p>The following events are logged to the audit trail:</p>
     <div class="code-block">appLaunch - Application started
+appResumed - Application resumed from background
 authSuccess - Successful authentication
 authFailed - Failed authentication attempt
+biometricReauthSuccess - Biometric re-authentication succeeded
+biometricReauthFailed - Biometric re-authentication failed
+termsAccepted - User accepted terms of service
 connectionAttempt - SSH connection initiated
 connectionSuccess - SSH connection established
 connectionFailed - SSH connection failed
 hostKeyVerified - New host key accepted
 hostKeyRejected - Host key rejected by user
 hostKeyChanged - Changed host key detected (potential MITM)
+hostKeyMismatchAutoReconnect - Host key mismatch during auto-reconnect
 rateLimitTriggered - Rate limiting activated
 lockoutTriggered - Account locked out
 sessionTimeout - Session expired due to inactivity
+sessionResume - User resumed an authenticated session within grace period
+sessionClear - User session cleared
 deviceCompromisedWarning - Jailbreak/root detected
+profileChanged - Security profile changed
+vaultCredentialStored - Credential stored in vault
+vaultCredentialRetrieved - Credential retrieved from vault
+vaultCredentialExpired - Vault credential expired due to TTL
+vaultCredentialCleared - Individual vault credential cleared
+vaultAllCleared - All vault credentials cleared
+vaultStoreRetry - Vault store operation retried
+vaultTamperingDetected - Vault integrity check failed (potential tampering)
 mediaDropUploaded - Photo/file uploaded to remote server via Media Drop
 sessionResumed - User resumed a stored dtach session
 inputWaitDetected - AI assistant detected waiting for user input
@@ -187,7 +202,17 @@ tunnelStopped - Port forwarding tunnel stopped
 tunnelError - Port forwarding tunnel failed (bind error, SSH error)
 jumpHostConnected - Successfully connected through a jump host
 jumpHostFailed - Jump host connection failed
-chatbotMessageSent - User sent a message to the AI chatbot</div>
+backupCreated - Encrypted backup file created
+backupRestored - Backup file restored
+sftpFileDownloaded - File downloaded via SFTP
+sftpFileUploaded - File uploaded via SFTP
+sftpFileDeleted - File deleted via SFTP
+sftpDirectoryCreated - Directory created via SFTP
+sftpDirectoryDeleted - Directory deleted via SFTP
+sftpFileRenamed - File renamed via SFTP
+sftpFileCreated - File created via SFTP
+developerPatStored - Developer personal access token stored
+developerPatCleared - Developer personal access token cleared</div>
 
     <h2>Secure Usage Guidelines</h2>
 
@@ -285,7 +310,7 @@ chatbotMessageSent - User sent a message to the AI chatbot</div>
     </div>
     <p style="margin-top: 16px;"><strong>GitHub:</strong> <a href="https://github.com/terminallm-issues/.github/issues">github.com/terminallm-issues/.github/issues</a></p>
 
-    <p style="margin-top: 32px; color: var(--text-disabled); font-size: 0.875rem; font-style: italic;">Last Security Review: February 17, 2026</p>
+    <p style="margin-top: 32px; color: var(--text-disabled); font-size: 0.875rem; font-style: italic;">Last Security Review: March 20, 2026</p>
 
   </main>
 

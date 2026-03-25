@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Tool Authentication Guide - TerminaLLM</title>
+  <meta name="description" content="Set up authentication tokens for Claude Code, GitHub Copilot, OpenAI Codex, Gemini, and other AI coding tools before connecting via TerminaLLM.">
+  <link rel="icon" type="image/png" href="../app_icon.png">
+  <link rel="apple-touch-icon" href="../app_icon.png">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .tool-card { margin-bottom: 16px; }
+    .tool-card summary {
+      cursor: pointer;
+      padding: 16px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      list-style: none;
+    }
+    .tool-card summary::-webkit-details-marker { display: none; }
+    .tool-card[open] summary { border-radius: 12px 12px 0 0; border-bottom: none; }
+    .tool-card__body {
+      padding: 16px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+    }
+    .tool-card__name { font-weight: 700; color: var(--text); font-size: 1rem; }
+    .tool-card__meta { color: var(--text-secondary); font-size: 0.8rem; }
+    .tool-card__chevron {
+      margin-left: auto;
+      color: var(--text-secondary);
+      transition: transform 0.2s;
+    }
+    .tool-card[open] .tool-card__chevron { transform: rotate(90deg); }
+    .code-block {
+      background: #000;
+      color: #69F0AE;
+      padding: 16px;
+      border-radius: 8px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      overflow-x: auto;
+      white-space: pre;
+      margin: 12px 0;
+    }
+    .code-block .comment { color: #666; }
+    .warning-box {
+      background: rgba(255, 152, 0, 0.1);
+      border: 1px solid rgba(255, 152, 0, 0.3);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-top: 12px;
+      color: #FFB74D;
+      font-size: 0.85rem;
+    }
+    .info-box {
+      background: rgba(76, 175, 80, 0.1);
+      border: 1px solid rgba(76, 175, 80, 0.3);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-top: 12px;
+      color: #81C784;
+      font-size: 0.85rem;
+    }
+    .env-var { color: #69F0AE; font-family: monospace; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="glow-line"></div>
+
+  <nav class="site-nav">
+    <div class="site-nav__inner">
+      <a href="/" class="site-nav__brand">
+        <span class="site-nav__logo">&gt;_T</span>
+        <span class="site-nav__title">TerminaLLM</span>
+      </a>
+      <ul class="site-nav__links">
+        <li><a href="/support">Support</a></li>
+        <li><a href="/privacy">Privacy</a></li>
+        <li><a href="/terms">Terms</a></li>
+        <li><a href="/account-deletion">Account Deletion</a></li>
+        <li><a href="/security">Security</a></li>
+        <li><a href="https://github.com/terminallm-issues/.github/issues">GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="site-container">
+
+    <section class="hero" style="padding-bottom: 24px;">
+      <h1 class="hero__title" style="font-size: 2rem;">AI Tool Authentication</h1>
+      <p class="hero__subtitle">Set up tokens before connecting to avoid login issues on mobile.</p>
+    </section>
+
+    <!-- Why -->
+    <h2 class="section-header">Why Tokens?</h2>
+    <div class="card">
+      <p class="card__text">
+        AI coding tools (Claude Code, Copilot, Codex, etc.) require authentication on the remote server.
+        Their browser-based <code>/login</code> flows don't work from mobile SSH &mdash; opening a browser
+        causes Android/iOS to kill the terminal app, dropping your SSH session.
+      </p>
+      <p class="card__text" style="margin-top: 12px;">
+        The solution: <strong>generate a token on your computer once</strong>, add it to your TerminaLLM
+        connection profile as an environment variable, and never deal with <code>/login</code> again.
+      </p>
+      <div class="info-box">
+        <strong>How to add env vars:</strong> Long-press a saved connection profile &rarr; Edit &rarr; scroll to Environment Variables.
+        Tokens are exported automatically on every connect.
+      </div>
+    </div>
+
+    <!-- Tools -->
+    <h2 class="section-header">Setup by Tool</h2>
+
+    <!-- Claude Code -->
+    <details class="tool-card">
+      <summary>
+        <div>
+          <div class="tool-card__name">Claude Code</div>
+          <div class="tool-card__meta">Anthropic &bull; Token lasts 1 year</div>
+        </div>
+        <span class="tool-card__chevron">&#9654;</span>
+      </summary>
+      <div class="tool-card__body">
+        <p>Generate a long-lived OAuth token on any machine with a browser:</p>
+        <div class="code-block"><span class="comment"># One-time setup (lasts 1 year)</span>
+claude setup-token
+
+<span class="comment"># Add to TerminaLLM env vars:</span>
+CLAUDE_CODE_OAUTH_TOKEN=sk-ant-oat01-...</div>
+        <p style="margin-top: 12px;">
+          <strong>Alternative</strong> (requires API billing, not Pro/Max subscription):<br>
+          <span class="env-var">ANTHROPIC_API_KEY</span> &mdash; generate at
+          <a href="https://console.anthropic.com" style="color: #69F0AE;">console.anthropic.com</a>
+        </p>
+        <div class="warning-box">
+          <strong>Never run <code>/logout</code></strong> &mdash; it permanently revokes the token.
+          If you need to switch accounts, generate a new token with <code>claude setup-token</code>.
+        </div>
+      </div>
+    </details>
+
+    <!-- GitHub Copilot -->
+    <details class="tool-card">
+      <summary>
+        <div>
+          <div class="tool-card__name">GitHub Copilot CLI</div>
+          <div class="tool-card__meta">GitHub &bull; Configurable expiry</div>
+        </div>
+        <span class="tool-card__chevron">&#9654;</span>
+      </summary>
+      <div class="tool-card__body">
+        <p>Generate a fine-grained personal access token:</p>
+        <div class="code-block"><span class="comment"># github.com/settings/tokens</span>
+<span class="comment"># &gt; Fine-grained token</span>
+<span class="comment"># &gt; Permission: Copilot Requests</span>
+
+<span class="comment"># Add to TerminaLLM env vars:</span>
+COPILOT_GITHUB_TOKEN=github_pat_...</div>
+        <p style="margin-top: 12px;">
+          Also accepts: <span class="env-var">GH_TOKEN</span>, <span class="env-var">GITHUB_TOKEN</span><br>
+          <strong>Alternative:</strong> <code>gh auth login</code> on the server (device code flow, works in terminal)
+        </p>
+      </div>
+    </details>
+
+    <!-- OpenAI Codex -->
+    <details class="tool-card">
+      <summary>
+        <div>
+          <div class="tool-card__name">OpenAI Codex CLI</div>
+          <div class="tool-card__meta">OpenAI &bull; No expiry</div>
+        </div>
+        <span class="tool-card__chevron">&#9654;</span>
+      </summary>
+      <div class="tool-card__body">
+        <div class="code-block"><span class="comment"># Generate at: platform.openai.com/api-keys</span>
+<span class="comment"># &gt; Create new secret key</span>
+
+<span class="comment"># Add to TerminaLLM env vars:</span>
+OPENAI_API_KEY=sk-...</div>
+        <p style="margin-top: 12px;">Requires OpenAI API billing. Keys don't expire until manually revoked.</p>
+      </div>
+    </details>
+
+    <!-- Gemini -->
+    <details class="tool-card">
+      <summary>
+        <div>
+          <div class="tool-card__name">Google Gemini CLI</div>
+          <div class="tool-card__meta">Google &bull; No expiry &bull; Free tier available</div>
+        </div>
+        <span class="tool-card__chevron">&#9654;</span>
+      </summary>
+      <div class="tool-card__body">
+        <div class="code-block"><span class="comment"># Generate at: aistudio.google.com/apikey</span>
+<span class="comment"># &gt; Create API key</span>
+
+<span class="comment"># Add to TerminaLLM env vars:</span>
+GEMINI_API_KEY=AI...</div>
+        <p style="margin-top: 12px;">Free tier available with rate limits. Also accepts <span class="env-var">GOOGLE_API_KEY</span>.</p>
+      </div>
+    </details>
+
+    <!-- Amazon Q -->
+    <details class="tool-card">
+      <summary>
+        <div>
+          <div class="tool-card__name">Amazon Q Developer</div>
+          <div class="tool-card__meta">AWS &bull; IAM Identity Center or Builder ID</div>
+        </div>
+        <span class="tool-card__chevron">&#9654;</span>
+      </summary>
+      <div class="tool-card__body">
+        <p>Authenticate directly on the server (recommended):</p>
+        <div class="code-block"><span class="comment"># SSO / device code flow (works in terminal)</span>
+aws configure sso</div>
+        <p style="margin-top: 12px;">
+          For programmatic access, add to TerminaLLM env vars:<br>
+          <span class="env-var">AWS_ACCESS_KEY_ID</span>, <span class="env-var">AWS_SECRET_ACCESS_KEY</span>,
+          <span class="env-var">AWS_SESSION_TOKEN</span> (if using STS)
+        </p>
+      </div>
+    </details>
+
+    <!-- Aider -->
+    <details class="tool-card">
+      <summary>
+        <div>
+          <div class="tool-card__name">Aider</div>
+          <div class="tool-card__meta">Uses your LLM provider's key</div>
+        </div>
+        <span class="tool-card__chevron">&#9654;</span>
+      </summary>
+      <div class="tool-card__body">
+        <p>Aider doesn't have its own auth &mdash; it uses your LLM provider's API key:</p>
+        <div class="code-block"><span class="comment"># Add your provider's key to TerminaLLM env vars:</span>
+ANTHROPIC_API_KEY=sk-ant-...  <span class="comment"># Claude</span>
+OPENAI_API_KEY=sk-...         <span class="comment"># GPT</span>
+DEEPSEEK_API_KEY=...          <span class="comment"># DeepSeek</span></div>
+        <p style="margin-top: 12px;">If the key is set, Aider works. No <code>/login</code> needed.</p>
+      </div>
+    </details>
+
+    <!-- Cursor -->
+    <details class="tool-card">
+      <summary>
+        <div>
+          <div class="tool-card__name">Cursor CLI</div>
+          <div class="tool-card__meta">Cursor &bull; Expires after 90 days</div>
+        </div>
+        <span class="tool-card__chevron">&#9654;</span>
+      </summary>
+      <div class="tool-card__body">
+        <div class="code-block"><span class="comment"># Generate at: cursor.com dashboard</span>
+<span class="comment"># &gt; Integrations &gt; User API Keys</span>
+
+<span class="comment"># Add to TerminaLLM env vars:</span>
+CURSOR_API_KEY=...</div>
+        <p style="margin-top: 12px;">Keys expire after 90 days. Regenerate and update the env var when expired.</p>
+      </div>
+    </details>
+
+    <!-- Amp -->
+    <details class="tool-card">
+      <summary>
+        <div>
+          <div class="tool-card__name">Amp</div>
+          <div class="tool-card__meta">Sourcegraph &bull; Until revoked</div>
+        </div>
+        <span class="tool-card__chevron">&#9654;</span>
+      </summary>
+      <div class="tool-card__body">
+        <div class="code-block"><span class="comment"># Generate at: ampcode.com/settings</span>
+
+<span class="comment"># Add to TerminaLLM env vars:</span>
+AMP_API_KEY=...</div>
+      </div>
+    </details>
+
+    <!-- OpenCode -->
+    <details class="tool-card">
+      <summary>
+        <div>
+          <div class="tool-card__name">OpenCode</div>
+          <div class="tool-card__meta">Uses your LLM provider's key</div>
+        </div>
+        <span class="tool-card__chevron">&#9654;</span>
+      </summary>
+      <div class="tool-card__body">
+        <div class="code-block"><span class="comment"># Add your provider's key to TerminaLLM env vars:</span>
+ANTHROPIC_API_KEY=sk-ant-...  <span class="comment"># Claude</span>
+OPENAI_API_KEY=sk-...         <span class="comment"># GPT</span>
+
+<span class="comment"># Or authenticate on server:</span>
+<span class="comment"># opencode auth login</span></div>
+      </div>
+    </details>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 TerminaLLM. All rights reserved.</p>
+    <ul class="site-footer__links">
+      <li><a href="/privacy">Privacy Policy</a></li>
+      <li><a href="/terms">Terms of Service</a></li>
+      <li><a href="/security">Security</a></li>
+      <li><a href="/support">Support</a></li>
+    </ul>
+  </footer>
+</body>
+</html>

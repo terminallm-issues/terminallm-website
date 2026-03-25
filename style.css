@@ -491,7 +491,7 @@ code {
 
 /* ========== Copyable email / contact block ========== */
 .contact-block {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 0;
   margin-top: var(--space-md);
@@ -499,6 +499,7 @@ code {
   border-radius: var(--radius-lg);
   border: 1px solid rgba(255, 255, 255, 0.08);
   overflow: hidden;
+  max-width: 100%;
 }
 
 .contact-email {
@@ -512,6 +513,9 @@ code {
   -webkit-user-select: all;
   cursor: text;
   line-height: 1.4;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .contact-email__copy {
@@ -556,9 +560,27 @@ code {
   .hero__subtitle {
     font-size: 1rem;
   }
+  /* Contact block: stack vertically on mobile */
+  .contact-block {
+    flex-wrap: wrap;
+  }
+  .contact-email {
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    font-size: 0.8125rem;
+  }
+  .contact-email__copy {
+    flex: 1;
+    justify-content: center;
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
   /* Show Send Email on mobile */
   .contact-email__send {
     display: inline-flex;
+    flex: 1;
+    justify-content: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
   }
   .site-nav__links {
     gap: var(--space-sm);

@@ -74,7 +74,7 @@
       <li><strong>No Default Password Storage:</strong> Passwords not stored by default; opt-in Credential Vault available</li>
       <li><strong>Credential Vault (Opt-in):</strong> AES-256-GCM authenticated encryption with HKDF-Expand key derivation and per-credential random nonces, configurable TTL</li>
       <li><strong>Secure Memory Clearing:</strong> Credentials zeroed after use</li>
-      <li><strong>Platform Encryption:</strong> iOS Keychain / Android EncryptedSharedPreferences</li>
+      <li><strong>Platform Encryption:</strong> Platform-native encrypted storage</li>
       <li><strong>Clipboard Auto-Clear:</strong> Clipboard cleared automatically after paste (default 3 seconds, configurable per security profile: Paranoid 3s, Casual 10s, Speedster disabled)</li>
     </ul>
 
@@ -89,8 +89,7 @@
     <h3>Device Security</h3>
     <ul>
       <li><strong>Jailbreak/Root Detection:</strong> Warns on compromised devices</li>
-      <li><strong>Screen Capture Prevention:</strong> FLAG_SECURE on Android</li>
-      <li><strong>Screenshot Prevention:</strong> Secure text field overlay on iOS</li>
+      <li><strong>Screen Capture Prevention:</strong> Platform-native screenshot blocking</li>
       <li><strong>Developer Mode Warning:</strong> Alerts when developer mode enabled</li>
     </ul>
 
@@ -155,8 +154,7 @@
     <ul>
       <li><strong>TOTP Generation:</strong> HMAC-SHA1 (RFC 6238)</li>
       <li><strong>Host Key Fingerprint:</strong> SHA-256 (OpenSSH format)</li>
-      <li><strong>Credential Storage (iOS):</strong> AES-256-GCM (iOS Keychain)</li>
-      <li><strong>Credential Storage (Android):</strong> AES-256-GCM (EncryptedSharedPreferences)</li>
+      <li><strong>Credential Storage:</strong> AES-256-GCM (platform-native encrypted storage)</li>
       <li><strong>Credential Vault Key Derivation:</strong> HKDF-Expand / HMAC-SHA256 (RFC 5869)</li>
       <li><strong>Credential Vault Encryption:</strong> AES-256-GCM (NIST SP 800-38D, per-credential random nonce)</li>
       <li><strong>Backup Encryption:</strong> AES-256-GCM (NIST SP 800-38D)</li>
@@ -242,7 +240,7 @@ developerPatCleared - Developer personal access token cleared</div>
       <li><strong>No Remote Wipe:</strong> No capability to remotely disable compromised instances</li>
       <li><strong>Single User:</strong> No multi-user or role-based access control</li>
       <li><strong>Local Audit Only:</strong> Audit logs stored locally only</li>
-      <li><strong>Dart GC Memory Limitation:</strong> Dart's garbage collector may retain copies of credential data in heap memory even after explicit zeroing. Platform-level device encryption (iOS sandbox, Android SELinux) mitigates this risk</li>
+      <li><strong>Dart GC Memory Limitation:</strong> Dart's garbage collector may retain copies of credential data in heap memory even after explicit zeroing. Platform-level device encryption and sandboxing mitigates this risk</li>
     </ol>
 
     <h2>Vulnerability Disclosure</h2>

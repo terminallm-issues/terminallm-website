@@ -83,7 +83,7 @@
     <h3>Voice Input</h3>
     <p>The App offers optional speech-to-text input for dictating terminal commands and chatbot messages. Two speech engines are available:</p>
     <ul>
-      <li><strong>Built-in (platform STT):</strong> Uses the device's native speech recognition (iOS Speech framework, Android SpeechRecognizer). These platform engines may send audio to Apple or Google servers for processing, depending on your device model and OS version</li>
+      <li><strong>Built-in (platform STT):</strong> Uses the device's native speech recognition engine. Platform engines may send audio to their respective servers for processing, depending on your device model and OS version</li>
       <li><strong>Whisper (on-device AI):</strong> Runs entirely on-device via whisper.cpp &mdash; no audio leaves the device. Creates a temporary WAV file that is deleted immediately after transcription</li>
     </ul>
     <p>TerminaLLM never permanently stores audio data. Users choose their preferred engine in Settings. Microphone access is requested only when the mic button is tapped.</p>
@@ -122,11 +122,11 @@
 
     <h3>Additional Security Measures</h3>
     <ul>
-      <li>Multi-factor authentication (TOTP) required for app access</li>
+      <li>Optional multi-factor authentication (TOTP)</li>
       <li>Optional biometric authentication (Face ID / Fingerprint)</li>
       <li>Session timeouts after inactivity</li>
       <li>Rate limiting on authentication attempts</li>
-      <li>Screen capture prevention (Android FLAG_SECURE, iOS secure text field overlay)</li>
+      <li>Screen capture prevention (platform-native)</li>
       <li>Clipboard auto-clear after paste operations</li>
     </ul>
 

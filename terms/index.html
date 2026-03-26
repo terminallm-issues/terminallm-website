@@ -83,7 +83,7 @@
     <h2>5. Security Features Disclaimer</h2>
 
     <h3>5.1 Authentication</h3>
-    <p>The App provides multi-factor authentication (MFA) and optional biometric authentication. These features enhance security but do not guarantee absolute protection. You are responsible for:</p>
+    <p>The App provides optional multi-factor authentication (TOTP) and optional biometric authentication. These features enhance security but do not guarantee absolute protection. If you enable them, you are responsible for:</p>
     <ul>
       <li>Keeping your TOTP secret secure</li>
       <li>Not sharing your biometric data</li>
@@ -120,10 +120,10 @@
     </ul>
 
     <h3>5.5 Voice Input (Speech-to-Text)</h3>
-    <p>The App offers optional speech-to-text input using platform-native speech recognition engines (iOS Speech framework, Android SpeechRecognizer) and an on-device Whisper engine (whisper.cpp). You acknowledge that:</p>
+    <p>The App offers optional speech-to-text input using platform-native speech recognition and an on-device Whisper engine (whisper.cpp). You acknowledge that:</p>
     <ul>
       <li>Speech recognition is performed on-device by the operating system (Built-in engine) or on-device by Whisper (whisper.cpp), not by TerminaLLM servers</li>
-      <li>The Built-in engine: iOS Speech framework and Android SpeechRecognizer may have their own data handling and privacy policies as determined by Apple and Google respectively</li>
+      <li>The Built-in engine uses your device's native speech recognition, which may have its own data handling and privacy policies as determined by the platform provider</li>
       <li>The Whisper engine runs entirely on-device &mdash; no audio leaves your device. A temporary WAV file is created and deleted immediately after transcription</li>
       <li>TerminaLLM does not permanently record, store, or transmit audio data</li>
       <li>Recognized text is sent to the terminal or chatbot input as plain text</li>

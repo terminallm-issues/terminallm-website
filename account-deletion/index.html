@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Account &amp; Data Deletion - TerminaLLM</title>
   <meta name="description" content="How to delete your TerminaLLM account and data.">
-  <link rel="icon" type="image/png" href="../app_icon.png">
-  <link rel="apple-touch-icon" href="../app_icon.png">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -42,20 +43,29 @@
 
     <h2 class="section-header">Delete All Data</h2>
     <div class="card">
-      <h3 class="card__title">Uninstall the App</h3>
-      <p class="card__text">Uninstalling TerminaLLM from your device permanently deletes all locally stored data, including:</p>
+      <h3 class="card__title">In-App: Delete All Data</h3>
+      <p class="card__text">Open the app &rarr; Settings &rarr; scroll to the bottom &rarr; <strong>Delete All Data</strong>. After two confirmation prompts, this erases all locally stored data and resets the app to its initial state, including:</p>
       <ul style="margin-top: 12px; padding-left: 24px; color: var(--text-secondary);">
-        <li>SSH connection profiles</li>
-        <li>Credential Vault entries (passwords, private keys)</li>
-        <li>TOTP MFA secrets</li>
+        <li>All saved connection profiles</li>
+        <li>Encrypted credentials in the vault</li>
+        <li>MFA and biometric settings</li>
+        <li>Terminal settings and preferences</li>
+        <li>AI chatbot conversation history</li>
+        <li>Command snippets</li>
+        <li>All other app data</li>
+      </ul>
+      <p class="card__text" style="margin-top: 12px;"><strong>This action is irreversible.</strong> We recommend creating an encrypted backup before deleting if you want to preserve your settings. The app will close automatically after deletion.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card__title">Uninstall the App</h3>
+      <p class="card__text">Uninstalling TerminaLLM from your device also permanently deletes all locally stored data, including everything listed above plus:</p>
+      <ul style="margin-top: 12px; padding-left: 24px; color: var(--text-secondary);">
         <li>Host key fingerprints</li>
         <li>Security audit logs</li>
-        <li>AI chatbot conversation history</li>
         <li>Terminal session recordings</li>
         <li>Custom terminal themes</li>
-        <li>All app preferences and settings</li>
       </ul>
-      <p class="card__text" style="margin-top: 12px;"><strong>This action is irreversible.</strong> We recommend creating an encrypted backup before uninstalling if you want to preserve your settings.</p>
     </div>
 
     <h2 class="section-header">Delete Specific Data</h2>

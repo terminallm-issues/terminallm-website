@@ -486,7 +486,34 @@ code {
 }
 
 .store-badges img {
-  height: 44px;
+  height: 54px;
+  border-radius: 8px;
+}
+
+.store-badge {
+  transition: opacity 0.2s;
+}
+
+.store-badge:hover {
+  opacity: 0.85;
+}
+
+.store-badge--pending {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.store-badge--coming-soon {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
 }
 
 /* ========== Copyable email / contact block ========== */

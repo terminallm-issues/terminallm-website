@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 646 250" width="646" height="250">
+  <rect width="646" height="250" rx="12" fill="#000"/>
+  <rect x="3" y="3" width="640" height="244" rx="10" fill="#000" stroke="#a6a6a6" stroke-width="2"/>
+  <text x="200" y="75" fill="#fff" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="36" font-weight="400" letter-spacing="1">Coming Soon on the</text>
+  <text x="200" y="155" fill="#fff" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="72" font-weight="600">App Store</text>
+  <!-- Apple logo approximation -->
+  <g transform="translate(75,45) scale(5.5)">
+    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.81-1.31.05-2.31-1.32-3.15-2.56C4.22 16 2.97 11.35 5.77 8.29c1.39-1.52 3.43-2.47 5.12-2.47 1.34-.03 2.59.9 3.4.9.82 0 2.35-1.11 3.96-.95.67.03 2.57.27 3.79 2.06-.1.06-2.26 1.32-2.24 3.94.03 3.13 2.75 4.17 2.78 4.19-.03.06-.43 1.49-1.43 2.95l-.44.59z M15.63 3.05c.75-.94 1.27-2.23 1.13-3.55-1.09.05-2.42.73-3.2 1.65-.7.81-1.32 2.13-1.15 3.38 1.22.1 2.46-.61 3.22-1.48z" fill="#fff"/>
+  </g>
+</svg>

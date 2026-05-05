@@ -105,8 +105,8 @@
     <div class="card">
       <p class="card__text">
         AI coding tools (Claude Code, Copilot, Codex, etc.) require authentication on the remote server.
-        Their browser-based <code>/login</code> flows don't work from mobile SSH &mdash; opening a browser
-        causes Android/iOS to kill the terminal app, dropping your SSH session.
+        Their browser-based <code>/login</code> flows don't work from mobile SSH, since opening a browser
+        causes Android/iOS to kill the terminal app and drops your SSH session.
       </p>
       <p class="card__text" style="margin-top: 12px;">
         The solution: <strong>generate a token on your computer once</strong>, add it to your TerminaLLM
@@ -143,7 +143,7 @@ CLAUDE_CODE_OAUTH_TOKEN=sk-ant-oat01-...</div>
           <a href="https://console.anthropic.com" style="color: #69F0AE;">console.anthropic.com</a>
         </p>
         <div class="warning-box">
-          <strong>Never run <code>/logout</code></strong> &mdash; it permanently revokes the token.
+          <strong>Never run <code>/logout</code>.</strong> It permanently revokes the token.
           If you need to switch accounts, generate a new token with <code>claude setup-token</code>.
         </div>
       </div>
@@ -242,7 +242,7 @@ aws configure sso</div>
         <span class="tool-card__chevron">&#9654;</span>
       </summary>
       <div class="tool-card__body">
-        <p>Aider doesn't have its own auth &mdash; it uses your LLM provider's API key:</p>
+        <p>Aider doesn't have its own auth. It uses your LLM provider's API key:</p>
         <div class="code-block"><span class="comment"># Add your provider's key to TerminaLLM env vars:</span>
 ANTHROPIC_API_KEY=sk-ant-...  <span class="comment"># Claude</span>
 OPENAI_API_KEY=sk-...         <span class="comment"># GPT</span>

@@ -1,0 +1,24 @@
+{
+  // Cloudflare Workers config for the static-assets-only marketing site.
+  // The Cloudflare Pages dashboard is configured to run
+  // `npx wrangler versions upload` on every push to main; that command
+  // needs this file to know what to deploy.
+  //
+  // We're shipping the repo root as static assets — every .html / .css /
+  // image is served as-is from the edge. No JavaScript Worker logic.
+  // `./` covers the whole tree; wrangler skips dotfiles and a small
+  // built-in deny list (.git, etc.). Anything else we don't want shipped
+  // (README.md, package.json) gets listed in `.assetsignore`.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "terminallm-website",
+  "compatibility_date": "2026-05-05",
+  "assets": {
+    "directory": "./",
+    // Serve `index.html` for `/` and trailing-slash paths so the existing
+    // `/privacy/`, `/terms/` etc. layout keeps working.
+    "html_handling": "auto-trailing-slash",
+    // 404s fall through to a not-found page (we don't have one yet —
+    // wrangler will fall back to a default 404 until we add /404.html).
+    "not_found_handling": "404-page"
+  }
+}

@@ -1,0 +1,8 @@
+# Files in the repo that should NOT be served from the edge.
+# wrangler reads this when building the static-assets bundle.
+README.md
+wrangler.jsonc
+.assetsignore
+node_modules
+.github
+.git

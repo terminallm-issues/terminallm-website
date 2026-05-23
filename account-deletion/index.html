@@ -102,8 +102,18 @@
     </div>
 
     <h2 class="section-header">Server-Side Data</h2>
+    <div class="card">
+      <h3 class="card__title">In-App: Forget AI Device</h3>
+      <p class="card__text">Open the app &rarr; Settings &rarr; Security &rarr; <strong>Forget AI Device</strong>. Confirming this:</p>
+      <ul style="margin-top: 12px; padding-left: 24px; color: var(--text-secondary);">
+        <li>Clears the local device identifier, chatbot proxy token, cached subscription tier, AI usage counters, AI consent state, and local push-notification state on this device</li>
+        <li>Immediately asks the TerminaLLM proxy to delete the subscription cache and push-token mappings tied to this device</li>
+        <li>Does not cancel your platform subscription (cancel that separately in the App Store or Google Play)</li>
+      </ul>
+    </div>
     <div class="callout callout--caution">
-      <p><strong>Proxy server data:</strong> If you used the built-in AI chatbot (Pro subscription), your device identifier and daily message count were sent to our proxy server for rate limiting and stored temporarily in Redis. Usage data expires after 48 hours. Subscription validation data may be retained longer. No conversation content is ever logged or stored server-side. To request deletion of any proxy data, email privacy@terminallm.app (see below).</p>
+      <p><strong>What the proxy stores:</strong> If you use the AI chatbot or paid features, our proxy (Google Cloud Run, backed by Firestore) holds a randomly generated device identifier, your subscription tier and state, AI usage counters, free-tier quota counters, and push-token mappings. No conversation content is logged or stored server-side. Proxy access logs (timestamp, IP address, route, status) are retained up to 30 days, then automatically deleted.</p>
+      <p style="margin-top: 12px;"><strong>Free-tier quota counters</strong> are mirrored server-side and are <strong>not</strong> reset by uninstalling, clearing app data, or Forget AI Device. They roll over automatically on each feature's schedule (for example, daily or monthly). To request deletion of any residual server-side data, email privacy@terminallm.app or legal@terminallm.app with your device identifier (Settings &rarr; About); we process requests within 30 days.</p>
     </div>
 
     <h2 class="section-header">Need Help?</h2>

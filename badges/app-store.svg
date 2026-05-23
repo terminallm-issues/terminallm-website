@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 646 250" width="646" height="250">
   <rect width="646" height="250" rx="12" fill="#000"/>
   <rect x="3" y="3" width="640" height="244" rx="10" fill="#000" stroke="#a6a6a6" stroke-width="2"/>
-  <text x="200" y="75" fill="#fff" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="36" font-weight="400" letter-spacing="1">Coming Soon on the</text>
+  <text x="200" y="75" fill="#fff" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="36" font-weight="400" letter-spacing="1">Download on the</text>
   <text x="200" y="155" fill="#fff" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="72" font-weight="600">App Store</text>
   <!-- Apple logo approximation -->
   <g transform="translate(75,45) scale(5.5)">

@@ -633,3 +633,39 @@ code {
 .terminal-prompt .prompt-symbol {
   color: var(--primary);
 }
+
+/* ========== Hero with flanking phone screenshots (desktop) ========== */
+/* The site container is a narrow 720px column; the flanking shots need more
+   room, so this row breaks out to a wider page-centered width. */
+.hero-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xl);
+  width: min(1080px, calc(100vw - 2 * var(--screen-padding)));
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.hero-row .hero {
+  flex: 1 1 auto; /* no min-width:0 — keep the title from shrink-clipping */
+}
+.hero-aside {
+  flex: 0 0 auto;
+  width: 200px;
+  height: auto;
+  border-radius: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5), 0 0 50px var(--primary-glow);
+}
+
+/* Below ~960px the flanking shots are dropped and the row returns to the
+   normal centered column. */
+@media (max-width: 960px) {
+  .hero-row {
+    width: auto;
+    left: auto;
+    transform: none;
+  }
+  .hero-aside { display: none; }
+}

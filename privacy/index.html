@@ -33,8 +33,19 @@
 
   <main class="site-container legal-content">
 
+    <style>
+      .legal-content .table-scroll { overflow-x: auto; margin: 16px 0; }
+      .legal-content table { border-collapse: collapse; width: 100%; min-width: 720px; font-size: 0.9375rem; }
+      .legal-content th, .legal-content td { border: 1px solid rgba(255, 255, 255, 0.15); padding: 10px 12px; text-align: left; vertical-align: top; }
+    </style>
+
     <h1>Privacy Policy - TerminaLLM</h1>
-    <p class="last-updated">Last Updated: May 23, 2026</p>
+    <p class="last-updated">Last Updated: July 14, 2026</p>
+
+    <h2>Data Controller</h2>
+    <p>TerminaLLM LLC, 7401 Granada Road, Denver, CO 80221, USA, is the data controller for your personal data under the EU General Data Protection Regulation (GDPR), the UK GDPR, and the California Consumer Privacy Act / California Privacy Rights Act (CCPA/CPRA).</p>
+    <p><strong>Privacy contact:</strong> privacy@terminallm.app</p>
+    <p>We do not have a separately appointed Data Protection Officer or an EU Article 27 representative at this time. Users in the European Economic Area, the United Kingdom, or Switzerland may direct GDPR / UK GDPR inquiries to privacy@terminallm.app.</p>
 
     <h2>Overview</h2>
     <p>TerminaLLM ("the App") is a mobile SSH terminal client that enables secure remote command execution. This Privacy Policy describes how we collect, use, and protect your information.</p>
@@ -42,7 +53,7 @@
     <h2>Information We Collect</h2>
 
     <h3>Data Stored Locally on Your Device</h3>
-    <p>The App stores the following information locally on your device using platform-native encrypted storage (iOS Keychain / Android EncryptedSharedPreferences):</p>
+    <p>The App stores the following information locally on your device using platform-native encrypted storage:</p>
     <ul>
       <li><strong>SSH Connection Details:</strong> Host address, port number, and username</li>
       <li><strong>TOTP MFA Secrets:</strong> Encrypted secrets for multi-factor authentication</li>
@@ -57,7 +68,7 @@
       <li><strong>AI Chatbot Usage:</strong> Your subscription tier is stored locally. The AI chatbot and voice-to-command translation are available to Pro subscribers only. The last 50 chatbot messages are persisted in platform-native encrypted storage for conversation continuity across app sessions</li>
       <li><strong>Free-Tier Quotas:</strong> To enforce daily, weekly, monthly, and concurrent caps on Free-tier features (file editor saves, batch SFTP operations, session shares, encrypted backups, port forward duration, saved bookmarks), the App stores per-feature counters and rollover timestamps in local app preferences (<code>quota_v1_*</code> keys). These counters are stored on-device only and never transmitted</li>
       <li><strong>Terminal Session Recordings:</strong> If you use the recording feature, terminal sessions are captured in asciicast v2 format (.cast files) and stored locally in the app's documents directory. Recordings contain all terminal output and input events with timestamps. Recordings are <strong>not encrypted at rest</strong> and are never automatically uploaded or shared</li>
-      <li><strong>Encrypted Backups:</strong> If you create a backup, an encrypted .tlmbackup file is generated containing your selected data categories (profiles, snippets, settings, and optionally vault credentials). Backups are encrypted with AES-256-GCM using a password-derived key (PBKDF2). Backup files are stored locally or shared via the system share sheet &mdash; they are never uploaded to TerminaLLM servers</li>
+      <li><strong>Encrypted Backups:</strong> If you create a backup, an encrypted .tlmbackup file is generated containing your selected data categories (profiles, snippets, settings, and optionally vault credentials). Backups are encrypted with AES-256-GCM using a password-derived key (PBKDF2-HMAC-SHA256, 1,000,000 iterations for v3 backups; legacy v1/v2 backup files are auto-upgraded on next save). Backup files are stored locally or shared via the system share sheet &mdash; they are never uploaded to TerminaLLM servers</li>
       <li><strong>Custom Terminal Themes:</strong> User-created terminal color themes (23 color values per theme) are stored in platform-native encrypted storage</li>
       <li><strong>Connection History:</strong> Timestamps, durations, and host information for recent connections (up to 10 entries) are stored locally in encrypted storage for the session resume feature</li>
       <li><strong>Connection Health Check:</strong> TCP port reachability results for saved profiles are cached in memory with a 60-second TTL. Health check results are never persisted to disk or transmitted</li>
@@ -65,17 +76,22 @@
       <li><strong>Device Identifier:</strong> A randomly generated device identifier (not linked to your hardware or advertising ID) is created and stored locally for proxy authentication purposes</li>
       <li><strong>Push Notification Tokens:</strong> If you enable push notifications for AI prompt alerts, a Firebase Cloud Messaging (FCM) device token is generated by Google's Firebase SDK. This token is sent to the TerminaLLM proxy server and exchanged for an opaque push token (<code>tlm_</code> prefix) that is stored locally in encrypted storage and deployed to your remote server's <code>~/.terminallm/config</code> file. Push tokens expire automatically after 30 days and are re-registered on reconnect. No phone number, email address, or personal information is included in push tokens</li>
       <li><strong>AI Prompt Monitor:</strong> When push notifications are enabled, a lightweight POSIX shell script (<code>idle-notify.sh</code>) is deployed to your remote server at <code>~/.terminallm/</code>. This script uses dtach-rev's native idle detection (<code>-I</code>/<code>-C</code> flags) to fire when the terminal session has been idle for a configurable timeout, then sends a notification request to the TerminaLLM proxy server via <code>curl</code>. Notification payloads are transient &mdash; they are relayed as a push notification and not stored on the proxy server</li>
+      <li><strong>T-TCP Helper Daemon (optional):</strong> When you opt into Termina-TCP for fast reconnects, the App deploys a small Go binary (~6.5 MB uncompressed, ~2.6&ndash;2.9 MB gzipped) to <code>~/.terminallm/</code> on your remote server. The daemon multiplexes the SSH session, watches AI-tool idle hooks, and forwards push-notification requests. It is compiled with <code>-trimpath</code> so the compiled binary embeds no developer filesystem paths, opens no listening ports (Unix-socket only, reached through an SSH exec bridge inside your existing SSH session), and uses no third-party telemetry. You can disable deployment and uninstall the daemon any time via Settings &rarr; Help &rarr; "What we install on your server" &rarr; toggle off, or by manually deleting <code>~/.terminallm/</code> on the server</li>
+      <li><strong>Hive Helper Daemon (Swarm, Pro, optional):</strong> When you use the Swarm feature, the App can install Hive (about 4.5 MB: two binaries bundled inside the App and pushed to your server over your own SSH connection, never downloaded from a third-party host) to <code>~/.hive/</code> on your remote server. Hive orchestrates multi-agent Swarm sessions. Its daemon listens only on localhost (<code>127.0.0.1:7333</code>, never exposed to the network), requires a per-install authentication token stored at <code>~/.hive/auth-token</code> on your server, runs only while you use Swarm, and is controlled exclusively through your existing SSH session. Installation happens only when you explicitly tap Install in the Swarm setup, using your own SSH credentials. You can stop the daemon or uninstall Hive at any time from the Swarm screen's Hive menu, or by deleting <code>~/.hive/</code> on the server</li>
+      <li><strong>Swarm Configurations (Pro):</strong> Saved Swarm designs (agent rosters, recipes, per-agent model and effort choices) are stored locally in platform-native encrypted storage. They are never transmitted to TerminaLLM servers</li>
+      <li><strong>In-App Browser:</strong> When you tap an authentication URL detected in terminal output (OAuth flows for AI tools, etc.), the App opens it in an in-app browser (<code>flutter_inappwebview</code> on top of platform WebKit/WebView). The in-app browser does not persist cookies across sessions, runs no first-party analytics, and is dismissed when you return to the terminal. External sites you visit there are subject to their own privacy policies; the App does not log the URLs you open</li>
       <li><strong>iOS Live Activities:</strong> When an SSH session is active on iOS 16.1+, session metadata (server name, connected AI tool, AI state, and file change counts) is written to an App Group shared container (NSUserDefaults) and displayed on the Lock Screen and Dynamic Island via iOS Live Activities. This data is visible without unlocking your device. Live Activities are automatically ended when you disconnect or the session is idle for 8 hours (iOS system limit)</li>
+      <li><strong>Nearby Hosts (mDNS discovery, Android only):</strong> The Connect screen's Nearby Hosts feature uses standard mDNS / Bonjour multicast queries (<code>_ssh._tcp.local</code>) broadcast on your local network to discover SSH-advertising hosts. Queries contain no personal information and are local-only &mdash; they never leave your network. Discovery results (hostname, IP, port) are held in memory for the duration of the picker and discarded when the picker closes. <strong>Currently shipping on Android only</strong>; iOS support is pending Apple's manual approval of the <code>com.apple.developer.networking.multicast</code> entitlement</li>
     </ul>
 
     <h3>Data Transmitted to External Services</h3>
     <ul>
-      <li><strong>AI Chatbot:</strong> When using the built-in AI chatbot (Pro only), your prompts and streamed responses are sent through the TerminaLLM proxy server (hosted on Google Cloud Run) to the Anthropic API. The proxy server receives your device identifier and subscription tier for access control. Your remote server's OS type and shell may be included as context with requests. A <code>mode</code> field ("chat" or "translate") is also sent to indicate the request type. Messages are not stored on our proxy server beyond the brief in-memory window required to stream them through to Anthropic, and are not linked by us to your identity beyond transient routing. Anthropic's handling of API inputs, including any short-term retention for trust-and-safety review, is governed by <a href="https://www.anthropic.com/privacy">Anthropic's Privacy Policy</a>. Use of the AI chatbot requires explicit in-app consent on first use. You can revoke consent at any time in Settings &rarr; Security.</li>
-      <li><strong>Voice-to-Command Translation:</strong> When using the wand button or voice input to translate natural language into shell commands (Pro only), your spoken text is sent through the same TerminaLLM proxy server to the Anthropic API. Your remote server's OS type and shell are included as context to generate OS-appropriate commands. A <code>mode</code> field ("translate") distinguishes these requests from chat requests. No audio is transmitted, only the transcribed text. Requests are not stored on our proxy server beyond the streaming window. Anthropic's handling is again governed by <a href="https://www.anthropic.com/privacy">Anthropic's Privacy Policy</a>. Use of voice-to-command translation requires explicit in-app consent on first use. You can revoke consent at any time in Settings &rarr; Security.</li>
+      <li><strong>AI Chatbot:</strong> When using the built-in AI chatbot (Pro only), your prompts and streamed responses are sent through the TerminaLLM proxy server (hosted on Google Cloud Run) to the Anthropic API. The proxy server receives your device identifier and subscription tier for access control. Your remote server's OS type and shell may be included as context with requests. A <code>mode</code> field ("chat" or "translate") is also sent to indicate the request type. Messages are not stored on our proxy server beyond the brief in-memory window required to stream them through to Anthropic and are not linked by us to your identity beyond transient routing. Anthropic's handling of API inputs, including any short-term retention for trust-and-safety review, is governed by <a href="https://www.anthropic.com/privacy">Anthropic's Privacy Policy</a>. Use of the AI chatbot requires explicit in-app consent on first use. You can revoke consent at any time in Settings &rarr; Security.</li>
+      <li><strong>Voice-to-Command Translation:</strong> When using the wand button or voice input to translate natural language into shell commands (Pro only), your spoken text is sent through the same TerminaLLM proxy server to the Anthropic API. Your remote server's OS type and shell are included as context to generate OS-appropriate commands. A <code>mode</code> field ("translate") distinguishes these requests from chat requests. No audio is transmitted &mdash; only the transcribed text. Requests are not stored on our proxy server beyond the streaming window; Anthropic's handling is again governed by <a href="https://www.anthropic.com/privacy">Anthropic's Privacy Policy</a>. Use of voice-to-command translation requires explicit in-app consent on first use. You can revoke consent at any time in Settings &rarr; Security.</li>
       <li><strong>Subscription, Purchase, and Usage State:</strong> To unlock paid features and enforce subscription access, the proxy may receive and cache your randomly generated device identifier, subscription tier and state, platform-store purchase metadata from Apple App Store or Google Play purchase validation, and AI usage counters. This data is linked to the app-generated device identifier, not to your advertising ID or hardware identifier.</li>
       <li><strong>Support Correspondence:</strong> If you email support@terminallm.app, privacy@terminallm.app, or legal@terminallm.app, we receive your email address, message content, and any attachments or diagnostic details you choose to provide. We use this information only to respond to your request, troubleshoot issues, and satisfy legal or security obligations.</li>
       <li><strong>Crash Data:</strong> Firebase Crashlytics may collect crash reports, stack traces, device model, OS version, app version, timestamps, and diagnostic breadcrumbs. We configure the App not to intentionally include terminal content, SSH credentials, or directly identifying personal information in crash reports. Crash reports are treated as diagnostic data and are not linked by us to your subscription device identifier.</li>
-      <li><strong>Proxy Server Logs:</strong> For abuse prevention and operational reliability, our proxy server briefly logs each request's timestamp, IP address, route, and HTTP status. These access logs do not contain message content and are retained for up to 30 days, then automatically deleted.</li>
+      <li><strong>Proxy server logs:</strong> For abuse prevention and operational reliability, our proxy server briefly logs each request's timestamp, IP address, route, and HTTP status. These access logs do not contain message content and are retained for up to 30 days, then automatically deleted</li>
     </ul>
 
     <h3>Data We Do NOT Collect</h3>
@@ -83,9 +99,13 @@
       <li><strong>Passwords (by default):</strong> SSH passwords are not stored by default &mdash; you enter them at connection time and they are cleared from memory after use. If you opt in to the Credential Vault, credentials are encrypted and stored locally with configurable TTL expiry (see "Credential Vault" above)</li>
       <li><strong>Command History:</strong> Commands executed on remote servers are not logged by the App</li>
       <li><strong>Terminal Output:</strong> Content displayed in the terminal is not stored or transmitted</li>
+      <li><strong>Swarm Agent Traffic:</strong> Swarm (Pro) is a remote control for AI coding agents that run on your own server under your own AI CLI accounts (for example Claude Code or Codex). Your Swarm prompts, agent output, and code travel only between your device and your server over SSH. The App never sends them to TerminaLLM servers or to Anthropic. Each agent's own network traffic (for example Claude Code calling Anthropic from your server) is governed by that tool's provider, exactly as if you had run it from a desktop terminal</li>
       <li><strong>Location Data:</strong> We do not access your location</li>
-      <li><strong>Personal Information (proactive collection):</strong> We do not request your name, phone number, government-issued identifiers, contacts, calendar, or browsing history. However, if you voluntarily contact us by email (privacy@/legal@/support@terminallm.app), we receive your email address and message content for that correspondence. If you subscribe, Apple App Store or Google Play purchase and subscription metadata is processed as described under "Data Transmitted to External Services" above. The proxy server may briefly log IP addresses for abuse prevention. The opaque device identifier we generate is treated as personal data under the GDPR's broad definition</li>
+      <li><strong>Personal Information (proactive collection):</strong> We do not request your name, phone number, government-issued identifiers, contacts, calendar, or browsing history. <strong>However:</strong> if you voluntarily contact us by email (privacy@/legal@/support@terminallm.app), we receive your email address and message content for that correspondence. If you subscribe, Apple App Store or Google Play purchase and subscription metadata is processed as described under "Subscription, Purchase, and Usage State" above. The proxy server may briefly log IP addresses for abuse prevention as described above. The opaque device identifier we generate is treated as personal data under the GDPR's broad definition</li>
     </ul>
+
+    <h3>Cookies and Tracking Signals</h3>
+    <p>The App is a native mobile application and does not use cookies, web beacons, or browser localStorage. We do not track your activity across other apps or websites and we do not share or sell any data to advertisers. Because the App is not a web browser, we do not receive or respond to "Do Not Track" headers; native-mobile equivalents (iOS Limit Ad Tracking, Android opt-out of ad personalization) do not apply because we do not display advertising and do not use advertising identifiers.</p>
 
     <h3>Voice Input</h3>
     <p>The App offers optional speech-to-text input for dictating terminal commands and chatbot messages. Two speech engines are available:</p>
@@ -116,8 +136,7 @@
 
     <h3>Encryption at Rest</h3>
     <ul>
-      <li><strong>iOS:</strong> All sensitive data stored in Apple Keychain with <code>first_unlock_this_device</code> accessibility</li>
-      <li><strong>Android:</strong> EncryptedSharedPreferences with AES-256 encryption</li>
+      <li>All sensitive data stored using platform-native encrypted storage with AES-256 encryption</li>
     </ul>
 
     <h3>Encryption in Transit</h3>
@@ -136,6 +155,14 @@
       <li>Screen capture prevention (platform-native)</li>
       <li>Clipboard auto-clear after paste operations</li>
     </ul>
+
+    <h2>Managing Your Subscription</h2>
+    <p>You can cancel your subscription at any time:</p>
+    <ul>
+      <li><strong>iOS:</strong> Open Settings &gt; your name &gt; Subscriptions &gt; TerminaLLM &gt; Cancel Subscription</li>
+      <li><strong>Android:</strong> Open Google Play &gt; tap your profile icon &gt; Payments &amp; subscriptions &gt; Subscriptions &gt; TerminaLLM &gt; Cancel</li>
+    </ul>
+    <p>Cancellation takes effect at the end of your current billing period. You retain access to paid features until the period ends. No refunds are issued for partial periods. You can manage or change your plan at any time through the same settings.</p>
 
     <h2>Data Retention</h2>
     <ul>
@@ -162,72 +189,130 @@
 
     <h3>Delete Your Data</h3>
     <ul>
-      <li><strong>Delete All Data:</strong> Open the App &rarr; Settings &rarr; scroll to bottom &rarr; Delete All Data. This erases all locally stored data and resets the App to its initial state</li>
-      <li>Uninstalling the App also removes all locally stored data</li>
-      <li>You can clear specific data (saved connections, audit logs, chat history) from App settings</li>
+      <li>Uninstalling the App removes all locally stored data</li>
+      <li>You can clear specific data (saved connections, audit logs) from App settings</li>
     </ul>
 
-    <h3>For EU Residents (GDPR)</h3>
+    <h3>For EU / UK / Swiss Residents (GDPR / UK GDPR / FADP)</h3>
     <p>You have the right to:</p>
     <ul>
-      <li>Access your personal data</li>
-      <li>Rectify inaccurate data</li>
-      <li>Erase your data ("right to be forgotten")</li>
-      <li>Restrict processing</li>
-      <li>Data portability</li>
-      <li>Object to processing</li>
+      <li><strong>Access</strong> your personal data (Art. 15 GDPR)</li>
+      <li><strong>Rectify</strong> inaccurate data (Art. 16)</li>
+      <li><strong>Erase</strong> your data &mdash; "right to be forgotten" (Art. 17)</li>
+      <li><strong>Restrict</strong> processing (Art. 18)</li>
+      <li><strong>Data portability</strong> (Art. 20)</li>
+      <li><strong>Object</strong> to processing (Art. 21)</li>
+      <li><strong>Withdraw consent</strong> at any time, where processing is based on consent</li>
+      <li><strong>Lodge a complaint</strong> with your local supervisory authority (a list is maintained at <a href="https://edpb.europa.eu/about-edpb/about-edpb/members_en">edpb.europa.eu</a>; UK residents may complain to the Information Commissioner's Office at <a href="https://ico.org.uk">ico.org.uk</a>)</li>
     </ul>
-    <p>To exercise these rights, use the in-app data management features or contact us at the address below.</p>
+    <p><strong>Legal bases for processing:</strong> We process the limited personal data we receive (device identifier, IP address, FCM token, optional email correspondence, chatbot inputs you choose to send) on the bases of (a) <strong>performance of contract</strong> to deliver the App and any subscription you purchase, (b) <strong>legitimate interests</strong> in operating, securing, and debugging the App, and (c) <strong>consent</strong>, where required (e.g., for crash reporting where you have not opted out).</p>
+    <p><strong>To exercise your rights</strong>, email <strong>privacy@terminallm.app</strong>. We will acknowledge your request within 30 days and, in most cases, complete it within that window. We may need to verify your identity (typically by responding from the email you used to contact us, or by confirming the device identifier from within the App). There is no charge for the first request in any 12-month period; manifestly unfounded or repetitive requests may incur a reasonable fee or be refused as permitted by Art. 12(5) GDPR.</p>
 
     <h3>For California Residents (CCPA/CPRA)</h3>
     <p>You have the right to:</p>
     <ul>
-      <li>Know what personal information is collected</li>
-      <li>Delete your personal information</li>
-      <li>Opt-out of the "sale" of personal information (we do not sell data)</li>
-      <li>Non-discrimination for exercising your rights</li>
+      <li><strong>Know</strong> what categories of personal information we collect, the sources, the business purpose, and the categories of recipients</li>
+      <li><strong>Delete</strong> your personal information, subject to limited exceptions (e.g., legal compliance, fraud prevention)</li>
+      <li><strong>Correct</strong> inaccurate personal information</li>
+      <li><strong>Opt out of "sale" or "sharing"</strong> of personal information &mdash; <strong>we do not sell or share personal information for cross-context behavioral advertising, and we have not done so in the preceding 12 months</strong></li>
+      <li><strong>Limit use of sensitive personal information</strong> &mdash; we do not use sensitive personal information for any secondary purpose beyond providing the requested service</li>
+      <li><strong>Non-discrimination</strong> for exercising any of these rights</li>
     </ul>
+    <p>To exercise California rights, email <strong>privacy@terminallm.app</strong> with the subject "California Privacy Request." We do not currently use a "Do Not Sell or Share" link because we do not sell or share personal information; if that ever changes, we will add the link as required by &sect;1798.135.</p>
+
+    <h3>Authorized Agents and Minors</h3>
+    <p>You may use an authorized agent to submit a request on your behalf, subject to verification under Cal. Civ. Code &sect; 1798.140(d). For users under 16, the CCPA requires opt-in consent before any sale or sharing &mdash; we do not sell or share at all, so this is moot, but we honor the rule by default.</p>
 
     <h2>Third-Party Services</h2>
     <p>The App integrates with the following third-party services:</p>
     <ul>
       <li><strong>Anthropic, PBC</strong> &mdash; AI chatbot responses are powered by Anthropic's Claude API. Requests pass through our proxy to Anthropic. See <a href="https://www.anthropic.com/privacy">Anthropic's Privacy Policy</a></li>
-      <li><strong>Google Firebase</strong> &mdash; Firebase Cloud Messaging (FCM) is used to deliver push notifications to your device when AI tools need input. An FCM device token (an opaque identifier generated by Google's Firebase SDK) is transmitted to Google for push delivery. No message content is stored by Firebase. Firebase Crashlytics is used to collect anonymous crash reports (device model, OS version, app version, stack traces) to help diagnose and fix bugs. Crash reporting is enabled by default and can be disabled at any time in Settings &gt; Security &gt; Crash Reporting. No terminal content, SSH credentials, or personally identifying information is included in crash reports. See <a href="https://policies.google.com/privacy">Google's Privacy Policy</a></li>
+      <li><strong>Google Firebase</strong> &mdash; Firebase Cloud Messaging (FCM) is used to deliver push notifications to your device when AI tools need input. An FCM device token (an opaque identifier generated by Google's Firebase SDK) is transmitted to Google for push delivery. No message content is stored by Firebase. Firebase Crashlytics is used to collect crash reports (device model, OS version, app version, stack traces, breadcrumbs) to help diagnose and fix bugs. Crash reporting is enabled by default and can be disabled at any time in Settings &gt; Security &gt; Crash Reporting. <strong>We do not intentionally include terminal content, SSH credentials, or personally identifying information in crash reports.</strong> If incidental data appears in stack frames or log lines, it is processed by Firebase under Google's terms and is not retained by us beyond Firebase's standard reporting window. See <a href="https://policies.google.com/privacy">Google's Privacy Policy</a> and <a href="https://firebase.google.com/support/privacy">Firebase Crashlytics data handling</a></li>
       <li><strong>Google Cloud Run</strong> &mdash; Our proxy server infrastructure is hosted on Google Cloud Run (US-East region). The proxy does not store message content or push notification payloads</li>
-      <li><strong>Apple App Store</strong>: Processes iOS distribution, in-app purchases, subscriptions, purchase restoration, and refunds. Apple receives account, purchase, subscription, device, and IP data under its own terms. See <a href="https://www.apple.com/legal/privacy/data/en/app-store/">App Store &amp; Privacy</a></li>
-      <li><strong>Google Play</strong>: Processes Android distribution, in-app purchases, subscriptions, purchase restoration, and refunds. Google receives account, purchase, subscription, device, and IP data under its own terms. See <a href="https://policies.google.com/privacy">Google's Privacy Policy</a></li>
-      <li><strong>GitHub</strong> &mdash; Bug reports and feature requests can be submitted via <a href="https://github.com/terminallm-issues/.github/issues">GitHub Issues</a></li>
     </ul>
+
+    <h2>Subprocessors</h2>
+    <p>We use the following subprocessors to provide the App, operate the proxy service, deliver purchases and notifications, and diagnose crashes:</p>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Subprocessor</th>
+            <th>Purpose</th>
+            <th>User data processed</th>
+            <th>Privacy statement</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Anthropic, PBC</strong></td>
+            <td>AI chatbot and voice-to-command completions</td>
+            <td>Chatbot messages and natural-language command requests you choose to send, selected context such as remote OS type and shell, and transient request metadata routed through our proxy</td>
+            <td><a href="https://www.anthropic.com/privacy">Anthropic Privacy Policy</a></td>
+          </tr>
+          <tr>
+            <td><strong>Google Cloud / Firebase</strong></td>
+            <td>Firestore storage and cloud authentication for the TerminaLLM proxy</td>
+            <td>Device identifiers, subscription tier/state, usage counters, push token mappings, platform, token expiration timestamps, and service-account authentication metadata</td>
+            <td><a href="https://policies.google.com/privacy">Google Privacy Policy</a> and <a href="https://firebase.google.com/support/privacy">Firebase Privacy and Security</a></td>
+          </tr>
+          <tr>
+            <td><strong>Google Cloud Run</strong></td>
+            <td>Hosting the TerminaLLM proxy in the US-East region</td>
+            <td>Device identifiers, subscription tier, request timestamps, IP addresses, routes, HTTP status codes, chatbot or translation payloads while streaming, and push notification relay requests</td>
+            <td><a href="https://policies.google.com/privacy">Google Privacy Policy</a></td>
+          </tr>
+          <tr>
+            <td><strong>Firebase Cloud Messaging</strong></td>
+            <td>Push notification delivery for AI prompt alerts</td>
+            <td>FCM device tokens, opaque TerminaLLM push tokens, platform, notification routing metadata, and transient notification payloads</td>
+            <td><a href="https://policies.google.com/privacy">Google Privacy Policy</a> and <a href="https://firebase.google.com/support/privacy">Firebase Privacy and Security</a></td>
+          </tr>
+          <tr>
+            <td><strong>Firebase Crashlytics</strong></td>
+            <td>Crash reporting and diagnostics</td>
+            <td>Crash reports, stack traces, device model, OS version, app version, breadcrumbs, crash timestamps, and any incidental diagnostic data captured in crash context</td>
+            <td><a href="https://policies.google.com/privacy">Google Privacy Policy</a> and <a href="https://firebase.google.com/support/privacy">Firebase Crashlytics data handling</a></td>
+          </tr>
+          <tr>
+            <td><strong>Apple App Store</strong></td>
+            <td>iOS distribution, in-app purchases, subscriptions, purchase restoration, and refunds</td>
+            <td>Apple account, purchase, subscription, refund, device, IP address, and App Store interaction data processed by Apple under its terms</td>
+            <td><a href="https://www.apple.com/legal/privacy/data/en/app-store/">App Store &amp; Privacy</a></td>
+          </tr>
+          <tr>
+            <td><strong>Google Play</strong></td>
+            <td>Android distribution, in-app purchases, subscriptions, purchase restoration, and refunds</td>
+            <td>Google account, purchase, subscription, refund, device, IP address, and Play Store interaction data processed by Google under its terms</td>
+            <td><a href="https://policies.google.com/privacy">Google Privacy Policy</a> and <a href="https://play.google.com/about/play-terms/">Google Play Terms of Service</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <h3>Open Source Libraries</h3>
     <p>The App uses open-source libraries for SSH connectivity and terminal rendering. These libraries do not collect or transmit user data.</p>
 
     <h2>Children's Privacy</h2>
-    <p>The App is not intended for children under 13 years of age. We do not knowingly collect personal information from children.</p>
+    <p>The App is not intended for children under 13 years of age (or the equivalent minimum age in the user's jurisdiction, e.g., 16 in some EU member states under GDPR). The App's store age rating is set to reflect that an SSH terminal can expose users to unrestricted command execution and arbitrary remote content.</p>
+    <p>We do not knowingly collect personal information from children. If you believe a child has provided personal information to us, contact privacy@terminallm.app and we will delete the data and any related account state from our systems within 30 days, in accordance with the Children's Online Privacy Protection Act (COPPA, 15 U.S.C. &sect;&sect; 6501&ndash;6506) and equivalent laws in other jurisdictions.</p>
 
     <h2>Changes to This Policy</h2>
     <p>We may update this Privacy Policy periodically. Changes will be noted by updating the "Last Updated" date. Continued use of the App after changes constitutes acceptance of the updated policy.</p>
 
-    <h2>Data Controller</h2>
-    <p>The data controller for personal information processed in connection with the App is:</p>
-    <p style="margin-top: 8px;">
-      TerminaLLM LLC<br>
-      7401 Granada Road<br>
-      Denver, CO 80221<br>
-      United States
-    </p>
-
     <h2>Contact Information</h2>
-    <p>For privacy-related questions or concerns:</p>
+    <p>For privacy-related questions, requests, or complaints:</p>
     <div class="contact-block">
       <span class="contact-email">privacy@terminallm.app</span>
       <button class="contact-email__copy" onclick="navigator.clipboard.writeText('privacy@terminallm.app').then(()=>{this.textContent='Copied';this.classList.add('contact-email__copy--copied');setTimeout(()=>{this.textContent='Copy';this.classList.remove('contact-email__copy--copied')},2000)})">Copy</button>
       <a href="mailto:privacy@terminallm.app" class="btn btn--tertiary contact-email__send">Send Email</a>
     </div>
-    <p style="margin-top: 16px;"><strong>GitHub Issues:</strong> <a href="https://github.com/terminallm-issues/.github/issues">github.com/terminallm-issues/.github/issues</a></p>
+    <p style="margin-top: 16px;"><strong>Mailing address</strong>: TerminaLLM LLC, 7401 Granada Road, Denver, CO 80221, United States</p>
+    <p><strong>GitHub Issues</strong>: <a href="https://github.com/terminallm-issues/.github/issues">https://github.com/terminallm-issues/.github/issues</a></p>
 
-    <h2>Data Processing Location</h2>
-    <p>Most data processing occurs locally on your device. When using the AI chatbot, message data is processed through our proxy server (Google Cloud Run, US-East region) and Anthropic's API servers. When push notifications are enabled, notification relay requests pass through the same proxy server and are forwarded to Firebase Cloud Messaging (Google) for delivery to your device.</p>
+    <h2>Data Processing Location and International Transfers</h2>
+    <p>Most data processing occurs locally on your device. When you use the AI chatbot, voice-to-command translation, or push notifications, limited data (your device identifier, subscription tier, message content for chatbot/translation, and FCM token for push) is processed by our proxy server (Google Cloud Run, US-East region), Anthropic's API servers, and/or Firebase Cloud Messaging (Google) &mdash; all of which are located in the <strong>United States</strong>.</p>
+    <p><strong>For users in the European Economic Area, the United Kingdom, or Switzerland:</strong> When personal data is transferred from your jurisdiction to the United States, the transfer relies on (a) the <strong>EU-U.S. Data Privacy Framework</strong> (DPF) and the UK Extension thereto, where the U.S. recipient self-certifies under that framework (Google LLC is DPF-certified; Anthropic's certification status is published on its trust center), or (b) the <strong>European Commission's Standard Contractual Clauses (SCCs)</strong> (2021/914) and the UK International Data Transfer Addendum, where DPF certification does not apply. We have evaluated U.S. surveillance law (per <em>Schrems II</em>, C-311/18) and have implemented supplementary measures including end-to-end TLS, minimization (we do not transmit terminal output, credentials, or names), and short retention windows on proxy logs. To request a copy of the relevant transfer mechanism, email privacy@terminallm.app.</p>
 
     <div class="callout callout--info" style="margin-top: 32px;">
       <p><em>This privacy policy is provided for informational purposes. TerminaLLM is designed with privacy as a core principle &mdash; we collect minimal data, store credentials locally, and only transmit data to external services when required for specific features (AI chatbot).</em></p>

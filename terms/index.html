@@ -34,13 +34,15 @@
   <main class="site-container legal-content">
 
     <h1>Terms of Service - TerminaLLM</h1>
-    <p class="last-updated">Last Updated: May 6, 2026</p>
+    <p class="last-updated">Last Updated: July 14, 2026</p>
+
+    <p>These Terms of Service ("Terms") are a binding legal agreement between you and <strong>TerminaLLM LLC</strong>, a Colorado limited liability company with its principal place of business at 7401 Granada Road, Denver, CO 80221, United States ("TerminaLLM," "we," "us," or "our").</p>
 
     <h2>1. Acceptance of Terms</h2>
-    <p>By downloading, installing, or using TerminaLLM ("the App"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not use the App. You must be at least 13 years of age to use this App.</p>
+    <p>By downloading, installing, or using TerminaLLM ("the App"), you agree to be bound by these Terms. If you do not agree to these Terms, do not use the App. You must be at least 13 years of age (or the equivalent minimum age in your jurisdiction, e.g., 16 in some EU member states) to use this App. If you are using the App on behalf of an organization, you represent that you have authority to bind that organization to these Terms.</p>
 
     <h2>2. Description of Service</h2>
-    <p>TerminaLLM is a mobile SSH terminal client that enables secure remote command execution on servers you have authorization to access. The App is designed and optimized for use with AI coding assistants including Claude Code, Cursor, Aider, and similar tools. The App also includes a built-in AI chatbot for assistance with terminal and coding questions.</p>
+    <p>TerminaLLM is a mobile SSH terminal client that enables secure remote command execution on servers you have authorization to access. The App is designed and optimized for use with AI coding assistants including Claude Code, Cursor, Aider, and similar tools. The App also includes a built-in AI chatbot for assistance with terminal and coding questions, and Swarm (Pro), a feature that launches and supervises multiple AI coding agents on your own server.</p>
 
     <h2>3. User Responsibilities</h2>
 
@@ -85,7 +87,7 @@
     <h2>5. Security Features Disclaimer</h2>
 
     <h3>5.1 Authentication</h3>
-    <p>The App provides optional multi-factor authentication (TOTP) and optional biometric authentication. These features enhance security but do not guarantee absolute protection. If you enable them, you are responsible for:</p>
+    <p>The App provides multi-factor authentication (MFA) and optional biometric authentication. These features enhance security but do not guarantee absolute protection. You are responsible for:</p>
     <ul>
       <li>Keeping your TOTP secret secure</li>
       <li>Not sharing your biometric data</li>
@@ -104,7 +106,7 @@
     <p>The App offers an optional Credential Vault that encrypts and stores SSH credentials locally on your device. By enabling this feature, you acknowledge that:</p>
     <ul>
       <li>Credentials are stored using AES-256-GCM authenticated encryption with HKDF-Expand key derivation and per-credential random nonces</li>
-      <li>Credential security depends on the integrity of your device and its platform-native encrypted storage (iOS Keychain / Android EncryptedSharedPreferences)</li>
+      <li>Credential security depends on the integrity of your device and its platform-native encrypted storage</li>
       <li>The developers are NOT liable for credential data loss, corruption, or compromise resulting from device theft, jailbreak/root, malware, OS vulnerabilities, or hardware failure</li>
       <li>Vault entries have configurable TTL expiry; expired credentials are permanently deleted</li>
       <li>Uninstalling the App permanently deletes all vault data with no recovery option</li>
@@ -122,11 +124,10 @@
     </ul>
 
     <h3>5.5 Voice Input (Speech-to-Text)</h3>
-    <p>The App offers optional speech-to-text input using platform-native speech recognition and an on-device Whisper engine (whisper.cpp). You acknowledge that:</p>
+    <p>The App offers optional speech-to-text input using two engines: platform-native speech recognition and an on-device Whisper AI engine. You acknowledge that:</p>
     <ul>
-      <li>Speech recognition is performed on-device by the operating system (Built-in engine) or on-device by Whisper (whisper.cpp), not by TerminaLLM servers</li>
-      <li>The Built-in engine uses your device's native speech recognition, which may have its own data handling and privacy policies as determined by the platform provider</li>
-      <li>The Whisper engine runs entirely on-device &mdash; no audio leaves your device. A temporary WAV file is created and deleted immediately after transcription</li>
+      <li><strong>Built-in engine</strong>: Speech recognition is performed by the operating system. Platform speech engines may have their own data handling and privacy policies as determined by their respective platform providers</li>
+      <li><strong>Whisper engine</strong>: Runs fully on-device via whisper.cpp &mdash; no audio leaves the device. Whisper creates temporary audio files (WAV format) that are processed locally and deleted immediately after transcription</li>
       <li>TerminaLLM does not permanently record, store, or transmit audio data</li>
       <li>Recognized text is sent to the terminal or chatbot input as plain text</li>
       <li>Accuracy varies by device, language, engine selection, and ambient noise conditions</li>
@@ -142,8 +143,8 @@
     </ul>
 
     <h3>5.7 Subscription Tiers</h3>
-    <p>TerminaLLM is offered in three tiers: <strong>Free</strong>, <strong>Plus</strong>, and <strong>Pro</strong>. The Free tier includes a daily, weekly, or monthly allotment of features that paid subscribers receive without limits (e.g., the in-app code editor, session recording, session sharing, port forwarding, batch SFTP operations, saved bookmarks, and encrypted backups). The Plus tier removes those Free-tier caps and unlocks additional power features. The Pro tier includes everything in Plus plus AI-assisted features (the built-in AI chatbot and voice-to-command translation).</p>
-    <p>Feature availability, tier composition, and quota values may change at our discretion. We reserve the right to add, remove, or adjust limits, quotas, and tier membership without prior notice. We will provide reasonable notice of pricing changes through in-app communication or store notifications. Active subscriptions remain governed by the terms in effect at the time of purchase until the end of the current billing period.</p>
+    <p>TerminaLLM is offered in three tiers: <strong>Free</strong>, <strong>Plus</strong>, and <strong>Pro</strong>. The Free tier includes a daily, weekly, or monthly allotment of features that paid subscribers receive without limits (e.g., the in-app code editor, session recording, session sharing, port forwarding, batch SFTP operations, saved bookmarks, and encrypted backups). The Plus tier removes those Free-tier caps and unlocks additional power features. The Pro tier includes everything in Plus plus AI-assisted features (Swarm multi-agent sessions, the built-in AI chatbot, and voice-to-command translation).</p>
+    <p>Feature availability, tier composition, and quota values may change at our discretion. We reserve the right to adjust limits, quotas, and tier membership without prior notice. We will provide reasonable advance notice of (a) any <strong>material reduction</strong> to features or quotas already promised to a paid subscription tier and (b) any pricing change, through in-app communication, email (if supplied), or platform store notifications, with such notice given at least 30 days before the change takes effect where reasonably practicable. Active subscriptions remain governed by the terms in effect at the time of purchase until the end of the current billing period. If you do not accept a material adverse change, you may cancel your subscription before it takes effect through your platform store and will not be charged for the renewal.</p>
 
     <h3>5.8 Terminal Session Recording</h3>
     <p>The App offers optional terminal session recording in asciicast v2 format (.cast files). You acknowledge that:</p>
@@ -161,10 +162,43 @@
       <p>This App is designed and marketed for use with AI coding assistants (Claude Code, Cursor, Aider, Copilot CLI, and similar tools). <strong>Commands executed by AI coding assistants through this App are YOUR sole responsibility.</strong> AI tools may suggest or execute destructive commands including but not limited to file deletion, system configuration changes, package installation, and code modifications. The developers are NOT liable for any actions taken by AI tools running in your terminal session, including data loss, system damage, security vulnerabilities, or unintended changes to your codebase.</p>
     </div>
 
+    <h3>5.10 Swarm Multi-Agent Sessions (Pro)</h3>
+    <p>Swarm launches and supervises multiple AI coding agents (for example Claude Code and Codex) on a server you control. You acknowledge that:</p>
+    <ul>
+      <li>Everything in Section 5.9 applies to <strong>every agent in a Swarm simultaneously</strong>. Multiple agents can read, create, modify, and delete files on your server at the same time, and commands executed by Swarm agents are your sole responsibility. We strongly recommend running Swarms only in directories under version control</li>
+      <li>Swarm agents run <strong>on your server, under your operating-system user, signed in with your own third-party AI accounts</strong> (for example Anthropic or OpenAI CLI logins). Your use of those tools through Swarm is governed by each provider's own terms, and any usage-based costs, rate limits, or account actions those providers apply are between you and them. TerminaLLM does not provide, resell, or proxy those AI services: Swarm prompts and agent output are never sent to TerminaLLM servers</li>
+      <li>Swarm requires the Hive helper daemon, which the App installs to <code>~/.hive/</code> on your server only after your explicit confirmation and using your own SSH credentials. Its daemon listens on localhost only. You may stop it or uninstall it at any time from the Swarm screen or by deleting <code>~/.hive/</code> on the server</li>
+      <li>Work produced by a Swarm is <strong>AI-generated</strong> and subject to the disclaimers in Section 5.4. You are solely responsible for reviewing agent output before relying on it, merging it, or deploying it</li>
+      <li>Swarm availability depends on your server's compatibility, your SSH connection, and the third-party AI tools installed on your server</li>
+    </ul>
+
+    <h3>5.11 Subscription Auto-Renewal</h3>
+    <p>Plus and Pro subscriptions are sold as <strong>auto-renewing in-app purchases</strong> through the Apple App Store (StoreKit) or the Google Play Store (Google Play Billing). By subscribing, you authorize the platform store to charge your payment method on file at the start of each billing period (monthly or annually, as selected) at the then-current price for the selected tier, unless you cancel at least 24 hours before the end of the current period. Subscriptions are managed entirely by the platform store; <strong>TerminaLLM LLC does not directly process or store your payment information.</strong> You may cancel, change, or view your subscription at any time through your device's subscription management screen (iOS: Settings &rarr; [your name] &rarr; Subscriptions; Android: Play Store &rarr; Profile &rarr; Payments &amp; subscriptions &rarr; Subscriptions). Cancellation takes effect at the end of the current billing period.</p>
+
+    <h3>5.12 Refunds</h3>
+    <p>Because subscriptions are billed by the platform store, <strong>all refund requests must be submitted to Apple or Google directly</strong> in accordance with their respective refund policies. We do not issue refunds outside the platform store and have no ability to override platform store decisions.</p>
+    <p><strong>EU / UK / Switzerland 14-day right of withdrawal:</strong> If you are a consumer residing in the European Economic Area, the United Kingdom, or Switzerland, you have a statutory right to withdraw from a subscription within 14 days of purchase without giving any reason, by contacting <strong>legal@terminallm.app</strong> (and, where applicable, the platform store). By accessing paid features during the 14-day period you acknowledge that performance has begun, and you may lose the right to a full refund for that performance under EU Directive 2011/83/EU once the service has been fully supplied. We will pass any such withdrawal request to the platform store and cooperate with their resolution process.</p>
+    <p>If you live in California, you may also exercise refund rights expressly granted by California Civil Code &sect; 1789.3 by contacting us at the address in Section 17 below or the California Department of Consumer Affairs, Division of Consumer Services, 1625 North Market Blvd., Suite N 112, Sacramento, CA 95834, (800) 952-5210.</p>
+
+    <h3>5.13 Tier Changes (Upgrades and Downgrades)</h3>
+    <p>You may change your subscription tier at any time through the platform store. Upgrading takes effect immediately; the platform store handles any proration of the remaining billing period. <strong>Downgrading</strong> (e.g., Pro &rarr; Plus, or Plus &rarr; Free) takes effect at the <strong>start of your next billing cycle</strong>: you retain access to the higher tier's features until the current period ends. Unused subscription time is not refunded on downgrade. After a downgrade takes effect, free-tier caps re-apply automatically; any data or settings created while on a higher tier remain accessible (subject to the relevant free-tier caps).</p>
+
+    <h3>5.14 Account Deletion ("Forget AI Device")</h3>
+    <p>You can permanently delete your TerminaLLM device record at any time via <strong>Settings &rarr; Security &rarr; Forget AI Device</strong> inside the App. Confirming this action:</p>
+    <ul>
+      <li>Clears the local chatbot device identifier, chatbot proxy JWT, cached subscription tier, AI usage counters, legacy model preference, AI consent state, and local push-notification state on this device</li>
+      <li>Immediately asks the TerminaLLM proxy (<code>/v1/auth/forget</code>) to delete the subscription cache and push-token mappings tied to this device</li>
+      <li>Does <strong>not</strong> reset Free-tier quota counters for non-AI features. Build 338+ mirrors supported Free-tier quota counters to Firestore at <code>quota_counters/{device_id}__{feature}</code>. Those counters are not reset by uninstalling the App, clearing app data, or using Forget AI Device. They roll over on the server-side quota schedule for each feature (for example, daily or monthly windows)</li>
+      <li>Does <strong>not</strong> delete proxy access logs. Proxy access logs, if any, may be retained for up to 30 days for security and operational purposes</li>
+      <li>Does <strong>not</strong> cancel your platform subscription. Auto-renewing subscriptions managed by Apple or Google remain active until you cancel them separately via the platform store (paths in &sect;5.11 above)</li>
+      <li>Does <strong>not</strong> delete local data unrelated to AI features (connection profiles, snippets, recordings, themes, vault, audit log) &mdash; these remain on your device until you uninstall the App or clear app data</li>
+    </ul>
+    <p>If you also want any residual server-side data deleted outside the in-app flow, email <strong>legal@terminallm.app</strong> with your device identifier (visible in Settings &rarr; About) and we will process the request within 30 days. The right to deletion is available regardless of jurisdiction and is provided in addition to any specific rights under GDPR Article 17, CCPA &sect; 1798.105, or other applicable data-protection law.</p>
+
     <h2>6. Limitation of Liability</h2>
 
     <h3>6.1 Disclaimer of Warranties</h3>
-    <p>THE APP IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO:</p>
+    <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE APP IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO:</p>
     <ul>
       <li>MERCHANTABILITY</li>
       <li>FITNESS FOR A PARTICULAR PURPOSE</li>
@@ -172,12 +206,13 @@
       <li>SECURITY</li>
       <li>ACCURACY</li>
     </ul>
+    <p>Some jurisdictions do not allow the exclusion of certain warranties (including, without limitation, statutory consumer guarantees under the Australian Consumer Law, the UK Consumer Rights Act 2015, the EU Consumer Sales Directive, or California Civil Code &sect;&sect; 1791.1, 1792), so the above exclusion may not apply to you in full. Where such warranties cannot be excluded, our liability is limited to the minimum required by that law.</p>
 
     <h3>6.2 Limitation of Damages</h3>
     <p><strong>CRITICAL DISCLAIMER:</strong></p>
     <p>You assume ALL risk and responsibility for:</p>
     <ol>
-      <li><strong>Commands Executed:</strong> Any command executed on remote systems through the App, including commands resulting in:
+      <li><strong>Commands Executed</strong>: Any command executed on remote systems through the App, including commands resulting in:
         <ul>
           <li>Data loss or corruption</li>
           <li>System damage or downtime</li>
@@ -185,7 +220,7 @@
           <li>Financial loss</li>
         </ul>
       </li>
-      <li><strong>Remote System Security:</strong> The security of systems you access, including:
+      <li><strong>Remote System Security</strong>: The security of systems you access, including:
         <ul>
           <li>Server configuration</li>
           <li>Network security</li>
@@ -193,7 +228,7 @@
           <li>Data protection</li>
         </ul>
       </li>
-      <li><strong>Credential Compromise:</strong> Any unauthorized access resulting from:
+      <li><strong>Credential Compromise</strong>: Any unauthorized access resulting from:
         <ul>
           <li>Compromised SSH credentials</li>
           <li>Lost or stolen devices</li>
@@ -201,41 +236,42 @@
           <li>Social engineering attacks</li>
         </ul>
       </li>
-      <li><strong>Device Security:</strong> The security status of your device, including:
+      <li><strong>Device Security</strong>: The security status of your device, including:
         <ul>
           <li>Jailbroken/rooted devices (we warn but cannot prevent use)</li>
           <li>Malware or spyware</li>
           <li>Compromised operating system</li>
         </ul>
       </li>
-      <li><strong>AI-Generated Content:</strong> Any consequences of acting on chatbot suggestions, including incorrect code, commands, or advice</li>
+      <li><strong>AI-Generated Content</strong>: Any consequences of acting on chatbot suggestions, including incorrect code, commands, or advice</li>
     </ol>
-    <p>IN NO EVENT SHALL THE DEVELOPERS BE LIABLE FOR ANY:</p>
+    <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL TERMINALLM LLC, ITS MEMBERS, OFFICERS, EMPLOYEES, OR AGENTS BE LIABLE FOR ANY:</p>
     <ul>
       <li>Direct, indirect, incidental, special, consequential, or punitive damages</li>
       <li>Loss of profits, data, use, goodwill, or other intangible losses</li>
-      <li>Damages exceeding the amount you paid for the App (which is zero for free versions)</li>
+      <li>Damages exceeding the greater of (a) the amount you paid TerminaLLM LLC for the App in the twelve (12) months immediately preceding the event giving rise to the claim, or (b) USD 100</li>
     </ul>
+    <p><strong>Carve-outs.</strong> Nothing in these Terms excludes or limits our liability for: (i) death or personal injury caused by our negligence; (ii) fraud or fraudulent misrepresentation; (iii) any other liability that cannot be excluded or limited under applicable law (including, where you reside in the EU/UK, liability arising from gross negligence or wilful misconduct, or your statutory consumer rights). If you are a consumer in the European Economic Area, the United Kingdom, or Switzerland, your statutory rights remain unaffected.</p>
 
     <h2>7. Indemnification</h2>
-    <p>You agree to indemnify, defend, and hold harmless the developers from any claims, damages, losses, liabilities, costs, and expenses (including legal fees) arising from:</p>
+    <p>To the maximum extent permitted by applicable law, you agree to indemnify, defend, and hold harmless TerminaLLM LLC, its members, officers, employees, and agents from any <strong>third-party</strong> claims, damages, losses, liabilities, costs, and reasonable attorneys' fees arising out of or related to:</p>
     <ul>
-      <li>Your use of the App</li>
-      <li>Your violation of these Terms</li>
-      <li>Your violation of any third-party rights</li>
-      <li>Commands executed on remote systems</li>
-      <li>Unauthorized access to systems</li>
+      <li>Your unauthorized access to, or violation of the security of, any third-party system through the App</li>
+      <li>Your violation of these Terms or any applicable law in connection with your use of the App</li>
+      <li>Your infringement or misappropriation of any third-party right (including intellectual property, privacy, or contractual rights)</li>
+      <li>Content, commands, or data you transmit through the App that violates the rights of a third party</li>
     </ul>
+    <p>This indemnification obligation does <strong>not</strong> apply to: (a) claims arising from our gross negligence, wilful misconduct, or violation of law; (b) consumer claims that, under applicable mandatory consumer-protection law, may not be subject to indemnification by the consumer; or (c) any claim that we have settled or paid without your prior written consent. We will provide prompt written notice of any indemnifiable claim, give you reasonable cooperation, and allow you to control the defense and settlement, provided that any settlement releases us in full and does not impose non-monetary obligations on us without our written consent.</p>
 
     <h2>8. Regulatory Compliance</h2>
 
     <h3>8.1 Not Suitable Without Additional Compliance</h3>
     <p>This App is NOT designed or certified for:</p>
     <ul>
-      <li><strong>HIPAA-regulated healthcare systems:</strong> Accessing Protected Health Information (PHI) requires additional compliance measures not provided by this App</li>
-      <li><strong>PCI-DSS payment systems:</strong> Accessing cardholder data environments requires additional compliance measures</li>
-      <li><strong>Government classified systems:</strong> Access may require FedRAMP authorization or security clearance</li>
-      <li><strong>Critical infrastructure:</strong> Industrial control systems, power grids, etc.</li>
+      <li><strong>HIPAA-regulated healthcare systems</strong>: Accessing Protected Health Information (PHI) requires additional compliance measures not provided by this App</li>
+      <li><strong>PCI-DSS payment systems</strong>: Accessing cardholder data environments requires additional compliance measures</li>
+      <li><strong>Government classified systems</strong>: Access may require FedRAMP authorization or security clearance</li>
+      <li><strong>Critical infrastructure</strong>: Industrial control systems, power grids, etc.</li>
     </ul>
     <p>If you need to access regulated systems, consult your compliance team before using this App.</p>
 
@@ -245,11 +281,13 @@
     <h2>9. Intellectual Property</h2>
 
     <h3>9.1 App License</h3>
-    <p>The App is licensed under the MIT License. You may use, copy, modify, and distribute the App in accordance with that license.</p>
+    <p>The App, including its source code, compiled binaries, user-interface design, graphics, icons, and bundled content, is <strong>proprietary software</strong> of TerminaLLM LLC and is protected by copyright, trademark, and other intellectual-property laws. &copy; 2026 TerminaLLM LLC. All rights reserved. The App is <strong>licensed, not sold</strong>, to you under a personal, non-exclusive, non-transferable, revocable license to install and use the App on devices you own or control, solely for your personal or internal business use, subject to these Terms and to any platform store EULA (Apple Licensed Application End User License Agreement or Google Play Terms of Service).</p>
+    <p>You may not, except to the extent expressly permitted by these Terms or by applicable law that cannot be waived: (a) copy, modify, translate, or create derivative works of the App; (b) reverse engineer, decompile, or disassemble the App; (c) remove or alter any proprietary notices; (d) sublicense, rent, lease, lend, or otherwise transfer the App to a third party; or (e) use the App to build a competing product or service.</p>
+    <p>The App incorporates third-party open-source software listed in the in-app "Third-Party Licenses" screen, each licensed under its own terms. Those open-source components are licensed to you directly by their respective authors under those licenses, which prevail over this Section 9 to the extent of any conflict for that component.</p>
 
     <h3>9.2 Trademarks</h3>
-    <p>"TerminaLLM" and associated logos are trademarks. "Claude" and "Claude Code" are trademarks of Anthropic, PBC. "Cursor" is a trademark of Anysphere, Inc. "Aider" is a trademark of its respective owner. Other product names mentioned are trademarks of their respective owners and are used here solely to indicate compatibility.</p>
-    <p>TerminaLLM is not affiliated with, endorsed by, or sponsored by Anthropic, Anysphere (Cursor), Aider, or any other AI assistant provider. All third-party product names are trademarks of their respective owners and are used solely to describe compatibility with those products.</p>
+    <p>"TerminaLLM"&trade; and the TerminaLLM logos are trademarks of TerminaLLM LLC. "Claude" and "Claude Code" are trademarks of Anthropic, PBC. "Cursor" is a trademark of Anysphere, Inc. "GitHub Copilot" is a trademark of GitHub, Inc. "Aider" is the name of an open-source project (Apache 2.0 licensed) used here solely to identify compatibility. All other product names mentioned are trademarks of their respective owners and are used here for identification and compatibility purposes only.</p>
+    <p>TerminaLLM LLC is not affiliated with, endorsed by, or sponsored by Anthropic, Anysphere (Cursor), GitHub, the Aider project, or any other AI assistant provider.</p>
 
     <h2>10. Termination</h2>
 
@@ -274,18 +312,24 @@
     <p>We may modify these Terms at any time. Changes will be posted with an updated "Last Updated" date. Your continued use of the App after changes constitutes acceptance of the modified Terms.</p>
 
     <h2>12. Governing Law</h2>
-    <p>These Terms are governed by the laws of the State of California, United States, without regard to conflict of law principles.</p>
+    <p>These Terms are governed by the laws of the State of Colorado, United States, without regard to conflict-of-law principles. <strong>Consumers residing outside the United States retain the protections of the mandatory consumer-protection laws of the country in which they reside</strong>, and nothing in this section deprives you of those protections.</p>
 
     <h2>13. Dispute Resolution</h2>
 
     <h3>13.1 Informal Resolution</h3>
-    <p>Before filing any legal action, you agree to attempt informal resolution by contacting us.</p>
+    <p>Before filing any legal action, you agree to attempt informal resolution by contacting us at <strong>legal@terminallm.app</strong> with a brief written description of the dispute. We will work in good faith to resolve the dispute within 60 days of receipt.</p>
 
     <h3>13.2 Arbitration</h3>
-    <p>Any dispute not resolved informally shall be resolved by binding arbitration under the rules of the American Arbitration Association. Arbitration shall take place in the State of California.</p>
+    <p>Except for the carve-outs in &sect;13.4, any dispute, claim, or controversy arising out of or relating to these Terms or the App that cannot be resolved informally shall be resolved by <strong>binding individual arbitration</strong> administered by the American Arbitration Association ("AAA") under its <strong>Consumer Arbitration Rules</strong>, available at <a href="https://www.adr.org/">www.adr.org</a>. Arbitration shall be conducted in Denver, Colorado, or, at your election, by telephone or video conference, or in your county of residence (if you are a U.S. consumer). Judgment on the award may be entered in any court of competent jurisdiction. The arbitrator, and not any federal, state, or local court or agency, shall have exclusive authority to resolve any dispute relating to the interpretation, applicability, enforceability, or formation of this arbitration agreement, including any claim that all or any part of it is void or voidable.</p>
 
     <h3>13.3 Class Action Waiver</h3>
-    <p>You agree to resolve disputes individually and waive any right to participate in class actions.</p>
+    <p><strong>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, YOU AND TERMINALLM LLC AGREE TO RESOLVE DISPUTES ON AN INDIVIDUAL BASIS AND WAIVE ANY RIGHT TO BRING OR PARTICIPATE IN A CLASS, COLLECTIVE, OR REPRESENTATIVE ACTION</strong>, including any private attorney general action other than as expressly preserved in &sect;13.4.</p>
+
+    <h3>13.4 Carve-Outs and Public Injunctive Relief</h3>
+    <p>The arbitration agreement and class-action waiver in &sect;&sect;13.2&ndash;13.3 do <strong>not</strong> apply to: (a) claims for <strong>public injunctive relief</strong> that, under California law (including <em>McGill v. Citibank, N.A.</em>, 2 Cal. 5th 945 (2017)), may not be waived in arbitration; (b) claims that may be brought in <strong>small-claims court</strong> within that court's jurisdiction; (c) claims for <strong>intellectual-property infringement, trade-secret misappropriation, or violations of computer fraud, anti-hacking, or unauthorized-access statutes</strong>, which either party may bring in a court of competent jurisdiction; and (d) any other claim that, under applicable mandatory law, cannot be subject to pre-dispute arbitration or class-action waiver. Public injunctive relief claims, if not waivable, will be heard in court and shall be <strong>stayed pending arbitration of all individual claims</strong>.</p>
+
+    <h3>13.5 30-Day Right to Opt Out of Arbitration</h3>
+    <p>You may opt out of the arbitration agreement and class-action waiver in &sect;&sect;13.2&ndash;13.3 by sending a written opt-out notice to <strong>legal@terminallm.app</strong> with the subject "Arbitration Opt-Out" within <strong>30 days</strong> of first accepting these Terms (or, for users who installed the App before this section was added, within 30 days of the "Last Updated" date at the top of these Terms). Your notice must include your full name, the email associated with your account or platform-store purchase (if any), and a clear statement that you wish to opt out. Opting out will not affect any other provision of these Terms or your ability to use the App.</p>
 
     <h2>14. Severability</h2>
     <p>If any provision of these Terms is found unenforceable, the remaining provisions remain in full effect.</p>
@@ -300,7 +344,17 @@
       <button class="contact-email__copy" onclick="navigator.clipboard.writeText('legal@terminallm.app').then(()=>{this.textContent='Copied';this.classList.add('contact-email__copy--copied');setTimeout(()=>{this.textContent='Copy';this.classList.remove('contact-email__copy--copied')},2000)})">Copy</button>
       <a href="mailto:legal@terminallm.app" class="btn btn--tertiary contact-email__send">Send Email</a>
     </div>
-    <p style="margin-top: 16px;"><strong>GitHub Issues:</strong> <a href="https://github.com/terminallm-issues/.github/issues">github.com/terminallm-issues/.github/issues</a></p>
+    <p style="margin-top: 16px;"><strong>Mailing address</strong>: TerminaLLM LLC, 7401 Granada Road, Denver, CO 80221, United States</p>
+    <p><strong>GitHub Issues</strong>: <a href="https://github.com/terminallm-issues/.github/issues">https://github.com/terminallm-issues/.github/issues</a></p>
+
+    <h2>17. California Users &mdash; &sect; 1789.3 Disclosure</h2>
+    <p>Under California Civil Code &sect; 1789.3, California residents are entitled to the following specific consumer-rights notice: The provider of this service is <strong>TerminaLLM LLC, 7401 Granada Road, Denver, CO 80221, USA</strong>. Plus and Pro tiers are available for the prices listed inside the App and on the platform store at the time of purchase. To file a complaint regarding the App or to receive further information about its use, contact us in writing at the address above or by email at legal@terminallm.app. You may also contact the <strong>California Department of Consumer Affairs, Complaint Assistance Unit, Division of Consumer Services, 1625 North Market Blvd., Suite N 112, Sacramento, CA 95834</strong>, or by telephone at <strong>(800) 952-5210</strong> or <strong>(916) 445-1254</strong> (TDD: (800) 326-2297).</p>
+
+    <h2>18. Force Majeure</h2>
+    <p>Neither party shall be liable for any failure or delay in performance of these Terms (other than your obligation to pay subscription fees) caused by events beyond its reasonable control, including acts of God, natural disasters, war, terrorism, riots, civil unrest, government actions, labor disputes, internet or telecommunications outages, denial-of-service attacks, third-party API or platform-store outages, supply-chain failures, or pandemics. The affected party shall use commercially reasonable efforts to resume performance as soon as practicable. If a force-majeure event materially impairs the App for more than 30 consecutive days, either party may terminate the affected subscription on written notice without further liability except for any refund mandated by the applicable platform store.</p>
+
+    <h2>19. Apple App Store Additional Terms</h2>
+    <p>If you obtained the App from the Apple App Store, you acknowledge that these Terms are between you and TerminaLLM LLC only, and not with Apple Inc. ("Apple"). Apple is not responsible for the App or its contents. To the maximum extent permitted by applicable law, Apple has no warranty obligation with respect to the App. In the event of any failure of the App to conform to any applicable warranty, you may notify Apple, and Apple will refund the purchase price (if any) for the App; to the maximum extent permitted by applicable law, Apple has no other warranty obligation. Apple is not responsible for addressing any claims by you or any third party relating to the App or your possession or use of it. You and TerminaLLM LLC acknowledge that <strong>Apple, and Apple's subsidiaries, are third-party beneficiaries</strong> of these Terms and, upon your acceptance of these Terms, will have the right (and will be deemed to have accepted the right) to enforce these Terms against you as a third-party beneficiary.</p>
 
     <div class="callout callout--info" style="margin-top: 32px;">
       <p><em>By using TerminaLLM, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.</em></p>

@@ -44,16 +44,17 @@
     <p>TerminaLLM handles sensitive SSH credentials and provides access to remote systems. Our security design addresses:</p>
     <ol>
       <li><strong>Credential Theft:</strong> Attackers gaining access to stored credentials</li>
-      <li><strong>Man-in-the-Middle (MITM):</strong> Attackers intercepting SSH connections</li>
+      <li><strong>Man-in-the-Middle (MITM):</strong> Attackers intercepting SSH connections OR proxy-to-Anthropic API traffic</li>
       <li><strong>Device Compromise:</strong> Attackers with physical or malware access to the device</li>
       <li><strong>Brute Force:</strong> Attackers attempting to guess MFA codes</li>
       <li><strong>Session Hijacking:</strong> Attackers attempting to take over authenticated sessions</li>
       <li><strong>Shoulder Surfing:</strong> Visual observation of credentials or terminal content</li>
+      <li><strong>T-TCP Daemon Compromise:</strong> A local attacker who already has shell access to the user's remote server could subvert the optional T-TCP helper binary the app deploys to <code>~/.terminallm/</code>. The daemon listens only on a Unix socket inside the user's SSH session (no open TCP ports) and is compiled with <code>-trimpath</code> (no developer filesystem paths embedded). Users can disable deployment via Settings &rarr; Help and uninstall by deleting <code>~/.terminallm/</code> on the server</li>
     </ol>
 
     <h3>Security Principles</h3>
     <ol>
-      <li><strong>Credentials Not Stored by Default:</strong> SSH passwords are entered at connection time and cleared from memory immediately after use. Users may opt in to the Credential Vault, which encrypts credentials locally using AES-256-GCM with HKDF-Expand key derivation and per-credential random nonces, with configurable TTL expiry</li>
+      <li><strong>Credentials Not Stored by Default:</strong> SSH passwords are entered at connection time and cleared from memory immediately after use. Users may opt in to the Credential Vault, which encrypts credentials locally using AES-256-GCM with HKDF-Expand key derivation, per-credential random nonces, and configurable TTL expiry</li>
       <li><strong>Defense in Depth:</strong> Multiple layers of security (MFA, biometrics, encryption)</li>
       <li><strong>Minimal Privilege:</strong> App requests only necessary permissions</li>
       <li><strong>Fail Secure:</strong> On errors, default to denying access</li>
@@ -64,105 +65,128 @@
 
     <h3>Authentication</h3>
     <ul>
-      <li><strong>TOTP MFA:</strong> Mandatory time-based one-time passwords (RFC 6238)</li>
-      <li><strong>Biometric Auth:</strong> Optional Face ID / Fingerprint as secondary factor</li>
-      <li><strong>Rate Limiting:</strong> TOTP: 5 failed attempts triggers 2-minute lockout (persistent). Connection rate limiting per security profile: Paranoid: 3/min, 10-min lockout. Casual: 5/min, 5-min lockout. Speedster: 10/min, 1-min lockout.</li>
-      <li><strong>Code Reuse Prevention:</strong> TOTP codes cannot be reused within time window</li>
-      <li><strong>Session Timeout:</strong> Re-authentication required after inactivity</li>
+      <li><strong>TOTP MFA:</strong> Mandatory time-based one-time passwords (RFC 6238) (<code>mfa_service.dart</code>)</li>
+      <li><strong>Biometric Auth:</strong> Optional Face ID / Fingerprint as secondary factor (<code>security_service.dart</code>)</li>
+      <li><strong>Rate Limiting:</strong> TOTP: 5 failed attempts triggers 2-minute lockout (persistent). Connection rate limiting is profile-driven: Paranoid (3/min, 10-min lockout), Casual (5/min, 5-min lockout), Speedster (10/min, 1-min lockout) (<code>mfa_service.dart</code>, <code>security_service.dart</code>)</li>
+      <li><strong>Code Reuse Prevention:</strong> TOTP codes cannot be reused within time window (<code>mfa_service.dart</code>)</li>
+      <li><strong>Session Timeout:</strong> Re-authentication required after inactivity (<code>security_service.dart</code>)</li>
     </ul>
 
     <h3>Credential Protection</h3>
     <ul>
-      <li><strong>No Default Password Storage:</strong> Passwords not stored by default; opt-in Credential Vault available</li>
-      <li><strong>Credential Vault (Opt-in):</strong> AES-256-GCM authenticated encryption with HKDF-Expand key derivation and per-credential random nonces, configurable TTL</li>
-      <li><strong>Secure Memory Clearing:</strong> Credentials zeroed after use</li>
-      <li><strong>Platform Encryption:</strong> Platform-native encrypted storage</li>
-      <li><strong>Clipboard Auto-Clear:</strong> Clipboard cleared automatically after paste (default 3 seconds, configurable per security profile: Paranoid 3s, Casual 10s, Speedster disabled)</li>
+      <li><strong>No Default Password Storage:</strong> Passwords not stored by default; opt-in Credential Vault available (<code>connect_screen.dart</code>, <code>credential_vault_service.dart</code>)</li>
+      <li><strong>Credential Vault (Opt-in):</strong> AES-256-GCM encryption with HKDF-Expand key derivation, per-credential random nonces, 128-bit auth tags, configurable TTL (<code>credential_vault_service.dart</code>)</li>
+      <li><strong>Secure Memory Clearing:</strong> Credentials zeroed after use (<code>terminal_screen.dart</code>, <code>ssh_service.dart</code>)</li>
+      <li><strong>Platform Encryption:</strong> Platform-native encrypted storage (Throughout)</li>
+      <li><strong>Clipboard Auto-Clear:</strong> Clipboard cleared automatically after paste (default 3s, configurable per security profile: Paranoid 3s, Casual 10s, Speedster disabled) (<code>security_service.dart</code>)</li>
     </ul>
 
     <h3>Connection Security</h3>
     <ul>
-      <li><strong>SSH Host Key Verification:</strong> SHA256 fingerprints stored and verified</li>
-      <li><strong>MITM Detection:</strong> Warning on host key change</li>
-      <li><strong>Connection Timeout:</strong> 30-second timeout prevents hanging</li>
-      <li><strong>Keep-Alive:</strong> Prevents server-side timeout disconnections</li>
+      <li><strong>SSH Host Key Verification:</strong> SHA256 fingerprints stored and verified (<code>ssh_service.dart</code>)</li>
+      <li><strong>MITM Detection:</strong> Warning on host key change (<code>terminal_screen.dart</code>)</li>
+      <li><strong>Connection Timeout:</strong> 30-second timeout prevents hanging (<code>ssh_service.dart</code>)</li>
+      <li><strong>Keep-Alive:</strong> Prevents server-side timeout disconnections (<code>ssh_service.dart</code>)</li>
+      <li><strong>TLS Pinning (proxy):</strong> Public-key pinning (SubjectPublicKeyInfo SHA-256) on <code>api.terminallm.app</code>. Three pins rotated for cert renewal: GTS WR3 intermediate (primary), GTS Root R1 (backup), current leaf (Dart-only third pin). Enforced at three layers: <code>network_security_config.xml</code> (Android), <code>NSPinnedDomains</code> in <code>Info.plist</code> (iOS), and the Dart <code>badCertificateCallback</code> in <code>pinned_http_client.dart</code>. Fail-closed: a request whose served cert chain matches none of the three SPKI hashes is rejected without a fallback path. Rotation runbook: <code>docs/tls-pinning-rotation-runbook.md</code> (<code>pinned_http_client.dart</code>, <code>network_security_config.xml</code>, <code>Info.plist</code>)</li>
+      <li><strong>iOS Privacy Manifest:</strong> <code>ios/Runner/PrivacyInfo.xcprivacy</code> declares all data collection per Apple's Privacy Manifest requirement. <code>NSPrivacyTracking=false</code>. Reason codes published for every NSPrivacyAccessedAPIType used (UserDefaults, FileTimestamp, SystemBootTime, DiskSpace) (<code>ios/Runner/PrivacyInfo.xcprivacy</code>)</li>
+    </ul>
+
+    <h3>T-TCP Helper Daemon Security</h3>
+    <p>When users opt into Termina-TCP, the app deploys a small Go daemon binary (~6.5 MB uncompressed, ~2.6&ndash;2.9 MB gzipped) to <code>~/.terminallm/</code> on the user's remote server. The daemon's security posture:</p>
+    <ul>
+      <li><strong>No open ports:</strong> The daemon listens exclusively on a Unix socket inside the user's existing SSH session. There is no listening TCP port for an external attacker to reach. Communication between the app and daemon flows through <code>ssh exec</code> to the Unix socket &mdash; the same trust boundary as the SSH session itself</li>
+      <li><strong>No developer paths in binary:</strong> Compiled with <code>-trimpath</code> so reverse-engineering the binary surfaces no developer filesystem layout. Module paths in the binary point to <code>github.com/bmills23/terminallm-daemon/...</code>, not the build host</li>
+      <li><strong>Audit trail on server:</strong> Daemon logs to <code>~/.terminallm/logs/</code> on the user's server (user-accessible). No telemetry sent off-server</li>
+      <li><strong>User-controlled deployment:</strong> Users can disable T-TCP deployment via Settings &rarr; Help &rarr; "What we install on your server" &rarr; toggle off. They can also <code>rm -rf ~/.terminallm/</code> directly on the server to fully uninstall</li>
+      <li><strong>No remote auto-update:</strong> The daemon is bundled with each app build, deployed once per user-server pair, and never auto-updated from a remote source. Upgrades happen when the user installs a new app version and reconnects</li>
+    </ul>
+
+    <h3>Hive Daemon Security (Swarm, Pro)</h3>
+    <p>When users opt into Swarm, the app installs Hive (about 4.5 MB: a CLI and a daemon binary) to <code>~/.hive/</code> on the user's remote server. Hive's security posture:</p>
+    <ul>
+      <li><strong>Loopback-only listener:</strong> The daemon binds exclusively to <code>127.0.0.1:7333</code>. It is never reachable from the network; only processes on the server itself can connect</li>
+      <li><strong>Token authentication:</strong> A per-install authentication token at <code>~/.hive/auth-token</code> is required for daemon commands, so other local users on a shared server cannot drive the daemon</li>
+      <li><strong>Driven over SSH only:</strong> The app controls Hive by executing <code>~/.hive/bin/hive</code> inside the user's existing SSH session. No new inbound network path to the server is created</li>
+      <li><strong>No remote fetch, no auto-update:</strong> Both binaries are bundled inside the app and pushed over the user's own SSH connection at install time. Nothing is downloaded from third-party hosts, and the daemon never self-updates. Upgrades happen only through app updates and explicit reinstall</li>
+      <li><strong>Explicit install consent:</strong> Hive is installed only when the user taps Install in the Swarm setup, after the "What we install on your server" disclosure. It is never deployed as a side effect of connecting</li>
+      <li><strong>Lifecycle managed, easy removal:</strong> The daemon runs only while Swarm is in use and is stopped when no longer needed. Users can stop the daemon or uninstall from the Swarm screen's Hive menu, or run <code>rm -rf ~/.hive</code> on the server</li>
+      <li><strong>Agents run as the user:</strong> Swarm agents (Claude Code, Codex, etc.) execute on the user's server under the user's own Unix account and AI CLI logins. Their prompts and output stay inside the SSH session; the app never proxies them through TerminaLLM infrastructure</li>
     </ul>
 
     <h3>Device Security</h3>
     <ul>
-      <li><strong>Jailbreak/Root Detection:</strong> Warns on compromised devices</li>
-      <li><strong>Screen Capture Prevention:</strong> Platform-native screenshot blocking</li>
-      <li><strong>Developer Mode Warning:</strong> Alerts when developer mode enabled</li>
+      <li><strong>Jailbreak/Root Detection:</strong> Warns on compromised devices (<code>security_service.dart</code>)</li>
+      <li><strong>Screen Capture Prevention:</strong> Platform-native screenshot blocking (<code>MainActivity.kt</code>, <code>AppDelegate.swift</code>)</li>
+      <li><strong>Developer Mode Warning:</strong> Alerts when developer mode enabled (<code>security_service.dart</code>)</li>
     </ul>
 
     <h3>Port Forwarding Security</h3>
     <ul>
-      <li><strong>Localhost-only binding:</strong> Tunnels bind exclusively to 127.0.0.1, preventing remote network access</li>
-      <li><strong>Audit trail:</strong> Tunnel creation, stop, and errors logged as security events</li>
-      <li><strong>Auto-cleanup:</strong> All tunnels stopped on SSH disconnect or app dispose</li>
+      <li><strong>Localhost-only binding:</strong> Tunnels bind exclusively to <code>InternetAddress.loopbackIPv4</code> (127.0.0.1), preventing remote network access (<code>port_forward_service.dart</code>)</li>
+      <li><strong>Audit trail:</strong> Tunnel creation, stop, and errors logged as security events (<code>port_forward_service.dart</code>)</li>
+      <li><strong>Auto-cleanup:</strong> All tunnels stopped on SSH disconnect or app dispose (<code>terminal_screen.dart</code>, <code>port_forward_service.dart</code>)</li>
     </ul>
 
     <h3>Jump Host Security</h3>
     <ul>
-      <li><strong>Credential clearing:</strong> Jump host password, private key, and passphrase cleared from memory immediately after SSH handshake</li>
-      <li><strong>Host key verification:</strong> Both jump host and target host keys independently verified against stored fingerprints</li>
-      <li><strong>Self-reference prevention:</strong> UI prevents selecting a profile as its own jump host (circular reference)</li>
-      <li><strong>Vault-based credentials:</strong> Jump host credentials resolved from vault at connection time, never passed through navigation</li>
-      <li><strong>Inline credential fallback:</strong> When vault is disabled or empty, jump host password can be entered inline on the connect form without storing it</li>
+      <li><strong>Credential clearing:</strong> Jump host password, private key, and passphrase cleared from memory immediately after SSH handshake (<code>ssh_service.dart</code>)</li>
+      <li><strong>Host key verification:</strong> Both jump host and target host keys independently verified against stored fingerprints (<code>ssh_service.dart</code>)</li>
+      <li><strong>Self-reference prevention:</strong> UI prevents selecting a profile as its own jump host (circular reference) (<code>connect_screen.dart</code>)</li>
+      <li><strong>Vault-based credentials:</strong> Jump host credentials resolved from vault at connection time, never passed through navigation (<code>terminal_screen.dart</code>)</li>
+      <li><strong>Inline credential fallback:</strong> When the vault is disabled or empty, jump host credentials can be entered inline on the connect form without storing them (<code>connect_screen.dart</code>)</li>
     </ul>
 
     <h3>Media Drop Security</h3>
     <ul>
-      <li><strong>File permissions:</strong> All uploaded files set to <code>chmod 600</code> (owner read/write only)</li>
-      <li><strong>No local caching:</strong> Media files streamed to server, not stored on device</li>
-      <li><strong>Audit logging:</strong> Upload events logged with source type, path, and file size</li>
-      <li><strong>On-demand permissions:</strong> Camera and photo library access requested only when feature is used</li>
+      <li><strong>File permissions:</strong> All uploaded files set to <code>chmod 600</code> (owner read/write only) (<code>terminal_screen.dart</code>)</li>
+      <li><strong>No local caching:</strong> Media files streamed to server, not stored on device (<code>terminal_screen.dart</code>)</li>
+      <li><strong>Audit logging:</strong> Upload events logged with source type, path, and file size (<code>terminal_screen.dart</code>)</li>
+      <li><strong>On-demand permissions:</strong> Camera and photo library access requested only when feature is used (Platform manifest)</li>
     </ul>
 
     <h3>Speech-to-Text Security</h3>
     <ul>
-      <li><strong>Dual speech engines:</strong> Two engines: <strong>Built-in</strong> uses platform STT (Apple/Google &mdash; may send audio to their servers for processing). <strong>Whisper</strong> runs fully on-device via whisper.cpp &mdash; no audio leaves the device. Users choose in Settings.</li>
-      <li><strong>No audio storage:</strong> TerminaLLM never permanently stores audio. Whisper mode creates a temporary WAV file that is deleted immediately after transcription.</li>
-      <li><strong>On-demand permissions:</strong> Microphone access requested only when the mic button is tapped</li>
-      <li><strong>Text-only output:</strong> Recognized text is written to the terminal; no audio intermediate stored</li>
+      <li><strong>Dual speech engines:</strong> Two engines: <strong>Built-in</strong> uses platform STT (Apple/Google &mdash; may send audio to their servers for processing). <strong>Whisper</strong> runs fully on-device via whisper.cpp &mdash; no audio leaves the device. Users choose in Settings. (<code>speech_service.dart</code>)</li>
+      <li><strong>No audio storage:</strong> TerminaLLM never permanently stores audio. Whisper mode creates a temporary WAV file that is deleted immediately after transcription. (<code>speech_service.dart</code>)</li>
+      <li><strong>On-demand permissions:</strong> Microphone access requested only when the mic button is tapped (Platform manifest)</li>
+      <li><strong>Text-only output:</strong> Recognized text is written to the terminal; no audio intermediate stored (<code>terminal_screen.dart</code>)</li>
     </ul>
 
     <h3>AI Chatbot Security</h3>
     <ul>
-      <li><strong>No server-side message storage:</strong> Proxy server processes requests in real-time; conversation content is never logged or persisted</li>
-      <li><strong>JWT device authentication:</strong> Per-device tokens (HS256, 365-day expiry) with no personal information</li>
-      <li><strong>Encrypted local storage:</strong> Conversation history and proxy tokens stored in platform-native encrypted storage</li>
-      <li><strong>Rate limiting:</strong> AI chatbot is available to Pro subscribers only. The proxy server enforces subscription tier checks per device</li>
-      <li><strong>HTTPS-only:</strong> All proxy communication uses HTTPS (enforced by Google Cloud Run)</li>
+      <li><strong>No server-side message storage:</strong> Proxy server processes requests in real-time; conversation content is never logged or persisted (<code>backend/main.py</code>)</li>
+      <li><strong>JWT device authentication:</strong> Per-device tokens (HS256, 365-day expiry) with no personal information (<code>backend/auth.py</code>, <code>chatbot_auth_service.dart</code>)</li>
+      <li><strong>Encrypted local storage:</strong> Conversation history and proxy tokens stored in platform-native encrypted storage (<code>chatbot_service.dart</code>, <code>chatbot_auth_service.dart</code>)</li>
+      <li><strong>Rate limiting:</strong> AI chatbot is available to Pro subscribers only. The proxy server enforces subscription tier checks per device (<code>backend/main.py</code>)</li>
+      <li><strong>HTTPS-only:</strong> All proxy communication uses HTTPS (enforced by Cloud Run + custom domain) (<code>backend/deploy-cloudrun.sh</code>)</li>
     </ul>
-    <p>As of May 2026, AI features (chatbot and voice-to-command translation) require an explicit in-context consent prompt the first time you use them. The dialog names Anthropic, PBC and the data sent (your text input, recent conversation history, and your remote server's OS/shell). Consent defaults off on fresh install and after updates &mdash; users always make an active choice. You can revoke consent at any time in Settings &rarr; Security &rarr; "AI features (Anthropic)". Until consent is granted, no chatbot or wand request leaves the device.</p>
 
     <h3>iOS Live Activities Security</h3>
     <ul>
-      <li><strong>Lock Screen data exposure:</strong> Live Activities display server name, AI tool, state, and file counts on the Lock Screen without device unlock. Users should be aware that bystanders can see active session metadata</li>
-      <li><strong>App Group isolation:</strong> Session data is written to an iOS App Group shared container accessible only to the app and its widget extension &mdash; not to other apps</li>
-      <li><strong>Auto-expiry:</strong> Live Activities end automatically on disconnect or after 8 hours (iOS system limit)</li>
-      <li><strong>No credentials exposed:</strong> Live Activities never display passwords, keys, usernames, or IP addresses &mdash; only display name, tool name, and aggregate counts</li>
+      <li><strong>Lock Screen data exposure:</strong> Live Activities display server name, AI tool, state, and file counts on the Lock Screen without device unlock. Users should be aware that bystanders can see active session metadata (<code>live_activity_service.dart</code>)</li>
+      <li><strong>App Group isolation:</strong> Session data is written to an iOS App Group shared container (<code>NSUserDefaults</code>) accessible only to the app and its widget extension &mdash; not to other apps (<code>live_activity_service.dart</code>)</li>
+      <li><strong>Auto-expiry:</strong> Live Activities end automatically on disconnect or after 8 hours (iOS system limit) (<code>live_activity_service.dart</code>)</li>
+      <li><strong>No credentials exposed:</strong> Live Activities never display passwords, keys, usernames, or IP addresses &mdash; only display name, tool name, and aggregate counts (<code>live_activity_service.dart</code>)</li>
     </ul>
 
     <h3>Audit &amp; Monitoring</h3>
     <ul>
-      <li><strong>Security Event Logging:</strong> 1,000 events retained</li>
-      <li><strong>Connection Logging:</strong> All connection attempts logged</li>
-      <li><strong>Host Key Events:</strong> Verification decisions logged</li>
-      <li><strong>Export Capability:</strong> Audit logs exportable as JSON</li>
+      <li><strong>Security Event Logging:</strong> 1,000 events retained (<code>security_service.dart</code>)</li>
+      <li><strong>Connection Logging:</strong> All connection attempts logged (Throughout)</li>
+      <li><strong>Host Key Events:</strong> Verification decisions logged (<code>terminal_screen.dart</code>)</li>
+      <li><strong>Export Capability:</strong> Audit logs exportable as JSON (<code>security_service.dart</code>)</li>
     </ul>
 
     <h2>Cryptographic Standards</h2>
     <ul>
       <li><strong>TOTP Generation:</strong> HMAC-SHA1 (RFC 6238)</li>
       <li><strong>Host Key Fingerprint:</strong> SHA-256 (OpenSSH format)</li>
-      <li><strong>Credential Storage:</strong> AES-256-GCM (platform-native encrypted storage)</li>
-      <li><strong>Credential Vault Key Derivation:</strong> HKDF-Expand / HMAC-SHA256 (RFC 5869)</li>
-      <li><strong>Credential Vault Encryption:</strong> AES-256-GCM (NIST SP 800-38D, per-credential random nonce)</li>
+      <li><strong>Credential Storage:</strong> AES-256-GCM (Platform-native encrypted storage)</li>
+      <li><strong>Credential Vault Key Derivation:</strong> HKDF-Expand (HMAC-SHA256) (RFC 5869)</li>
+      <li><strong>Credential Vault Encryption:</strong> AES-256-GCM (128-bit auth tag, 96-bit nonce) (NIST SP 800-38D)</li>
       <li><strong>Backup Encryption:</strong> AES-256-GCM (NIST SP 800-38D)</li>
-      <li><strong>Backup Key Derivation:</strong> PBKDF2-HMAC-SHA256, 600,000 iterations (RFC 2898). Legacy v1 backups used 150,000 iterations</li>
-      <li><strong>SSH Transport:</strong> Various (negotiated per SSH Protocol)</li>
+      <li><strong>Backup Key Derivation:</strong> PBKDF2-HMAC-SHA256 (1,000,000 iterations; legacy v2 backups used 600,000 and legacy v1 backups used 150,000) (RFC 2898)</li>
+      <li><strong>SSH Transport:</strong> Various (negotiated) (SSH Protocol)</li>
     </ul>
 
     <h2>Security Event Types</h2>
@@ -225,6 +249,7 @@ developerPatCleared - Developer personal access token cleared</div>
       <li><strong>Review Audit Logs:</strong> Periodically check for unauthorized access attempts</li>
       <li><strong>Avoid Public Networks:</strong> Use VPN when on untrusted networks</li>
       <li><strong>Report Issues:</strong> Contact us immediately if you suspect compromise</li>
+      <li><strong>Contain Your Swarms:</strong> Run Swarm agents only in project directories under version control, and review agent output before merging or deploying. Multiple agents can modify files concurrently, and they act with the full privileges of your server account</li>
     </ol>
 
     <h3>For Enterprise Deployment</h3>
@@ -271,7 +296,7 @@ developerPatCleared - Developer personal access token cleared</div>
       <li><strong>Initial Assessment:</strong> Within 7 days</li>
       <li><strong>Fix Timeline:</strong> Based on severity
         <ul>
-          <li>Critical: 24&ndash;48 hours</li>
+          <li>Critical: 24-48 hours</li>
           <li>High: 7 days</li>
           <li>Medium: 30 days</li>
           <li>Low: 90 days</li>
@@ -294,7 +319,7 @@ developerPatCleared - Developer personal access token cleared</div>
     <p>Security-relevant changes will be documented in:</p>
     <ul>
       <li>Release notes</li>
-      <li>This security policy</li>
+      <li>This SECURITY.md file</li>
       <li>GitHub security advisories (for vulnerabilities)</li>
     </ul>
 

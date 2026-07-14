@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  /* TerminaLLM phone mockup template - 1080x2340.
+     Shared chrome: iOS status bar, app header, SIX-tab bar
+     (Terminal, Changes, Files, Assist, Browse, Swarm - real app order),
+     bottom home indicator. Page content goes in .screen. */
+  :root{
+    --bg:#0B0E13; --panel:#12151C; --pane:#1A1F29; --navy:#1B2130;
+    --edge:rgba(124,228,149,0.14);
+    --green:#4CAF50; --green-hi:#7BE495; --green-dim:#2E5A33;
+    --ink:#EAF2EC; --dim:#8A9AA0; --faint:#5D6B6F;
+    --tab-inactive:#151A22; --tab-border:rgba(255,255,255,0.07);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:1080px;height:2340px;overflow:hidden;}
+  body{background:var(--bg);font-family:'SF Pro Text','Helvetica Neue',Arial,sans-serif;color:var(--ink);position:relative;}
+
+  /* ---- iOS status bar ---- */
+  .status{height:120px;display:flex;align-items:center;justify-content:space-between;padding:0 60px;font-size:44px;font-weight:600;position:relative;}
+  .notch{position:absolute;left:50%;top:30px;transform:translateX(-50%);width:290px;height:64px;background:#000;border-radius:40px;}
+  .st-right{display:flex;align-items:center;gap:18px;}
+  .bars{display:flex;align-items:flex-end;gap:5px;height:34px;}
+  .bars i{width:9px;background:#EAF2EC;border-radius:2px;display:block;}
+  .bars i:nth-child(1){height:14px}.bars i:nth-child(2){height:20px}.bars i:nth-child(3){height:27px}.bars i:nth-child(4){height:34px}
+  .batt{width:60px;height:30px;border:3px solid #EAF2EC;border-radius:7px;position:relative;}
+  .batt::after{content:'';position:absolute;right:-8px;top:8px;width:5px;height:14px;background:#EAF2EC;border-radius:2px;}
+  .batt::before{content:'';position:absolute;left:3px;top:3px;bottom:3px;width:44px;background:#EAF2EC;border-radius:3px;}
+
+  /* ---- app header ---- */
+  .apphead{display:flex;align-items:center;padding:18px 44px 14px;gap:24px;}
+  .conn{flex:1;}
+  .conn .host{font-size:40px;font-weight:600;}
+  .conn .state{font-size:28px;color:var(--green-hi);display:flex;align-items:center;gap:12px;margin-top:6px;}
+  .conn .cdot{width:18px;height:18px;border-radius:50%;background:var(--green-hi);box-shadow:0 0 14px rgba(123,228,149,0.9);}
+  .hicon{width:56px;height:56px;display:flex;align-items:center;justify-content:center;}
+  .hicon svg{width:44px;height:44px;}
+
+  /* ---- six-tab bar (real app: Terminal, Changes, Files, Assist, Browse, Swarm) ---- */
+  .tabs{display:flex;gap:10px;padding:14px 24px 18px;}
+  .tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 0 14px;background:var(--tab-inactive);border:2px solid var(--tab-border);border-radius:14px;}
+  .tab .tlabel{font-size:23px;color:var(--dim);font-weight:500;letter-spacing:0.2px;}
+  .tab svg{width:34px;height:34px;stroke:var(--dim);fill:none;stroke-width:2.4;}
+  .tab.active{background:rgba(76,175,80,0.13);border-color:var(--green);}
+  .tab.active .tlabel{color:var(--green-hi);font-weight:700;}
+  .tab.active svg{stroke:var(--green-hi);}
+  .tab .pro{position:absolute;}
+
+  /* ---- content area ---- */
+  .screen{position:absolute;top:352px;bottom:150px;left:0;right:0;overflow:hidden;}
+
+  /* ---- shared content atoms (used by tab screens) ---- */
+  .mono{font-family:'SF Mono','Menlo',monospace;}
+  .card{background:var(--pane);border:1px solid var(--edge);border-radius:24px;overflow:hidden;box-shadow:0 18px 44px rgba(0,0,0,0.4);}
+  .green{color:var(--green-hi);} .dimc{color:var(--dim);} .faintc{color:var(--faint);}
+  .cursor{display:inline-block;width:16px;height:30px;background:var(--green-hi);vertical-align:-4px;box-shadow:0 0 10px rgba(123,228,149,0.8);}
+
+  /* ---- bottom bar + home indicator ---- */
+  .bottombar{position:absolute;bottom:0;left:0;right:0;height:150px;background:var(--bg);border-top:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;gap:20px;padding:0 44px;}
+  .bbtn{background:var(--navy);border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:20px 28px;font-size:29px;color:var(--dim);display:flex;align-items:center;gap:12px;}
+  .bbtn.primary{background:var(--green);color:#0A0E0B;font-weight:700;border-color:transparent;}
+  .home{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);width:340px;height:11px;background:#EAF2EC;border-radius:6px;}
+</style>
+<style>
+  /* ---- Assist tab: Pro AI chat ---- */
+  .assist{height:100%;display:flex;flex-direction:column;padding:24px 44px 24px;}
+  .ahead{display:flex;align-items:center;justify-content:space-between;padding:6px 4px 12px;}
+  .atitle{font-size:36px;font-weight:700;display:flex;align-items:center;gap:20px;color:var(--ink);}
+  .propill{font-size:23px;font-weight:800;letter-spacing:1.5px;color:var(--green-hi);background:rgba(76,175,80,0.13);border:2px solid var(--green);border-radius:999px;padding:5px 18px;}
+  .newchat{display:flex;align-items:center;gap:12px;font-size:27px;color:var(--dim);background:var(--tab-inactive);border:2px solid var(--tab-border);border-radius:999px;padding:13px 26px;}
+  .newchat svg{width:30px;height:30px;stroke:var(--dim);stroke-width:2.4;fill:none;}
+
+  .chat{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:44px;overflow:hidden;}
+  .daychip{align-self:center;font-size:24px;color:var(--faint);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.05);border-radius:999px;padding:8px 26px;}
+
+  .msg{display:flex;flex-direction:column;max-width:78%;}
+  .msg.user{align-self:flex-end;align-items:flex-end;}
+  .msg.asst{align-self:flex-start;align-items:flex-start;}
+  .sender{font-size:24px;color:var(--faint);margin:0 8px 12px;display:flex;align-items:center;gap:12px;}
+  .sdot{width:14px;height:14px;border-radius:50%;background:var(--green-hi);box-shadow:0 0 10px rgba(123,228,149,0.8);}
+  .ts{font-size:24px;color:var(--faint);margin:12px 10px 0;}
+
+  .bubble{font-size:31px;line-height:1.55;padding:28px 34px;color:var(--ink);}
+  .ub{background:rgba(46,90,51,0.5);border:1px solid rgba(124,228,149,0.2);border-radius:26px 26px 8px 26px;}
+  .ab{border-radius:26px 26px 26px 8px;}
+  .ab p{margin:0;}
+  .ab > * + *{margin-top:26px;}
+
+  .code{background:var(--bg);border:1px solid var(--edge);border-radius:16px;overflow:hidden;}
+  .codehead{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:rgba(255,255,255,0.03);border-bottom:1px solid rgba(255,255,255,0.05);font-size:23px;color:var(--faint);}
+  .copychip{display:flex;align-items:center;gap:10px;font-size:22px;color:var(--dim);background:var(--navy);border:1px solid rgba(255,255,255,0.08);border-radius:999px;padding:6px 20px;}
+  .copychip svg{width:24px;height:24px;stroke:var(--dim);stroke-width:2;fill:none;}
+  .codebody{padding:20px 28px;font-size:27px;line-height:1.6;color:var(--ink);white-space:nowrap;}
+
+  .typing{display:flex;gap:12px;padding:8px 4px 2px;}
+  .typing i{width:16px;height:16px;border-radius:50%;background:var(--dim);display:block;}
+  .typing i:nth-child(1){opacity:0.95;}
+  .typing i:nth-child(2){opacity:0.6;}
+  .typing i:nth-child(3){opacity:0.3;}
+
+  /* ---- chat input bar ---- */
+  .chatbar{flex:1;display:flex;align-items:center;gap:24px;margin-bottom:22px;}
+  .chatfield{flex:1;display:flex;align-items:center;gap:20px;background:var(--navy);border:1px solid rgba(255,255,255,0.08);border-radius:52px;padding:26px 34px;}
+  .chatfield .ph{flex:1;font-size:30px;color:var(--dim);}
+  .chatfield .mic{width:40px;height:40px;stroke:var(--dim);stroke-width:2;fill:none;flex:none;}
+  .sendbtn{width:88px;height:88px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 8px 24px rgba(76,175,80,0.35);}
+  .sendbtn svg{width:44px;height:44px;stroke:#0A0E0B;stroke-width:2.6;fill:none;}
+</style>
+</head>
+<body>
+  <div class="status">
+    <span>9:41</span>
+    <div class="notch"></div>
+    <div class="st-right">
+      <span class="bars"><i></i><i></i><i></i><i></i></span>
+      <svg width="44" height="32" viewBox="0 0 44 32"><path d="M22 6C13 6 5.5 9.5 0 15l6 6c4.5-4.5 10-7 16-7s11.5 2.5 16 7l6-6C38.5 9.5 31 6 22 6z" fill="#EAF2EC" opacity="0.95"/><path d="M22 20c-3.5 0-6.7 1.4-9 3.7L22 32l9-8.3C28.7 21.4 25.5 20 22 20z" fill="#EAF2EC"/></svg>
+      <span class="batt"></span>
+    </div>
+  </div>
+
+  <div class="apphead">
+    <div class="conn">
+      <div class="host">user@devserver</div>
+      <div class="state"><span class="cdot"></span>Connected</div>
+    </div>
+    <div class="hicon"><svg viewBox="0 0 24 24" fill="none" stroke="#7BE495" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 16c3 0 5 2 5 5M2 12c5 0 8 3 8 9" stroke-linecap="round"/></svg></div>
+    <div class="hicon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="#7BE495" stroke-width="1.8"/><circle cx="12" cy="12" r="4.5" fill="#7BE495"/></svg></div>
+    <div class="hicon"><svg viewBox="0 0 24 24" fill="none" stroke="#E5484D" stroke-width="2"><path d="M9 5H5v14h4M14 8l4 4-4 4M18 12H9" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  </div>
+
+  <!-- SIX TABS, real app order. Set class="tab active" on exactly one. -->
+  <div class="tabs">
+    <div class="tab "><svg viewBox="0 0 24 24"><rect x="2.5" y="4" width="19" height="16" rx="2.5"/><path d="M6.5 9.5 10 12l-3.5 2.5M12 15.5h5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="tlabel">Terminal</span></div>
+    <div class="tab "><svg viewBox="0 0 24 24"><rect x="3" y="3" width="13" height="13" rx="2"/><path d="M9.5 7v5M7 9.5h5" stroke-linecap="round"/><path d="M8 16v2.5a2.5 2.5 0 0 0 2.5 2.5H18.5A2.5 2.5 0 0 0 21 18.5V10.5A2.5 2.5 0 0 0 18.5 8H16" /><path d="M12.5 17.5h5" stroke-linecap="round"/></svg><span class="tlabel">Changes</span></div>
+    <div class="tab "><svg viewBox="0 0 24 24"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h4l2 2.5h7A2.5 2.5 0 0 1 21 9v.5" stroke-linejoin="round"/><path d="M3.4 10h18.2a1.5 1.5 0 0 1 1.45 1.9l-1.9 7A2.5 2.5 0 0 1 18.7 21H5.3a2.5 2.5 0 0 1-2.45-2.1l-1.3-7A1.5 1.5 0 0 1 3.4 10z" stroke-linejoin="round"/></svg><span class="tlabel">Files</span></div>
+    <div class="tab active"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="11" rx="3"/><circle cx="9.5" cy="13" r="1.4" fill="currentColor" stroke="none"/><circle cx="14.5" cy="13" r="1.4" fill="currentColor" stroke="none"/><path d="M12 8V5M12 5a1.6 1.6 0 1 0-.01 0" stroke-linecap="round"/><path d="M9 16.5h6" stroke-linecap="round"/></svg><span class="tlabel">Assist</span></div>
+    <div class="tab "><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.4 4 5.6 4 9s-1.4 6.6-4 9c-2.6-2.4-4-5.6-4-9s1.4-6.6 4-9z"/></svg><span class="tlabel">Browse</span></div>
+    <div class="tab "><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="5.5" r="2"/><circle cx="19" cy="5.5" r="2"/><circle cx="5" cy="18.5" r="2"/><circle cx="19" cy="18.5" r="2"/><path d="M9.8 10.2 6.5 7M14.2 10.2 17.5 7M9.8 13.8 6.5 17M14.2 13.8 17.5 17"/></svg><span class="tlabel">Swarm</span></div>
+  </div>
+
+  <div class="screen">
+    <div class="assist">
+      <div class="ahead">
+        <div class="atitle">AI Assistant <span class="propill">PRO</span></div>
+        <div class="newchat"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>New Chat</div>
+      </div>
+      <div class="chat">
+        <div class="daychip">Today</div>
+
+        <div class="msg user">
+          <div class="bubble ub">My node server dies when I close the app. How do I keep it running?</div>
+          <div class="ts">2:47 PM</div>
+        </div>
+
+        <div class="msg asst">
+          <div class="sender"><span class="sdot"></span>TerminaLLM Assistant</div>
+          <div class="bubble ab card">
+            <p>Run it inside a persistent session so it is not tied to your connection. TerminaLLM sessions survive disconnects, so the server keeps running even after you close the app.</p>
+            <div class="code">
+              <div class="codehead"><span>bash</span><span class="copychip"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>Copy</span></div>
+              <div class="codebody mono"><div><span class="green">$</span> dtach -A ~/dev.sock -b 256k \</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;npm run dev</div></div>
+            </div>
+            <p>Reconnect any time and you will drop straight back into the live output.</p>
+          </div>
+          <div class="ts">2:47 PM</div>
+        </div>
+
+        <div class="msg user">
+          <div class="bubble ub">and how do I preview it?</div>
+          <div class="ts">2:49 PM</div>
+        </div>
+
+        <div class="msg asst">
+          <div class="sender"><span class="sdot"></span>TerminaLLM Assistant</div>
+          <div class="bubble ab card">
+            <p>Right in the app. Open the <span class="green">Browse</span> tab and point it at <span class="mono green">localhost:3000</span></p>
+            <div class="typing"><i></i><i></i><i></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottombar">
+    <div class="chatbar">
+      <div class="chatfield">
+        <span class="ph">Ask about your code or server...</span>
+        <svg class="mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3.5M8.5 21.5h7" stroke-linecap="round"/></svg>
+      </div>
+      <div class="sendbtn"><svg viewBox="0 0 24 24"><path d="M12 19V6M6.5 11.5 12 6l5.5 5.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+    <div class="home"></div>
+  </div>
+</body>
+</html>

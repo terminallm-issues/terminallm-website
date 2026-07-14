@@ -65,7 +65,7 @@
 
     <h3>Authentication</h3>
     <ul>
-      <li><strong>TOTP MFA:</strong> Mandatory time-based one-time passwords (RFC 6238) (<code>mfa_service.dart</code>)</li>
+      <li><strong>TOTP MFA:</strong> Optional time-based one-time passwords (RFC 6238); offered during onboarding and, once enabled, required at every app unlock (<code>mfa_service.dart</code>)</li>
       <li><strong>Biometric Auth:</strong> Optional Face ID / Fingerprint as secondary factor (<code>security_service.dart</code>)</li>
       <li><strong>Rate Limiting:</strong> TOTP: 5 failed attempts triggers 2-minute lockout (persistent). Connection rate limiting is profile-driven: Paranoid (3/min, 10-min lockout), Casual (5/min, 5-min lockout), Speedster (10/min, 1-min lockout) (<code>mfa_service.dart</code>, <code>security_service.dart</code>)</li>
       <li><strong>Code Reuse Prevention:</strong> TOTP codes cannot be reused within time window (<code>mfa_service.dart</code>)</li>

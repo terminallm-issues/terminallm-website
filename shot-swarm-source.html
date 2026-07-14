@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  :root{
+    --bg:#12151C; --pane:#1A1F29; --edge:rgba(124,228,149,0.14);
+    --green:#4CAF50; --green-hi:#7BE495; --ink:#EAF2EC; --dim:#8A9AA0; --faint:#5D6B6F;
+    --navy:#1B2130;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:1080px;height:2340px;overflow:hidden;}
+  body{background:#0B0E13;font-family:'SF Pro Text','Helvetica Neue',Arial,sans-serif;color:var(--ink);}
+
+  /* iOS status bar (matches the other hero shots) */
+  .status{height:132px;display:flex;align-items:center;justify-content:space-between;padding:0 60px;font-size:44px;font-weight:600;position:relative;}
+  .notch{position:absolute;left:50%;top:34px;transform:translateX(-50%);width:290px;height:64px;background:#000;border-radius:40px;}
+  .status .right{display:flex;align-items:center;gap:18px;font-size:0;}
+  .bars{display:flex;align-items:flex-end;gap:5px;height:34px;}
+  .bars i{width:9px;background:#EAF2EC;border-radius:2px;}
+  .bars i:nth-child(1){height:14px}.bars i:nth-child(2){height:20px}.bars i:nth-child(3){height:27px}.bars i:nth-child(4){height:34px}
+  .wifi{width:44px;height:32px;border:0;}
+  .batt{width:60px;height:30px;border:3px solid #EAF2EC;border-radius:7px;position:relative;}
+  .batt::after{content:'';position:absolute;right:-8px;top:8px;width:5px;height:14px;background:#EAF2EC;border-radius:2px;}
+  .batt::before{content:'';position:absolute;left:3px;top:3px;bottom:3px;width:44px;background:#EAF2EC;border-radius:3px;}
+
+  /* app top bar */
+  .topbar{display:flex;align-items:center;padding:26px 44px 22px;gap:20px;}
+  .title{flex:1;}
+  .title .h{font-size:44px;font-weight:700;}
+  .title .s{font-size:32px;color:var(--dim);margin-top:6px;display:flex;align-items:center;gap:14px;}
+  .dot{width:20px;height:20px;border-radius:50%;background:var(--green-hi);box-shadow:0 0 16px rgba(123,228,149,0.9);}
+  .icon{width:64px;height:64px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:34px;color:var(--green-hi);}
+
+  /* swarm meta strip */
+  .meta{margin:6px 44px 30px;padding:24px 30px;background:var(--navy);border:1px solid var(--edge);border-radius:22px;display:flex;align-items:center;gap:22px;}
+  .meta .m-badge{font-size:28px;font-weight:800;color:#0A0E0B;background:var(--green-hi);border-radius:10px;padding:8px 18px;letter-spacing:1px;}
+  .meta .m-txt{font-size:34px;color:var(--ink);}
+  .meta .m-sub{font-size:28px;color:var(--dim);}
+
+  /* panes */
+  .panes{padding:0 44px;display:flex;flex-direction:column;gap:34px;}
+  .pane{background:var(--pane);border:1px solid var(--edge);border-radius:26px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,0.45);}
+  .phead{display:flex;align-items:center;gap:18px;padding:26px 34px;border-bottom:1px solid rgba(124,228,149,0.10);background:rgba(124,228,149,0.05);}
+  .badge{font-size:28px;font-weight:800;border-radius:11px;padding:9px 20px;letter-spacing:0.5px;}
+  .b-arch{color:#0A0E0B;background:var(--green-hi);}
+  .b-claude{color:#F3CBB3;background:rgba(217,119,87,0.20);border:2px solid rgba(217,119,87,0.5);}
+  .b-codex{color:#CFE0FF;background:rgba(125,171,255,0.16);border:2px solid rgba(125,171,255,0.5);}
+  .ptitle{font-size:31px;color:var(--dim);flex:1;}
+  .pstat{font-size:26px;color:var(--green-hi);display:flex;align-items:center;gap:12px;}
+  .pstat .rd{width:16px;height:16px;border-radius:50%;background:var(--green-hi);box-shadow:0 0 12px rgba(123,228,149,0.9);}
+  .pbody{padding:28px 34px;font-family:'SF Mono','Menlo',monospace;font-size:31px;line-height:1.62;}
+  .ln{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .p{color:var(--green);} .t{color:var(--ink);} .d{color:var(--faint);} .ok{color:var(--green-hi);}
+  .cur{display:inline-block;width:16px;height:30px;background:var(--green-hi);vertical-align:-4px;box-shadow:0 0 10px rgba(123,228,149,0.8);}
+
+  /* bottom toolbar hint (matches other shots) */
+  .toolbar{position:absolute;bottom:0;left:0;right:0;height:150px;background:#0B0E13;border-top:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;gap:22px;padding:0 44px;}
+  .tbtn{background:var(--navy);border:1px solid rgba(255,255,255,0.06);border-radius:18px;padding:22px 30px;font-size:30px;color:var(--dim);display:flex;align-items:center;gap:14px;}
+  .tbtn.primary{background:var(--green);color:#0A0E0B;font-weight:700;border-color:transparent;}
+  .home{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);width:340px;height:11px;background:#EAF2EC;border-radius:6px;}
+</style>
+</head>
+<body>
+  <div class="status">
+    <span>9:41</span>
+    <div class="notch"></div>
+    <div class="right" style="font-size:44px;font-weight:600;display:flex;gap:22px;align-items:center;">
+      <span class="bars"><i></i><i></i><i></i><i></i></span>
+      <svg class="wifi" viewBox="0 0 44 32"><path d="M22 6C13 6 5.5 9.5 0 15l6 6c4.5-4.5 10-7 16-7s11.5 2.5 16 7l6-6C38.5 9.5 31 6 22 6z" fill="#EAF2EC" opacity="0.95"/><path d="M22 20c-3.5 0-6.7 1.4-9 3.7L22 32l9-8.3C28.7 21.4 25.5 20 22 20z" fill="#EAF2EC"/></svg>
+      <span class="batt"></span>
+    </div>
+  </div>
+
+  <div class="topbar">
+    <div class="title">
+      <div class="h">Swarm</div>
+      <div class="s"><span class="dot"></span>3 agents running &middot; orbitcart</div>
+    </div>
+    <div class="icon">&#9711;</div>
+    <div class="icon">&#9881;</div>
+  </div>
+
+  <div class="meta">
+    <span class="m-badge">TASK</span>
+    <span class="m-txt">Implement a feature</span>
+    <span class="m-sub">&middot; split into 3</span>
+  </div>
+
+  <div class="panes">
+    <div class="pane">
+      <div class="phead">
+        <span class="badge b-arch">ARCHITECT</span>
+        <span class="ptitle">planning &amp; delegation</span>
+        <span class="pstat"><span class="rd"></span>live</span>
+      </div>
+      <div class="pbody">
+        <div class="ln"><span class="d">Plan ready. Handing out 3 tasks.</span></div>
+        <div class="ln"><span class="ok">&#9654;</span> <span class="t">checkout API&ensp;&rarr; claude</span></div>
+        <div class="ln"><span class="ok">&#9654;</span> <span class="t">discount rules&ensp;&rarr; codex</span></div>
+        <div class="ln"><span class="ok">&#9654;</span> <span class="t">integration tests&ensp;&rarr; claude</span></div>
+      </div>
+    </div>
+
+    <div class="pane">
+      <div class="phead">
+        <span class="badge b-claude">claude</span>
+        <span class="ptitle">checkout API</span>
+        <span class="pstat"><span class="rd"></span>live</span>
+      </div>
+      <div class="pbody">
+        <div class="ln"><span class="p">&gt;</span> <span class="t">Wrote src/checkout.js</span></div>
+        <div class="ln"><span class="d">POST /checkout &middot; 3 routes added</span></div>
+        <div class="ln"><span class="ok">&#10003; 12 tests passing</span> <span class="cur"></span></div>
+      </div>
+    </div>
+
+    <div class="pane">
+      <div class="phead">
+        <span class="badge b-codex">codex</span>
+        <span class="ptitle">discount rules</span>
+        <span class="pstat"><span class="rd"></span>live</span>
+      </div>
+      <div class="pbody">
+        <div class="ln"><span class="p">&gt;</span> <span class="t">Refactoring pricing.js</span></div>
+        <div class="ln"><span class="d">+ stacked promo codes</span></div>
+        <div class="ln"><span class="t">running npm test</span> <span class="cur"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="tbtn primary">&#9654; Send brief</div>
+    <div class="tbtn">&#43; Add agent</div>
+    <div class="tbtn">&#8942;</div>
+    <div class="home"></div>
+  </div>
+</body>
+</html>

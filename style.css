@@ -705,3 +705,141 @@ code {
 .highlight-list li {
   margin-bottom: var(--space-sm);
 }
+
+/* ================================================================
+   Homepage v2 (2026-07-14 redesign): all classes namespaced h2-*
+   so the legal/support pages that share this stylesheet are
+   untouched. Refined-terminal direction: mono display type,
+   restrained glow, generous whitespace.
+   ================================================================ */
+.h2-container { max-width: 1120px; }
+
+.h2-eyebrow {
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+  color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 18px;
+}
+.h2-eyebrow .cursor-blink { color: var(--primary); }
+
+.h2-title {
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+  font-size: clamp(2rem, 4.6vw, 3.1rem); line-height: 1.14; font-weight: 700;
+  letter-spacing: -0.02em; color: var(--text-primary); margin-bottom: 20px;
+}
+.h2-title em { font-style: normal; color: var(--primary); text-shadow: 0 0 24px var(--primary-glow); }
+
+.h2-sub { color: var(--text-secondary); font-size: 1.1rem; line-height: 1.65; max-width: 540px; margin-bottom: 28px; }
+
+.h2-hero {
+  display: flex; align-items: center; gap: 56px;
+  padding: 72px 0 84px;
+}
+.h2-hero__copy { flex: 1 1 auto; min-width: 0; }
+.h2-badges { justify-content: flex-start; margin-top: 6px; }
+.h2-hero__note { color: var(--text-secondary); opacity: 0.75; font-size: 0.85rem; margin-top: 14px; }
+.h2-hero__phone { flex: 0 0 auto; width: 300px; }
+.h2-hero__phone img, .h2-swarm__phone img {
+  width: 100%; height: auto; border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.55), 0 0 56px var(--primary-glow);
+}
+
+.h2-kicker { margin-bottom: 16px; }
+.h2-h2 {
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+  font-size: clamp(1.5rem, 3.2vw, 2.1rem); line-height: 1.2; font-weight: 700;
+  letter-spacing: -0.015em; color: var(--text-primary); margin-bottom: 18px;
+}
+.h2-center { text-align: center; }
+.h2-body { color: var(--text-secondary); font-size: 1.02rem; line-height: 1.65; }
+.h2-fine { color: var(--text-secondary); opacity: 0.75; font-size: 0.85rem; line-height: 1.6; margin-top: 18px; }
+
+.h2-swarm {
+  display: flex; align-items: center; gap: 64px;
+  padding: 64px 0; margin: 24px 0;
+  border-top: 1px solid rgba(76, 175, 80, 0.14);
+}
+.h2-swarm__phone { flex: 0 0 auto; width: 320px; }
+.h2-swarm__copy { flex: 1 1 auto; min-width: 0; }
+.h2-list { margin: 20px 0 0 1.2em; color: var(--text-secondary); line-height: 1.6; }
+.h2-list li { margin-bottom: 12px; }
+
+.h2-tour { padding: 72px 0 24px; border-top: 1px solid rgba(76, 175, 80, 0.14); }
+.h2-tour__lede { margin-bottom: 42px; }
+.h2-tour__grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px 28px;
+}
+.h2-shot { margin: 0; }
+.h2-shot img {
+  width: 100%; height: auto; border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.5);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.h2-shot img:hover { transform: translateY(-4px); box-shadow: 0 22px 54px rgba(0, 0, 0, 0.55), 0 0 40px var(--primary-glow); }
+.h2-shot figcaption { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.55; margin-top: 14px; }
+.h2-shot figcaption b {
+  display: block; color: var(--text-primary);
+  font-family: 'SF Mono', 'Fira Code', monospace; font-size: 1rem; margin-bottom: 4px;
+}
+
+.h2-pro, .h2-plus {
+  display: inline-block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.04em;
+  border-radius: 100px; padding: 1px 9px; vertical-align: 2px; margin-left: 2px;
+}
+.h2-pro { color: var(--primary); border: 1px solid rgba(76, 175, 80, 0.5); }
+.h2-plus { color: var(--text-secondary); border: 1px solid rgba(255, 255, 255, 0.25); }
+
+.h2-features { padding: 72px 0 24px; border-top: 1px solid rgba(76, 175, 80, 0.14); margin-top: 48px; }
+.h2-featgrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 40px; }
+.h2-featcard {
+  background: var(--surface-bg); border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-xl); padding: 28px 30px;
+}
+.h2-featcard h3 {
+  font-family: 'SF Mono', 'Fira Code', monospace; font-size: 1.05rem;
+  color: var(--text-primary); margin-bottom: 16px;
+}
+.h2-featcard ul { margin-left: 1.15em; color: var(--text-secondary); line-height: 1.6; font-size: 0.94rem; }
+.h2-featcard li { margin-bottom: 10px; }
+
+.h2-pricing { padding: 72px 0 24px; border-top: 1px solid rgba(76, 175, 80, 0.14); margin-top: 48px; }
+.h2-plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; align-items: stretch; }
+.h2-plan {
+  background: var(--surface-bg); border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-xl); padding: 30px 30px 26px; position: relative;
+}
+.h2-plan--pro { border-color: rgba(76, 175, 80, 0.45); box-shadow: 0 0 44px rgba(76, 175, 80, 0.10); }
+.h2-plan h3 {
+  font-family: 'SF Mono', 'Fira Code', monospace; font-size: 1.15rem;
+  color: var(--text-primary); margin-bottom: 8px;
+}
+.h2-price { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 2rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+.h2-price span { font-size: 0.95rem; font-weight: 400; color: var(--text-secondary); }
+.h2-plan__lede { color: var(--primary); font-size: 0.9rem; margin-bottom: 18px; }
+.h2-plan ul { margin-left: 1.15em; color: var(--text-secondary); line-height: 1.6; font-size: 0.92rem; }
+.h2-plan li { margin-bottom: 10px; }
+.h2-plan__flag {
+  position: absolute; top: -12px; left: 26px;
+  background: var(--primary); color: #fff; font-size: 0.72rem; font-weight: 600;
+  border-radius: 100px; padding: 3px 12px;
+}
+
+.h2-cta { text-align: center; padding: 88px 0 72px; border-top: 1px solid rgba(76, 175, 80, 0.14); margin-top: 48px; }
+.h2-cta .h2-eyebrow { margin-bottom: 12px; }
+.h2-cta .h2-h2 { margin-bottom: 28px; }
+
+/* ---- responsive ---- */
+@media (max-width: 960px) {
+  .h2-hero { flex-direction: column-reverse; text-align: center; padding: 44px 0 56px; gap: 40px; }
+  .h2-sub { margin-left: auto; margin-right: auto; }
+  .h2-badges { justify-content: center; }
+  .h2-hero__phone { width: min(280px, 72vw); }
+  .h2-swarm { flex-direction: column; gap: 36px; }
+  .h2-swarm__phone { width: min(280px, 72vw); }
+  .h2-tour__grid { grid-template-columns: repeat(2, 1fr); gap: 28px 20px; }
+  .h2-featgrid, .h2-plans { grid-template-columns: 1fr; }
+}
+@media (max-width: 540px) {
+  .h2-tour__grid { grid-template-columns: 1fr; }
+  .h2-shot { max-width: 320px; margin: 0 auto; }
+}

@@ -4,27 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="canonical" href="https://terminallm.app/">
-  <title>TerminaLLM - Mobile Workspace for AI Coding Agents</title>
-  <meta name="description" content="TerminaLLM is a mobile workspace for command-line AI. Run Claude Code, Aider, Cursor and more on your remote machine, from your phone, on sessions that never drop. New in 1.2: Swarm runs a whole crew of agents at once.">
+  <title>TerminaLLM - Run a crew of AI coding agents from your phone</title>
+  <meta name="description" content="TerminaLLM is a mobile workspace for command-line AI. Run Claude Code, Codex, Aider and more on your own server, on sessions that never drop. New in 1.2: Swarm runs a whole crew of agents at once.">
   <meta property="og:title" content="TerminaLLM">
-  <meta property="og:description" content="A mobile workspace for command-line AI. Run Claude Code, Aider, Cursor and more on your remote machine, from your phone. New in 1.2: Swarm runs a whole crew of agents at once.">
+  <meta property="og:description" content="Run a crew of AI coding agents on your own server, from your phone. Any agent, each in its own live terminal.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://terminallm.app/">
-  <meta property="og:image" content="https://terminallm.app/og-image.png">
+  <meta property="og:image" content="https://terminallm.app/og-image.png?v=2">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="TerminaLLM">
-  <meta name="twitter:description" content="A mobile workspace for command-line AI. Run Claude Code, Aider, Cursor and more on your remote machine, from your phone. New in 1.2: Swarm runs a whole crew of agents at once.">
-  <meta name="twitter:image" content="https://terminallm.app/og-image.png">
+  <meta name="twitter:description" content="Run a crew of AI coding agents on your own server, from your phone. Any agent, each in its own live terminal.">
+  <meta name="twitter:image" content="https://terminallm.app/og-image.png?v=2">
   <link rel="icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
   <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
   <link rel="icon" type="image/png" href="/favicon-48x48.png" sizes="48x48">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=4">
 </head>
-<body>
+<body class="home2">
   <div class="glow-line"></div>
 
   <nav class="site-nav">
@@ -34,141 +34,179 @@
         <span class="site-nav__title">TerminaLLM</span>
       </a>
       <ul class="site-nav__links">
+        <li><a href="#tour">App</a></li>
+        <li><a href="#pricing">Pricing</a></li>
         <li><a href="/support/">Support</a></li>
         <li><a href="/privacy/">Privacy</a></li>
-        <li><a href="/terms/">Terms</a></li>
-        <li><a href="/account-deletion/">Account Deletion</a></li>
-        <li><a href="/security/">Security</a></li>
         <li><a href="https://github.com/terminallm-issues/.github/issues">GitHub</a></li>
       </ul>
     </div>
   </nav>
 
-  <main class="site-container">
-    <div class="hero-row">
-      <img class="hero-aside hero-aside--left" src="shot-swarm.png" width="1080" height="2340"
-        alt="TerminaLLM Swarm view: a lead architect delegating tasks to the coding agents you choose, each running live in its own labeled terminal pane.">
-    <section class="hero">
-      <img src="app_icon.png" alt="TerminaLLM" class="hero__icon">
-      <h1 class="hero__title">Termina<span>LLM</span></h1>
-      <p class="hero__subtitle">A remote workspace for command-line AI, from your phone. Run one agent or a whole crew, edit code, preview your app, and watch every change, on sessions that survive every disconnect.</p>
+  <main class="site-container h2-container">
 
+    <!-- ============ HERO ============ -->
+    <section class="h2-hero">
+      <div class="h2-hero__copy">
+        <p class="h2-eyebrow">$ ssh you@your-server<span class="cursor-blink">_</span></p>
+        <h1 class="h2-title">Your command-line AI,<br>in your <em>pocket</em></h1>
+        <p class="h2-sub">TerminaLLM is a mobile workspace for the remote machine where your AI runs. Connect to your own server, keep going on sessions that survive every disconnect, and now run a whole crew of agents at once.</p>
+        <div class="store-badges h2-badges">
+          <a href="https://play.google.com/store/apps/details?id=app.terminallm" class="store-badge"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="68"></a>
+          <a href="https://apps.apple.com/us/app/terminallm/id6760659975" class="store-badge"><img src="badges/app-store.svg" alt="Download on the App Store" height="54"></a>
+        </div>
+        <p class="h2-hero__note">Free to start. Works with any terminal AI agent.</p>
+      </div>
+      <div class="h2-hero__phone">
+        <img src="shot-terminal.png" width="1080" height="2340" fetchpriority="high"
+          alt="TerminaLLM terminal running Claude Code on a remote server, with the six-tab bar: Terminal, Changes, Files, Assist, Browse, and Swarm.">
+      </div>
+    </section>
+
+    <!-- ============ SWARM ============ -->
+    <section class="h2-swarm" id="swarm">
+      <div class="h2-swarm__phone">
+        <img src="shot-swarm.png" width="1080" height="2340" loading="lazy"
+          alt="TerminaLLM Swarm view: a lead architect delegating tasks to the coding agents you choose, each running live in its own labeled terminal pane.">
+      </div>
+      <div class="h2-swarm__copy">
+        <p class="h2-kicker"><span class="tier-tag">New in 1.2 &middot; Pro</span></p>
+        <h2 class="h2-h2">Swarm: a team of AI agents, run from your phone</h2>
+        <p class="h2-body">Launch a crew of coding agents on your own server and watch it work. A lead architect breaks the job into pieces and hands them out, while the agents you choose run side by side, each in its own live terminal pane.</p>
+        <ul class="h2-list">
+          <li>Run any agent: one-tap presets for Claude Code, Codex, and Aider, or point a pane at your own command, each with its model and effort.</li>
+          <li>Start from a recipe: Debugging, Code review, Add tests, Refactor, Implement a feature, or Write docs.</li>
+          <li>Each pane is a real terminal, not a log tail. Read it, type into it, take over any time.</li>
+          <li>Agents run on your machine, signed in with your own AI CLI logins. Your prompts and your code never pass through us.</li>
+        </ul>
+        <p class="h2-fine">Swarm needs a small helper daemon on your server, which the app can install for you (one tap on supported servers). You choose when it installs, and removal is one command.</p>
+      </div>
+    </section>
+
+    <!-- ============ SIX-TAB TOUR ============ -->
+    <section class="h2-tour" id="tour">
+      <h2 class="h2-h2 h2-center">One connection, six workspaces</h2>
+      <p class="h2-body h2-center h2-tour__lede">Every TerminaLLM session gives you six tabs on the same server.</p>
+      <div class="h2-tour__grid">
+        <figure class="h2-shot">
+          <img src="shot-terminal.png" width="1080" height="2340" loading="lazy" alt="Terminal tab: full ANSI terminal running an AI agent.">
+          <figcaption><b>Terminal</b>Full xterm-256color with a keyboard built for agents: arrows, Ctrl keys, snippets, voice.</figcaption>
+        </figure>
+        <figure class="h2-shot">
+          <img src="shot-changes.png" width="1080" height="2340" loading="lazy" alt="Changes tab: files the AI changed with line counts and a diff preview.">
+          <figcaption><b>Changes</b>Every file your AI touches, with line-by-line diffs and one-tap export.</figcaption>
+        </figure>
+        <figure class="h2-shot">
+          <img src="shot-files.png" width="1080" height="2340" loading="lazy" alt="Files tab: SFTP browser with previews and in-place editing.">
+          <figcaption><b>Files</b>Full SFTP browser. Preview code, images, and media; edit in place.</figcaption>
+        </figure>
+        <figure class="h2-shot">
+          <img src="shot-assist.png" width="1080" height="2340" loading="lazy" alt="Assist tab: AI chat answering questions about your server.">
+          <figcaption><b>Assist</b><span class="h2-pro">Pro</span> Ask about your code, your server, or the app itself.</figcaption>
+        </figure>
+        <figure class="h2-shot">
+          <img src="shot-browse.png" width="1080" height="2340" loading="lazy" alt="Browse tab: port forwarding with an in-app preview of a dev server.">
+          <figcaption><b>Browse</b>Forward a port and preview your dev server without leaving the app.</figcaption>
+        </figure>
+        <figure class="h2-shot">
+          <img src="shot-swarm.png" width="1080" height="2340" loading="lazy" alt="Swarm tab: multiple AI agents working in live panes.">
+          <figcaption><b>Swarm</b><span class="h2-pro">Pro</span> A crew of agents, each in a live pane you can take over.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ FEATURES ============ -->
+    <section class="h2-features">
+      <h2 class="h2-h2 h2-center">Everything the job needs</h2>
+      <div class="h2-featgrid">
+        <div class="h2-featcard">
+          <h3>Built for AI agents</h3>
+          <ul>
+            <li>Works with any CLI agent: Claude Code, Codex, Aider, Cursor, Gemini, Amazon Q, Amp, OpenCode, and yours</li>
+            <li>Push notification the moment a long run stops and waits for input</li>
+            <li>Auth and OAuth links open in an in-app browser, so the session never dies</li>
+            <li>Voice-to-command: say it, get the shell command <span class="h2-pro">Pro</span></li>
+          </ul>
+        </div>
+        <div class="h2-featcard">
+          <h3>Sessions that do not drop</h3>
+          <ul>
+            <li>Persistent sessions survive disconnects, Wi-Fi to cellular handoffs, and backgrounding</li>
+            <li>Termina-TCP, an optional helper daemon, gives sub-second reconnects; falls back to plain SSH automatically</li>
+            <li>Live Activities show session status on the iOS Lock Screen and Dynamic Island</li>
+          </ul>
+        </div>
+        <div class="h2-featcard">
+          <h3>A real workspace</h3>
+          <ul>
+            <li>Code editor with syntax highlighting, saving straight to the server</li>
+            <li>Photograph a bug, drop it on the server, tell your agent to fix it</li>
+            <li>Command palette, snippets with variables, split-keyboard landscape</li>
+            <li>15 hand-tuned themes plus a custom theme editor with iTerm2 import</li>
+          </ul>
+        </div>
+        <div class="h2-featcard">
+          <h3>Security, serious by default</h3>
+          <ul>
+            <li>Encrypted credential vault: AES-256-GCM, on-device only, opt-in</li>
+            <li>TOTP two-factor, biometric unlock, SSH host key verification</li>
+            <li>Multi-hop SSH through jump hosts <span class="h2-plus">Plus</span></li>
+            <li>Exportable audit log, screen-capture protection, clipboard auto-clear</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PRICING ============ -->
+    <section class="h2-pricing" id="pricing">
+      <h2 class="h2-h2 h2-center">Pricing</h2>
+      <div class="h2-plans">
+        <div class="h2-plan">
+          <h3>Free</h3>
+          <p class="h2-price">$0</p>
+          <p class="h2-plan__lede">The full terminal, forever.</p>
+          <ul>
+            <li>SSH terminal, session persistence, and the Changes tab</li>
+            <li>SFTP browser with previews and search</li>
+            <li>Voice dictation, media drop, all 15 themes + editor</li>
+            <li>Full security suite and 5 connection profiles</li>
+            <li>A daily taste of every Plus feature: editor saves, recording clips, sharing, port forwarding, batch SFTP, bookmarks, backups</li>
+          </ul>
+        </div>
+        <div class="h2-plan h2-plan--mid">
+          <h3>Plus</h3>
+          <p class="h2-price">$4.99<span>/mo</span></p>
+          <p class="h2-plan__lede">Every Free cap removed.</p>
+          <ul>
+            <li>Unlimited code editor, recording, sharing, and backups</li>
+            <li>Unlimited port forwarding tunnels and batch SFTP</li>
+            <li>Multi-hop SSH through jump hosts</li>
+            <li>Unlimited connection profiles</li>
+          </ul>
+        </div>
+        <div class="h2-plan h2-plan--pro">
+          <p class="h2-plan__flag">Everything in Plus, and</p>
+          <h3>Pro</h3>
+          <p class="h2-price">$9.99<span>/mo</span></p>
+          <p class="h2-plan__lede">The AI tier.</p>
+          <ul>
+            <li><b>Swarm</b>: run a team of AI agents on your server</li>
+            <li><b>Assist</b>: AI chat about your code and terminal</li>
+            <li><b>Voice-to-command</b>: natural language in, shell out</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CLOSING CTA ============ -->
+    <section class="h2-cta">
+      <p class="h2-eyebrow">$ ssh you@your-server<span class="cursor-blink">_</span></p>
+      <h2 class="h2-h2">Put your dev machine in your pocket</h2>
       <div class="store-badges">
         <a href="https://play.google.com/store/apps/details?id=app.terminallm" class="store-badge"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="68"></a>
         <a href="https://apps.apple.com/us/app/terminallm/id6760659975" class="store-badge"><img src="badges/app-store.svg" alt="Download on the App Store" height="54"></a>
       </div>
-
-      <p class="terminal-prompt">
-        <span class="prompt-symbol">$</span> ssh you@your-server<span class="cursor-blink">_</span>
-      </p>
     </section>
-      <img class="hero-aside hero-aside--right" src="shot-terminal.png" width="1080" height="2340"
-        alt="TerminaLLM terminal connected to a dev server, listing project files, with a command and arrow-key toolbar.">
-    </div>
-
-    <section class="card card--highlight">
-      <h2 class="card__title card__title--highlight">Swarm: a team of AI agents, run from your phone <span class="tier-tag">New in 1.2 &middot; Pro</span></h2>
-      <p class="card__text">Launch a crew of coding agents on your own server and watch it work. A lead architect breaks the job into pieces and hands them out, while the agents you choose run side by side, each in its own live terminal pane.</p>
-      <ul class="card__text highlight-list">
-        <li>Start from a recipe: Debugging, Code review, Add tests, Refactor, Implement a feature, or Write docs.</li>
-        <li>Run any agent: one-tap presets for Claude Code, Codex, and Aider, or point a pane at your own command, each with its model and effort.</li>
-        <li>Each pane is a real terminal, not a log tail. Read it, type into it, take over any time.</li>
-        <li>Agents run on your machine, signed in with your own AI CLI logins. Your prompts and your code never pass through us.</li>
-      </ul>
-      <p class="card__text">Swarm needs a small helper daemon on your server. The app installs it in one tap.</p>
-    </section>
-
-    <div class="feature-grid">
-      <div class="card">
-        <h3 class="card__title">Edit Code Remotely</h3>
-        <p class="card__text">Built-in code editor with syntax highlighting. Edit files on your server, save instantly, and see changes reflected in your AI agent's context. No laptop required.</p>
-      </div>
-
-      <div class="card">
-        <h3 class="card__title">Preview Your App</h3>
-        <p class="card__text">Port forwarding with an in-app browser. Preview localhost dev servers (React, Vite, Django, Rails) directly inside TerminaLLM. Edit, refresh, iterate, all from your phone.</p>
-      </div>
-
-      <div class="card">
-        <h3 class="card__title">Watch AI Changes Live</h3>
-        <p class="card__text">See every file your AI agent creates, modifies, or deletes in real-time. Line-by-line diffs, file counts, and export. Know exactly what happened while you were away.</p>
-      </div>
-
-      <div class="card">
-        <h3 class="card__title">Any AI Agent</h3>
-        <p class="card__text">Claude Code, Aider, Cursor, GitHub Copilot, OpenAI Codex, Google Gemini, Amazon Q, Amp, OpenCode. If it runs in a terminal, it runs in TerminaLLM. Not locked to one vendor.</p>
-      </div>
-
-      <div class="card">
-        <h3 class="card__title">Smart Push Notifications</h3>
-        <p class="card__text">Get notified when your AI agent needs input, not just when your terminal is idle. Process tree detection knows when an AI tool is actually waiting. Tap the notification to auto-reconnect.</p>
-      </div>
-
-      <div class="card">
-        <h3 class="card__title">Persistent Sessions</h3>
-        <p class="card__text">Your AI agent keeps running when you close the app. Termina-TCP (an optional ~6.5&nbsp;MB helper daemon) gives you near-instant reconnects over a long-lived TCP link; falls back to plain SSH if you'd rather not deploy it. dtach scrollback replay either way.</p>
-      </div>
-
-      <div class="card">
-        <h3 class="card__title">Live Activities on iOS</h3>
-        <p class="card__text">Watch SSH session status from the Lock Screen and Dynamic Island. Server name, live-ticking timer, and connection state always visible. Requires iPhone 14&nbsp;Pro or later for Dynamic Island; Lock Screen works on any iOS&nbsp;16.1+ device.</p>
-      </div>
-
-      <div class="card">
-        <h3 class="card__title">Screenshot a Bug</h3>
-        <p class="card__text">Take a photo of a bug, upload it to your server, and tell your AI agent "fix this." The file path is auto-inserted into the terminal. Visual debugging from your pocket.</p>
-      </div>
-
-      <div class="card">
-        <h3 class="card__title">Security First</h3>
-        <p class="card__text">Optional TOTP and biometric auth, AES-256-GCM encrypted credential vault, host key verification, multi-hop SSH through jump hosts, encrypted backups, audit logging, and screen capture prevention. Your keys stay on your device.<br><span style="font-size: 0.8em; opacity: 0.7;">Three security profiles tune the trade-offs: Paranoid and Casual block screenshots; Speedster permits them for usability.</span></p>
-      </div>
-
-      <div class="card">
-        <h3 class="card__title">Command Palette</h3>
-        <p class="card__text">50+ commands organized by category, fuzzy-searchable from anywhere in the terminal. Jump to settings, share a session, paste a snippet, change themes &mdash; without leaving the keyboard.</p>
-      </div>
-
-      <div class="card">
-        <h3 class="card__title">Snippets with Variables</h3>
-        <p class="card__text">Save reusable command templates with prompts for the parts that change (server names, paths, ports). One tap fills in the variables and pastes a ready-to-run command. Sync across devices via encrypted backup.</p>
-      </div>
-
-      <div class="card">
-        <h3 class="card__title">15 Themes + Custom Editor</h3>
-        <p class="card__text">15 hand-tuned terminal color schemes plus a visual editor for your own. Import from iTerm2 .itermcolors or paste any 23-color JSON. Pick a different theme per connection if you want.</p>
-      </div>
-
-      <div class="card">
-        <h3 class="card__title">Split-Keyboard Landscape</h3>
-        <p class="card__text">Rotate to landscape and the keyboard splits into left/right halves around the terminal &mdash; thumb-friendly typing at full speed, with sticky Ctrl / Alt / Shift and arrow keys exactly where you'd put them on a real keyboard.</p>
-      </div>
-
-      <div class="card">
-        <h3 class="card__title">AI Assistant Chat <span style="font-size: 0.75em; opacity: 0.6;">Pro</span></h3>
-        <p class="card__text">Ask anything about your terminal, your code, or how to use TerminaLLM. Powered by Anthropic's Claude. Conversation history persists across sessions.</p>
-      </div>
-
-      <div class="card">
-        <h3 class="card__title">Voice to Shell Command <span style="font-size: 0.75em; opacity: 0.6;">Pro</span></h3>
-        <p class="card__text">Tap the wand button. Say what you want. Get the shell command. Natural language in, valid syntax out &mdash; no docs to look up, no flags to memorize.</p>
-      </div>
-
-      <div class="card">
-        <h3 class="card__title">Free</h3>
-        <p class="card__text">Full SSH terminal, SFTP browser, AI change detection (Changes tab), and a daily taste of every Plus feature: code editor (≤15&nbsp;KB, 3 saves/day), recording (30s clips), session sharing (1/day), port forwarding (1 tunnel, 30-min cap), batch SFTP ops (3 files, 2/day), 2 SFTP bookmarks, encrypted backup (1/month), 5 connection profiles.</p>
-      </div>
-
-      <div class="card">
-        <h3 class="card__title">Plus <span style="font-size: 0.75em; opacity: 0.6;">$4.99/mo</span></h3>
-        <p class="card__text">Removes every Free cap. Unlimited recording, code editor, sharing, port forwarding, batch ops, bookmarks, backups, and connection profiles. Adds multi-hop SSH through bastion servers (jump host).</p>
-      </div>
-
-      <div class="card">
-        <h3 class="card__title">Pro <span style="font-size: 0.75em; opacity: 0.6;">$9.99/mo</span></h3>
-        <p class="card__text">Everything in Plus, plus Swarm (run a team of AI agents on your server), AI assistant chat, and voice-to-command translation.</p>
-      </div>
-    </div>
   </main>
 
   <footer class="site-footer">

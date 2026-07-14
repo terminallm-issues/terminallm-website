@@ -84,7 +84,7 @@
 
     <div class="card">
       <h3 class="card__title">What is Swarm?</h3>
-      <p class="card__text">Swarm (Pro only, new in 1.2) launches a crew of AI coding agents on your own server: a lead architect breaks the job into pieces while the agents you choose work side by side, each in its own live terminal pane you can read, type into, and take over. Swarm works with any terminal AI agent, with one-tap presets for Claude Code, Codex, and Aider, or point any pane at your own command. Swarm needs a small helper daemon on your server, which the app installs in one tap. Agents run under your own AI CLI logins on your machine; your prompts and code never pass through TerminaLLM's servers.</p>
+      <p class="card__text">Swarm (Pro only, new in 1.2) launches a crew of AI coding agents on your own server: a lead architect breaks the job into pieces while the agents you choose work side by side, each in its own live terminal pane you can read, type into, and take over. Swarm works with any terminal AI agent, with one-tap presets for Claude Code, Codex, and Aider, or point any pane at your own command. Swarm needs a small helper daemon on your server, which the app can install for you (one tap on supported servers). Agents run under your own AI CLI logins on your machine; your prompts and code never pass through TerminaLLM's servers.</p>
     </div>
 
     <div class="card">
@@ -94,7 +94,7 @@
 
     <div class="card">
       <h3 class="card__title">How does the wand button translate to shell commands?</h3>
-      <p class="card__text">The wand button (Pro only) takes your natural-language request &mdash; typed or spoken &mdash; and asks Anthropic's Claude to suggest the equivalent shell command. Only the text is sent to the proxy; no audio leaves the device. The wand requires the same in-context consent as the AI Assistant Chat, and you can revoke it from the same Settings toggle.</p>
+      <p class="card__text">The wand button (Pro only) takes your natural-language request &mdash; typed or spoken &mdash; and asks Anthropic's Claude to suggest the equivalent shell command. Only the transcribed text is sent to our proxy; TerminaLLM never transmits audio. If you dictate with the Built-in speech engine, your device's platform speech service may process audio on Apple or Google servers. Choose the Whisper engine in Settings for fully on-device transcription. The wand requires the same in-context consent as the AI Assistant Chat, and you can revoke it from the same Settings toggle.</p>
     </div>
 
     <div class="card">
@@ -109,12 +109,12 @@
 
     <div class="card">
       <h3 class="card__title">How does session persistence work?</h3>
-      <p class="card__text">TerminaLLM uses dtach to keep your terminal session alive on the remote server even when your phone disconnects. When you reconnect, you pick up right where you left off &mdash; your AI assistant keeps running.</p>
+      <p class="card__text">TerminaLLM's T-TCP helper (a small binary the app can deploy to your server) keeps your terminal session alive on the remote server even when your phone disconnects. On plain SSH connections without the helper, dtach is used as a fallback. Either way, when you reconnect you pick up right where you left off, and your AI assistant keeps running.</p>
     </div>
 
     <div class="card">
       <h3 class="card__title">What is session sharing?</h3>
-      <p class="card__text">Session sharing lets you attach to the same terminal session from a laptop. Tap the mirror icon in the terminal toolbar to generate an SSH command you can run on any computer with dtach installed. Requires dtach on the remote server.</p>
+      <p class="card__text">Session sharing lets you attach to the same terminal session from a laptop or a second device. On T-TCP sessions (the default when the TerminaLLM helper is installed on your server), the share flow can open a pre-attached terminal window on your desktop or let another TerminaLLM device join the same session, with no dtach involved. On SSH (dtach) sessions, tapping the mirror icon generates an SSH command that attaches via dtach, which must be installed on the remote server.</p>
     </div>
 
     <div class="card">

@@ -6,3 +6,8 @@ wrangler.jsonc
 node_modules
 .github
 .git
+
+# Render-only HTML used to generate the committed PNG screenshots.
+# Not linked, not in the sitemap, and should never be indexed.
+mockups
+shot-swarm-source.html

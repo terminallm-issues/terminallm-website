@@ -77,6 +77,12 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   min-height: 100vh;
+  /* The legal pages contain unbreakable tokens in plain prose, such as the
+     "privacy@/legal@/support@terminallm.app" address group, which browsers
+     will not break at "@" or "/". One of those was enough to push the whole
+     document into horizontal scroll at 320px. This only breaks words that
+     would otherwise overflow, so normal text is unaffected. */
+  overflow-wrap: break-word;
 }
 
 a {
@@ -258,6 +264,11 @@ code {
   padding: 2px 6px;
   border-radius: var(--radius-sm);
   font-size: 0.85em;
+  /* Inline code is often a long unbroken token (a path, a URL, a shell one
+     liner). Without this it cannot wrap, so on narrow phones it pushes the
+     whole page into horizontal scroll. Measured at 320px on the privacy and
+     terms pages before this rule existed. */
+  overflow-wrap: anywhere;
 }
 
 /* ========== Buttons - from AppButtonStyles ========== */

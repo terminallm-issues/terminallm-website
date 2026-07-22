@@ -102,12 +102,13 @@
     </ul>
 
     <h3>Hive Daemon Security (Swarm, Pro)</h3>
-    <p>When users opt into Swarm, the app installs Hive (about 4.5 MB: a CLI and a daemon binary) to <code>~/.hive/</code> on the user's remote server. Hive's security posture:</p>
+    <p>When users opt into Swarm, the app installs Hive (about 4.6 MB: a CLI and a daemon binary) to <code>~/.hive/</code> on the user's remote server. The app bundles builds for macOS and Linux on both x86_64 and arm64, and the Linux builds are statically linked so they carry no runtime library dependencies. Hive's security posture:</p>
     <ul>
       <li><strong>Loopback-only listener:</strong> The daemon binds exclusively to <code>127.0.0.1:7333</code>. It is never reachable from the network; only processes on the server itself can connect</li>
       <li><strong>Token authentication:</strong> A per-install authentication token at <code>~/.hive/auth-token</code> is required for daemon commands, so other local users on a shared server cannot drive the daemon</li>
       <li><strong>Driven over SSH only:</strong> The app controls Hive by executing <code>~/.hive/bin/hive</code> inside the user's existing SSH session. No new inbound network path to the server is created</li>
-      <li><strong>No remote fetch, no auto-update:</strong> Both binaries are bundled inside the app and pushed over the user's own SSH connection at install time. Nothing is downloaded from third-party hosts, and the daemon never self-updates. Upgrades happen only through app updates and explicit reinstall</li>
+      <li><strong>No remote fetch by the app, no auto-update:</strong> Both binaries are bundled inside the app and pushed over the user's own SSH connection at install time. The app itself downloads nothing, from us or from third-party hosts, and the daemon never self-updates. Upgrades happen only through app updates and explicit reinstall</li>
+      <li><strong>Optional manual install channel:</strong> For servers the app cannot reach over SFTP, the user may instead run <code>curl -fsSL https://terminallm.app/install.sh | sh</code> on the server themselves. That script is hosted first-party on terminallm.app, is readable before it runs, pins a sha256 for every binary it fetches, and refuses to install on any mismatch. It is never invoked by the app; the user chooses to run it</li>
       <li><strong>Explicit install consent:</strong> Hive is installed only when the user taps Install in the Swarm setup, after the "What we install on your server" disclosure. It is never deployed as a side effect of connecting</li>
       <li><strong>Lifecycle managed, easy removal:</strong> The daemon runs only while Swarm is in use and is stopped when no longer needed. Users can stop the daemon or uninstall from the Swarm screen's Hive menu, or run <code>rm -rf ~/.hive</code> on the server</li>
       <li><strong>Agents run as the user:</strong> Swarm agents (Claude Code, Codex, etc.) execute on the user's server under the user's own Unix account and AI CLI logins. Their prompts and output stay inside the SSH session; the app never proxies them through TerminaLLM infrastructure</li>
@@ -336,7 +337,7 @@ developerPatCleared - Developer personal access token cleared</div>
     </div>
     <p style="margin-top: 16px;"><strong>GitHub:</strong> <a href="https://github.com/terminallm-issues/.github/issues">github.com/terminallm-issues/.github/issues</a></p>
 
-    <p style="margin-top: 32px; color: var(--text-disabled); font-size: 0.875rem; font-style: italic;">Last Security Review: March 20, 2026</p>
+    <p style="margin-top: 32px; color: var(--text-disabled); font-size: 0.875rem; font-style: italic;">Last Security Review: July 22, 2026</p>
 
   </main>
 

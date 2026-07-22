@@ -102,7 +102,7 @@
     </ul>
 
     <h3>Hive Daemon Security (Swarm, Pro)</h3>
-    <p>When users opt into Swarm, the app installs Hive (about 4.6 MB: a CLI and a daemon binary) to <code>~/.hive/</code> on the user's remote server. The app bundles builds for macOS and Linux on both x86_64 and arm64, and the Linux builds are statically linked so they carry no runtime library dependencies. Hive's security posture:</p>
+    <p>When users opt into Swarm, the app installs Hive (about 4 to 5 MB depending on the server's architecture: a CLI and a daemon binary) to <code>~/.hive/</code> on the user's remote server. The app bundles builds for macOS and Linux on both x86_64 and arm64, and the Linux builds are statically linked so they carry no runtime library dependencies. Hive's security posture:</p>
     <ul>
       <li><strong>Loopback-only listener:</strong> The daemon binds exclusively to <code>127.0.0.1:7333</code>. It is never reachable from the network; only processes on the server itself can connect</li>
       <li><strong>Token authentication:</strong> A per-install authentication token at <code>~/.hive/auth-token</code> is required for daemon commands, so other local users on a shared server cannot drive the daemon</li>
